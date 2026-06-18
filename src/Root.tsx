@@ -1,15 +1,23 @@
 import "./index.css";
 import { Composition } from "remotion";
-import { Page1Opening } from "./scenes/Page1Opening";
-import { Page2AIToPrototype } from "./scenes/Page2AIToPrototype";
-import { Page3Prototype } from "./scenes/Page3Prototype";
-import { Page4PrototypeVideo } from "./scenes/Page4PrototypeVideo";
-import { Page5PrototypeGoal } from "./scenes/Page5PrototypeGoal";
-import { Page6Flow } from "./scenes/Page6Flow";
-import { Page7Codex } from "./scenes/Page7Codex";
-import { Page8Compare } from "./scenes/Page8Compare";
-import { Page9Placeholder } from "./scenes/Page9Placeholder";
-import { Page10Ending } from "./scenes/Page10Ending";
+import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
+import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
+import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
+import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
+import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
+import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
+import { Page6Flow } from "./scenes/01-實驗介紹/Page6Flow";
+import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
+import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
+import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
+import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
+import { Ch2Page1Opening } from "./scenes/02-遊戲設計/Ch2Page1Opening";
+import { Ch2Page2Constraint } from "./scenes/02-遊戲設計/Ch2Page2Constraint";
+import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
+import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
+import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
+import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
+import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { FullVideo } from "./FullVideo";
 
 export const RemotionRoot: React.FC = () => {
@@ -18,7 +26,15 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="FullVideo"
         component={FullVideo}
-        durationInFrames={4720}
+        durationInFrames={4630}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Page0-LogoIntro"
+        component={Page0LogoIntro}
+        durationInFrames={120}
         fps={30}
         width={1920}
         height={1080}
@@ -98,7 +114,65 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Page10-Ending"
         component={Page10Ending}
-        durationInFrames={660}
+        durationInFrames={570}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ── 第 2 集・遊戲設計 ── */}
+      <Composition
+        id="Ch2-Page1-Opening"
+        component={Ch2Page1Opening}
+        durationInFrames={720}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page2-Constraint"
+        component={Ch2Page2Constraint}
+        durationInFrames={930}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page3-RhythmDoctor"
+        component={Ch2Page3RhythmDoctor}
+        durationInFrames={740}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page4-CorePlay"
+        component={Ch2Page4CorePlay}
+        durationInFrames={700}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page5-CoreLoop"
+        component={Ch2Page5CoreLoop}
+        durationInFrames={1170}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page6-LoopCeleste"
+        component={Ch2Page6LoopCeleste}
+        durationInFrames={840}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page7-Storyboard"
+        component={Ch2Page7Storyboard}
+        durationInFrames={1470}
         fps={30}
         width={1920}
         height={1080}

@@ -5,3 +5,6 @@ dist
 
 # Ignore the output video from Git but not videos you import into src/.
 out
+
+# Chapter 2 source clips are kept locally and replaced during editing.
+/public/02-遊戲設計/*.mp4

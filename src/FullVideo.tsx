@@ -1,18 +1,18 @@
 import React from "react";
 import { Series } from "remotion";
-import { Page1Opening } from "./scenes/Page1Opening";
-import { Page2AIToPrototype } from "./scenes/Page2AIToPrototype";
-import { Page3Prototype } from "./scenes/Page3Prototype";
-import { Page4PrototypeVideo } from "./scenes/Page4PrototypeVideo";
-import { Page5PrototypeGoal } from "./scenes/Page5PrototypeGoal";
-import { Page6Flow } from "./scenes/Page6Flow";
-import { Page7Codex } from "./scenes/Page7Codex";
-import { Page8Compare } from "./scenes/Page8Compare";
-import { Page9Placeholder } from "./scenes/Page9Placeholder";
-import { Page10Ending } from "./scenes/Page10Ending";
+import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
+import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
+import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
+import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
+import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
+import { Page6Flow } from "./scenes/01-實驗介紹/Page6Flow";
+import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
+import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
+import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
+import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 
 // 整支影片：10 頁依序接起來（第 9 頁為佔位卡）
-// 各頁長度加總 = 4720 frames（見 Root.tsx 的 FullVideo composition）
+// 各頁長度加總 = 4630 frames（見 Root.tsx 的 FullVideo composition）
 
 export const FullVideo: React.FC = () => {
   return (
@@ -44,7 +44,7 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={360}>
         <Page9Placeholder />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={660}>
+      <Series.Sequence durationInFrames={570}>
         <Page10Ending />
       </Series.Sequence>
     </Series>
