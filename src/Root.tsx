@@ -20,6 +20,7 @@ import {Ch2Page4CorePlayOverlay} from "./scenes/02-遊戲設計/Ch2Page4CorePlay
 import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
 import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
+import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<Record<string, unknown>> =
@@ -201,6 +202,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch2-Page7-Storyboard"
         component={Ch2Page7Storyboard}
         durationInFrames={1470}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page10-Ending"
+        component={Ch2Page10Ending}
+        durationInFrames={690}
         fps={30}
         width={1920}
         height={1080}

@@ -24,7 +24,7 @@ const clamp = {
   extrapolateLeft: "clamp",
   extrapolateRight: "clamp",
 } as const;
-const ease = {...clamp, easing: EASE};
+const ease = { ...clamp, easing: EASE };
 
 const S10_OUT = [184, 212] as const;
 const S11_GLOW_IN = [220, 238] as const;
@@ -35,20 +35,20 @@ const S12_HEADING_IN = [510, 540] as const;
 const S12_ACTION_START = [548, 590, 632] as const;
 
 const ACTIONS = [
-  {emoji: "⬆️", label: "跳躍"},
-  {emoji: "🧗", label: "攀牆"},
-  {emoji: "💨", label: "衝刺"},
+  { emoji: "⬆️", label: "跳躍" },
+  { emoji: "🧗", label: "攀牆" },
+  { emoji: "💨", label: "衝刺" },
 ] as const;
 
 export const Ch2Page4CorePlayOverlay: React.FC = () => {
   const frame = useCurrentFrame();
-  const {fps} = useVideoConfig();
+  const { fps } = useVideoConfig();
 
   const s10Opacity = interpolate(frame, S10_OUT, [1, 0], clamp);
   const titleIn = spring({
     frame,
     fps,
-    config: {damping: 14, stiffness: 110},
+    config: { damping: 14, stiffness: 110 },
   });
   const definitionOpacity = interpolate(frame, [24, 54], [0, 1], clamp);
   const promptOpacity = interpolate(frame, [92, 114], [0, 1], clamp);
@@ -68,7 +68,7 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
   const headingIn = interpolate(frame, S12_HEADING_IN, [0, 1], ease);
 
   return (
-    <AbsoluteFill style={{fontFamily: FONT}}>
+    <AbsoluteFill style={{ fontFamily: FONT }}>
       {frame < 220 && (
         <AbsoluteFill
           style={{
@@ -102,7 +102,7 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
             }}
           >
             玩家在遊戲中
-            <span style={{color: YELLOW, fontWeight: 800}}>
+            <span style={{ color: YELLOW, fontWeight: 800 }}>
               最常重複的動作
             </span>
           </div>
@@ -121,7 +121,7 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
               whiteSpace: "nowrap",
             }}
           >
-            👀 觀察：哪些動作最常重複？
+            觀察：哪些動作最常重複？
           </div>
         </AbsoluteFill>
       )}
@@ -206,7 +206,9 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
 
       {frame >= 492 && (
         <>
-          <AbsoluteFill style={{backgroundColor: BLACK, opacity: veilOpacity}} />
+          <AbsoluteFill
+            style={{ backgroundColor: BLACK, opacity: veilOpacity }}
+          />
           <div
             style={{
               position: "absolute",
@@ -226,14 +228,14 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
               whiteSpace: "nowrap",
             }}
           >
-            最常重複的 <span style={{color: YELLOW}}>3 個動作</span>
+            最常重複的 <span style={{ color: YELLOW }}>3 個動作</span>
           </div>
 
           {ACTIONS.map((action, index) => {
             const progress = spring({
               frame: frame - S12_ACTION_START[index],
               fps,
-              config: {damping: 16, stiffness: 130, mass: 0.8},
+              config: { damping: 16, stiffness: 130, mass: 0.8 },
             });
             const y = 405 + index * 140;
 
@@ -242,7 +244,7 @@ export const Ch2Page4CorePlayOverlay: React.FC = () => {
                 key={action.label}
                 style={{
                   position: "absolute",
-                  left: 720,
+                  left: 960,
                   top: y,
                   width: 720,
                   minHeight: 104,

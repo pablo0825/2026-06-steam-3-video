@@ -14,7 +14,7 @@ import {
   BLUE,
   BORDER_LIGHT,
   CARD_BORDER,
-  NEUTRAL_100,
+  CHIP_BG,
   SUBTLE,
   TEXT_DARK,
   WHITE,
@@ -23,14 +23,13 @@ import {
 } from "../../theme/colors";
 
 // 第 2 集・第 7 頁：Storyboard 分鏡圖
-//   S18：分鏡圖可演出玩法與關卡設計
-//   S19：真實案例呈現形式多元
-//   S20：放大檢視兩種差異最大的分鏡
+//   S18：Storyboard 定義與案例提示
+//   S19：三張真實分鏡案例滿版播放
+//   S20：形式多元，但夥伴看得懂最重要
 //   S21：分鏡圖用來凝聚團隊共識
 //   S22：四個繪製分鏡圖的重點
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const EASE = Easing.bezier(0.4, 0, 0.2, 1);
 const SOFT_EASE = Easing.bezier(0.16, 1, 0.3, 1);
 const clamp = {
   extrapolateLeft: "clamp",
@@ -41,10 +40,28 @@ const S19_START = 240;
 const S20_START = 510;
 const S21_START = 720;
 const S22_START = 1200;
-const PANEL_START = [76, 112, 148] as const;
-const SAMPLE_START = [286, 320, 354] as const;
 const AVATAR_START = [780, 810, 840] as const;
 const LINE_START = [818, 848, 878] as const;
+const STORYBOARD_SAMPLES = [
+  {
+    src: "02-遊戲設計/storyboard-sample-1.png",
+    fadeIn: [240, 258],
+    fadeOut: [322, 330],
+    objectPosition: "center",
+  },
+  {
+    src: "02-遊戲設計/storyboard-sample-2.png",
+    fadeIn: [326, 334],
+    fadeOut: [406, 414],
+    objectPosition: "center",
+  },
+  {
+    src: "02-遊戲設計/storyboard-sample-3.png",
+    fadeIn: [410, 418],
+    fadeOut: [492, 516],
+    objectPosition: "center 18%",
+  },
+] as const;
 const CHECKLIST = [
   { label: "完整開始與結尾", icon: "endpoints", start: 1250 },
   { label: "情境連貫", icon: "continuity", start: 1300 },
@@ -52,160 +69,47 @@ const CHECKLIST = [
   { label: "夥伴看得懂", icon: "readable", start: 1400 },
 ] as const;
 
-const panelProgress = (frame: number, start: number) =>
-  interpolate(frame, [start, start + 34], [0, 1], {
-    ...clamp,
-    easing: SOFT_EASE,
-  });
-
-const StoryboardPanel: React.FC<{ index: number; progress: number }> = ({
-  index,
-  progress,
-}) => {
-  const marks = interpolate(progress, [0.52, 0.82], [0, 1], clamp);
-  const arrowOffset = interpolate(marks, [0, 1], [1, 0], clamp);
-
-  return (
-    <div
-      style={{
-        position: "relative",
-        width: 440,
-        height: 300,
-        opacity: progress,
-        transform: `translateY(${interpolate(progress, [0, 1], [28, 0])}px)`,
-      }}
-    >
-      <svg width="440" height="300" viewBox="0 0 440 300" aria-hidden="true">
-        <rect
-          x="4"
-          y="4"
-          width="432"
-          height="292"
-          rx="20"
-          fill={WHITE}
-          stroke={CARD_BORDER}
-          strokeWidth="4"
-          pathLength={1}
-          strokeDasharray={1}
-          strokeDashoffset={1 - progress}
-        />
-
-        <g opacity={marks} strokeLinecap="round" strokeLinejoin="round">
-          {index === 0 && (
-            <>
-              <path d="M55 222H238" stroke={TEXT_DARK} strokeWidth="8" />
-              <circle cx="112" cy="181" r="20" fill={WHITE} stroke={TEXT_DARK} strokeWidth="7" />
-              <path d="M112 202V220M91 220H133" stroke={TEXT_DARK} strokeWidth="7" />
-              <path d="M273 196H385V222H273Z" fill={NEUTRAL_100} stroke={SUBTLE} strokeWidth="5" />
-              <circle cx="338" cy="157" r="8" fill={YELLOW} />
-            </>
-          )}
-
-          {index === 1 && (
-            <>
-              <path d="M42 226H176M275 188H398" stroke={TEXT_DARK} strokeWidth="8" />
-              <circle cx="112" cy="185" r="19" fill={WHITE} stroke={TEXT_DARK} strokeWidth="7" />
-              <path d="M112 205V224" stroke={TEXT_DARK} strokeWidth="7" />
-              <path
-                d="M140 182C191 100 257 102 304 153"
-                fill="none"
-                stroke={YELLOW}
-                strokeWidth="8"
-                pathLength={1}
-                strokeDasharray={1}
-                strokeDashoffset={arrowOffset}
-              />
-              <path d="M286 142 310 158 282 166" fill="none" stroke={YELLOW} strokeWidth="8" />
-            </>
-          )}
-
-          {index === 2 && (
-            <>
-              <path d="M48 226H392" stroke={TEXT_DARK} strokeWidth="8" />
-              <circle cx="180" cy="185" r="19" fill={WHITE} stroke={TEXT_DARK} strokeWidth="7" />
-              <path d="M180 205V224" stroke={TEXT_DARK} strokeWidth="7" />
-              <path d="M302 86V226" stroke={SUBTLE} strokeWidth="7" />
-              <path d="M305 90H374L346 122 374 154H305Z" fill={YELLOW} />
-              <path
-                d="M218 176C245 154 266 151 292 165"
-                fill="none"
-                stroke={YELLOW}
-                strokeWidth="7"
-                pathLength={1}
-                strokeDasharray={1}
-                strokeDashoffset={arrowOffset}
-              />
-            </>
-          )}
-        </g>
-
-        <rect x="22" y="20" width="54" height="30" rx="15" fill={NEUTRAL_100} opacity={marks} />
-        <text
-          x="49"
-          y="42"
-          textAnchor="middle"
-          fontFamily={FONT}
-          fontSize="18"
-          fontWeight="800"
-          fill={SUBTLE}
-          opacity={marks}
-        >
-          {index + 1}
-        </text>
-      </svg>
-    </div>
-  );
-};
-
-type SampleCardProps = {
+type FullscreenStoryboardImageProps = {
   src: string;
-  progress: number;
-  left: number;
-  top: number;
-  width: number;
-  height: number;
-  rotate: number;
+  opacity: number;
+  scale: number;
   objectPosition?: string;
-  opacity?: number;
 };
 
-const SampleCard: React.FC<SampleCardProps> = ({
+const FullscreenStoryboardImage: React.FC<FullscreenStoryboardImageProps> = ({
   src,
-  progress,
-  left,
-  top,
-  width,
-  height,
-  rotate,
+  opacity,
+  scale,
   objectPosition = "center",
-  opacity = 1,
 }) => (
-  <div
-    style={{
-      position: "absolute",
-      left,
-      top,
-      width,
-      height,
-      overflow: "hidden",
-      borderRadius: 20,
-      border: `2px solid ${BORDER_LIGHT}`,
-      backgroundColor: WHITE,
-      boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
-      opacity: progress * opacity,
-      transform: `translateY(${interpolate(progress, [0, 1], [26, 0])}px) rotate(${rotate}deg) scale(${interpolate(progress, [0, 1], [0.96, 1])})`,
-    }}
-  >
+  <AbsoluteFill style={{ opacity, overflow: "hidden", backgroundColor: WHITE }}>
     <Img
       src={staticFile(src)}
       style={{
-        width: "100%",
-        height: "100%",
+        position: "absolute",
+        inset: -30,
+        width: "calc(100% + 60px)",
+        height: "calc(100% + 60px)",
         objectFit: "cover",
         objectPosition,
+        filter: "blur(22px)",
+        opacity: 0.18,
+        transform: `scale(${scale * 1.04})`,
       }}
     />
-  </div>
+    <Img
+      src={staticFile(src)}
+      style={{
+        position: "absolute",
+        inset: 0,
+        width: "100%",
+        height: "100%",
+        objectFit: "contain",
+        objectPosition,
+        transform: `scale(${scale})`,
+      }}
+    />
+  </AbsoluteFill>
 );
 
 type MemberAvatarProps = {
@@ -240,8 +144,22 @@ const MemberAvatar: React.FC<MemberAvatarProps> = ({
     }}
   >
     <svg width="132" height="132" viewBox="0 0 132 132" aria-hidden="true">
-      <circle cx="66" cy="66" r="62" fill={WHITE} stroke={color} strokeWidth="5" />
-      <circle cx="66" cy="47" r="20" fill={withAlpha(color, 0.16)} stroke={color} strokeWidth="5" />
+      <circle
+        cx="66"
+        cy="66"
+        r="62"
+        fill={WHITE}
+        stroke={color}
+        strokeWidth="5"
+      />
+      <circle
+        cx="66"
+        cy="47"
+        r="20"
+        fill={withAlpha(color, 0.16)}
+        stroke={color}
+        strokeWidth="5"
+      />
       <path
         d="M33 103C39 79 52 72 66 72C80 72 93 79 99 103"
         fill={withAlpha(color, 0.16)}
@@ -274,7 +192,12 @@ const ChecklistGlyph: React.FC<{
         {icon === "endpoints" && (
           <>
             <circle cx="19" cy="69" r="9" fill={color} />
-            <path d="M29 69H91" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
+            <path
+              d="M29 69H91"
+              pathLength={1}
+              strokeDasharray={1}
+              strokeDashoffset={draw}
+            />
             <path d="M94 18V77M96 20H116L107 31 116 42H96" />
           </>
         )}
@@ -298,7 +221,12 @@ const ChecklistGlyph: React.FC<{
             <circle cx="31" cy="34" r="13" />
             <circle cx="70" cy="34" r="13" />
             <path d="M10 73C14 56 21 51 31 51S48 56 52 73M49 73C53 56 60 51 70 51" />
-            <path d="m82 62 11 11 23-29" pathLength={1} strokeDasharray={1} strokeDashoffset={draw} />
+            <path
+              d="m82 62 11 11 23-29"
+              pathLength={1}
+              strokeDasharray={1}
+              strokeDashoffset={draw}
+            />
           </>
         )}
       </g>
@@ -319,7 +247,11 @@ const ChecklistCard: React.FC<ChecklistCardProps> = ({
   progress,
   accentProgress,
 }) => {
-  const color = interpolateColors(accentProgress, [0, 1], [CARD_BORDER, YELLOW]);
+  const color = interpolateColors(
+    accentProgress,
+    [0, 1],
+    [CARD_BORDER, YELLOW],
+  );
   const iconProgress = interpolate(progress, [0, 0.72], [0, 1], clamp);
   const textProgress = interpolate(progress, [0.16, 1], [0, 1], clamp);
 
@@ -364,54 +296,39 @@ export const Ch2Page7Storyboard: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const s18Out = interpolate(frame, [220, 252], [1, 0], clamp);
+  const s18Out = interpolate(frame, [214, 240], [1, 0], clamp);
   const introTitle = spring({
     frame,
     fps,
     config: { damping: 14, stiffness: 110 },
   });
-  const introSubtitle = interpolate(frame, [34, 62], [0, 1], {
-    ...clamp,
-    easing: EASE,
-  });
-  const introScale = interpolate(frame, [220, 252], [1, 0.94], clamp);
-
-  const s19In = interpolate(frame, [S19_START, S19_START + 24], [0, 1], clamp);
-  const s19Out = interpolate(frame, [500, 532], [1, 0], clamp);
-  const s19Opacity = s19In * s19Out;
-  const s19TitleOpacity = interpolate(frame, [252, 278], [0, 1], clamp);
-  const s19TitleY = interpolate(frame, [252, 278], [20, 0], {
+  const definitionOpacity = interpolate(frame, [36, 68], [0, 1], clamp);
+  const promptOpacity = interpolate(frame, [104, 130], [0, 1], clamp);
+  const promptY = interpolate(frame, [104, 130], [28, 0], {
     ...clamp,
     easing: SOFT_EASE,
-  });
-  const stampProgress = spring({
-    frame: frame - 414,
-    fps,
-    config: { damping: 11, stiffness: 150 },
   });
 
   const s20Opacity =
-    interpolate(frame, [S20_START, S20_START + 20], [0, 1], clamp) *
-    interpolate(frame, [700, 735], [1, 0], clamp);
-  const sample1Opacity =
-    interpolate(frame, [510, 530], [0, 1], clamp) *
-    interpolate(frame, [602, 628], [1, 0], clamp);
-  const sample3Opacity =
-    interpolate(frame, [606, 632], [0, 1], clamp) *
-    interpolate(frame, [700, 730], [1, 0], clamp);
-  const sample1Scale = interpolate(frame, [510, 628], [1.03, 1.08], clamp);
-  const sample3Scale = interpolate(frame, [606, 730], [1.03, 1.08], clamp);
-
-  const s21Out = interpolate(frame, [1180, 1210], [1, 0], clamp);
-  const s21Opacity = s21Out;
-  const boardTransition = interpolate(frame, [720, 758], [0, 1], {
+    interpolate(frame, [510, 534], [0, 1], clamp) *
+    interpolate(frame, [690, 720], [1, 0], clamp);
+  const conclusionMainOpacity = interpolate(frame, [548, 578], [0, 1], clamp);
+  const conclusionMainY = interpolate(frame, [548, 578], [22, 0], {
     ...clamp,
     easing: SOFT_EASE,
   });
-  const boardLeft = interpolate(boardTransition, [0, 1], [210, 650]);
-  const boardTop = interpolate(boardTransition, [0, 1], [160, 286]);
-  const boardWidth = interpolate(boardTransition, [0, 1], [1500, 620]);
-  const boardHeight = interpolate(boardTransition, [0, 1], [760, 350]);
+  const conclusionKeyOpacity = interpolate(frame, [602, 634], [0, 1], clamp);
+  const conclusionKeyY = interpolate(frame, [602, 634], [30, 0], {
+    ...clamp,
+    easing: SOFT_EASE,
+  });
+
+  const s21Out = interpolate(frame, [1180, 1210], [1, 0], clamp);
+  const s21Opacity = s21Out;
+  const boardEntrance = interpolate(frame, [720, 758], [0, 1], {
+    ...clamp,
+    easing: SOFT_EASE,
+  });
   const avatarProgress = AVATAR_START.map((start) =>
     spring({
       frame: frame - start,
@@ -446,7 +363,12 @@ export const Ch2Page7Storyboard: React.FC = () => {
     config: { damping: 14, stiffness: 110 },
   });
 
-  const s22Opacity = interpolate(frame, [S22_START, S22_START + 24], [0, 1], clamp);
+  const s22Opacity = interpolate(
+    frame,
+    [S22_START, S22_START + 24],
+    [0, 1],
+    clamp,
+  );
   const s22TitleProgress = spring({
     frame: frame - S22_START,
     fps,
@@ -454,185 +376,125 @@ export const Ch2Page7Storyboard: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT, overflow: "hidden" }}>
-      {/* S18：概念與三格示意分鏡 */}
-      {frame < 252 && (
+    <AbsoluteFill
+      style={{ backgroundColor: WHITE, fontFamily: FONT, overflow: "hidden" }}
+    >
+      {/* S18：Storyboard 定義與案例提示 */}
+      {frame < S19_START && (
         <AbsoluteFill
           style={{
             opacity: s18Out,
+            justifyContent: "center",
             alignItems: "center",
-            transform: `scale(${introScale})`,
           }}
         >
           <div
             style={{
-              position: "absolute",
-              top: 112,
-              fontSize: 76,
+              fontSize: 104,
               fontWeight: 800,
-              letterSpacing: 5,
+              letterSpacing: 8,
               color: TEXT_DARK,
               opacity: introTitle,
-              transform: `translateY(${interpolate(introTitle, [0, 1], [20, 0])}px)`,
-              whiteSpace: "nowrap",
+              transform: `scale(${interpolate(introTitle, [0, 1], [0.92, 1])})`,
             }}
           >
-            <span style={{ color: YELLOW }}>Storyboard</span> 分鏡圖
+            Storyboard
           </div>
 
           <div
             style={{
-              position: "absolute",
-              top: 222,
-              fontSize: 42,
+              marginTop: 56,
+              maxWidth: 1500,
+              textAlign: "center",
+              fontSize: 48,
+              fontWeight: 500,
+              lineHeight: 1.55,
+              letterSpacing: 2,
+              color: SUBTLE,
+              opacity: definitionOpacity,
+            }}
+          >
+            Storyboard 是用
+            <span style={{ color: YELLOW, fontWeight: 800 }}>連續畫面</span>
+            ，呈現玩家在遊戲中經歷的工具
+          </div>
+
+          <div
+            style={{
+              marginTop: 58,
+              padding: "18px 44px",
+              borderRadius: 999,
+              backgroundColor: CHIP_BG,
+              color: TEXT_DARK,
+              fontSize: 36,
+              fontWeight: 700,
+              letterSpacing: 2,
+              opacity: promptOpacity,
+              transform: `translateY(${promptY}px)`,
+            }}
+          >
+            一起看幾個案例
+          </div>
+        </AbsoluteFill>
+      )}
+
+      {/* S19：三張真實分鏡案例滿版播放 */}
+      {frame >= S19_START && frame < 516 && (
+        <AbsoluteFill>
+          {STORYBOARD_SAMPLES.map((sample) => (
+            <FullscreenStoryboardImage
+              key={sample.src}
+              src={sample.src}
+              opacity={
+                interpolate(frame, sample.fadeIn, [0, 1], clamp) *
+                interpolate(frame, sample.fadeOut, [1, 0], clamp)
+              }
+              scale={interpolate(
+                frame,
+                [sample.fadeIn[0], sample.fadeOut[1]],
+                [1, 1.025],
+                clamp,
+              )}
+              objectPosition={sample.objectPosition}
+            />
+          ))}
+        </AbsoluteFill>
+      )}
+
+      {/* S20：形式多元，但夥伴看得懂最重要 */}
+      {frame >= S20_START && frame < S21_START && (
+        <AbsoluteFill
+          style={{
+            opacity: s20Opacity,
+            justifyContent: "center",
+            alignItems: "center",
+            backgroundColor: WHITE,
+          }}
+        >
+          <div
+            style={{
+              fontSize: 58,
               fontWeight: 700,
               letterSpacing: 4,
-              color: SUBTLE,
-              opacity: introSubtitle,
-            }}
-          >
-            演出玩法・關卡設計
-          </div>
-
-          <div
-            style={{
-              position: "absolute",
-              top: 390,
-              display: "flex",
-              gap: 50,
-            }}
-          >
-            {PANEL_START.map((start, index) => (
-              <StoryboardPanel
-                key={start}
-                index={index}
-                progress={panelProgress(frame, start)}
-              />
-            ))}
-          </div>
-        </AbsoluteFill>
-      )}
-
-      {/* S19：真實分鏡素材牆 */}
-      {frame >= S19_START && frame < 532 && (
-        <AbsoluteFill style={{ opacity: s19Opacity }}>
-          <div
-            style={{
-              position: "absolute",
-              left: 960,
-              top: 105,
-              transform: `translate(-50%, ${s19TitleY}px)`,
-              fontSize: 64,
-              fontWeight: 800,
-              letterSpacing: 5,
               color: TEXT_DARK,
-              opacity: s19TitleOpacity,
-              whiteSpace: "nowrap",
+              opacity: conclusionMainOpacity,
+              transform: `translateY(${conclusionMainY}px)`,
             }}
           >
-            形式多元・<span style={{ color: YELLOW }}>無固定格式</span>
+            Storyboard 重點在於
           </div>
-
-          <SampleCard
-            src="02-遊戲設計/storyboard-sample-1.png"
-            progress={panelProgress(frame, SAMPLE_START[0])}
-            left={150}
-            top={300}
-            width={540}
-            height={510}
-            rotate={-2}
-            objectPosition="35% center"
-          />
-          <SampleCard
-            src="02-遊戲設計/storyboard-sample-2.png"
-            progress={panelProgress(frame, SAMPLE_START[1])}
-            left={690}
-            top={265}
-            width={540}
-            height={510}
-            rotate={1.5}
-          />
-          <SampleCard
-            src="02-遊戲設計/storyboard-sample-3.png"
-            progress={panelProgress(frame, SAMPLE_START[2])}
-            left={1230}
-            top={300}
-            width={540}
-            height={510}
-            rotate={-1}
-            objectPosition="50% 18%"
-          />
-
           <div
             style={{
-              position: "absolute",
-              left: 1588,
-              top: 830,
-              width: 260,
-              height: 150,
-              border: `6px solid ${YELLOW}`,
-              borderRadius: "50%",
-              color: YELLOW,
-              backgroundColor: withAlpha(WHITE, 0.94),
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              fontSize: 35,
+              marginTop: 48,
+              fontSize: 84,
               fontWeight: 900,
-              letterSpacing: 3,
-              lineHeight: 1.25,
-              opacity: stampProgress,
-              transform: `translate(-50%, -50%) rotate(-8deg) scale(${interpolate(stampProgress, [0, 1], [1.35, 1])})`,
-              boxShadow: `0 12px 32px ${withAlpha(YELLOW, 0.14)}`,
+              letterSpacing: 6,
+              color: YELLOW,
+              opacity: conclusionKeyOpacity,
+              transform: `translateY(${conclusionKeyY}px)`,
             }}
           >
-            看得懂
-            <br />
-            最重要
-          </div>
-        </AbsoluteFill>
-      )}
-
-      {/* S20：兩張差異最大的真實分鏡 */}
-      {frame >= S20_START && frame < 735 && (
-        <AbsoluteFill style={{ opacity: s20Opacity, alignItems: "center", justifyContent: "center" }}>
-          <div
-            style={{
-              position: "relative",
-              width: 1500,
-              height: 760,
-              overflow: "hidden",
-              borderRadius: 28,
-              border: `3px solid ${BORDER_LIGHT}`,
-              backgroundColor: NEUTRAL_100,
-              boxShadow: `0 24px 55px ${withAlpha(TEXT_DARK, 0.12)}`,
-            }}
-          >
-            <Img
-              src={staticFile("02-遊戲設計/storyboard-sample-1.png")}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "35% 35%",
-                opacity: sample1Opacity,
-                transform: `scale(${sample1Scale})`,
-              }}
-            />
-            <Img
-              src={staticFile("02-遊戲設計/storyboard-sample-3.png")}
-              style={{
-                position: "absolute",
-                width: "100%",
-                height: "100%",
-                objectFit: "cover",
-                objectPosition: "50% 18%",
-                opacity: sample3Opacity,
-                transform: `scale(${sample3Scale})`,
-              }}
-            />
+            其他夥伴要看得懂
           </div>
         </AbsoluteFill>
       )}
@@ -643,15 +505,21 @@ export const Ch2Page7Storyboard: React.FC = () => {
           <div
             style={{
               position: "absolute",
-              left: boardLeft,
-              top: boardTop,
-              width: boardWidth,
-              height: boardHeight,
+              left: 650,
+              top: 286,
+              width: 620,
+              height: 350,
               overflow: "hidden",
               borderRadius: 24,
               border: `3px solid ${BORDER_LIGHT}`,
               backgroundColor: WHITE,
               boxShadow: `0 20px 50px ${withAlpha(TEXT_DARK, 0.12)}`,
+              opacity: boardEntrance,
+              transform: `translateY(${interpolate(
+                boardEntrance,
+                [0, 1],
+                [28, 0],
+              )}px) scale(${interpolate(boardEntrance, [0, 1], [0.94, 1])})`,
               zIndex: 2,
             }}
           >
@@ -662,7 +530,6 @@ export const Ch2Page7Storyboard: React.FC = () => {
                 height: "100%",
                 objectFit: "cover",
                 objectPosition: "50% 18%",
-                transform: `scale(${interpolate(boardTransition, [0, 1], [1.08, 1])})`,
               }}
             />
           </div>
@@ -762,7 +629,14 @@ export const Ch2Page7Storyboard: React.FC = () => {
             }}
           >
             <svg width="74" height="74" viewBox="0 0 74 74" aria-hidden="true">
-              <circle cx="37" cy="37" r="32" fill={withAlpha(YELLOW, 0.12)} stroke={YELLOW} strokeWidth="4" />
+              <circle
+                cx="37"
+                cy="37"
+                r="32"
+                fill={withAlpha(YELLOW, 0.12)}
+                stroke={YELLOW}
+                strokeWidth="4"
+              />
               <path
                 d="m21 38 11 11 22-25"
                 fill="none"
@@ -821,8 +695,21 @@ export const Ch2Page7Storyboard: React.FC = () => {
             }}
           >
             <svg width="78" height="62" viewBox="0 0 78 62" aria-hidden="true">
-              <rect x="3" y="3" width="72" height="56" rx="8" fill={WHITE} stroke={YELLOW} strokeWidth="5" />
-              <path d="M27 4V58M51 4V58M4 30H74" stroke={YELLOW} strokeWidth="4" />
+              <rect
+                x="3"
+                y="3"
+                width="72"
+                height="56"
+                rx="8"
+                fill={WHITE}
+                stroke={YELLOW}
+                strokeWidth="5"
+              />
+              <path
+                d="M27 4V58M51 4V58M4 30H74"
+                stroke={YELLOW}
+                strokeWidth="4"
+              />
             </svg>
             <div
               style={{
@@ -856,7 +743,12 @@ export const Ch2Page7Storyboard: React.FC = () => {
                   ? progress
                   : frame < item.start + 42
                     ? progress
-                    : interpolate(frame, [item.start + 42, item.start + 70], [1, 0], clamp);
+                    : interpolate(
+                        frame,
+                        [item.start + 42, item.start + 70],
+                        [1, 0],
+                        clamp,
+                      );
 
               return (
                 <ChecklistCard
