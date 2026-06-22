@@ -8,3 +8,6 @@ out
 
 # Chapter 2 source clips are kept locally and replaced during editing.
 /public/02-遊戲設計/*.mp4
+
+# Transient dev-server runtime logs.
+.dev-server.*.log
