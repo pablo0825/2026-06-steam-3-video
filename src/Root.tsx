@@ -22,6 +22,7 @@ import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCelest
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1Opening } from "./scenes/03-程式實作/Ch3Page1Opening";
+import { Ch3Page2UserStory } from "./scenes/03-程式實作/Ch3Page2UserStory";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -222,6 +223,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch3-Page1-Opening"
         component={Ch3Page1Opening}
         durationInFrames={780}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page2-UserStory"
+        component={Ch3Page2UserStory}
+        durationInFrames={720}
         fps={30}
         width={1920}
         height={1080}
