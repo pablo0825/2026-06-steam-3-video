@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -32,8 +31,6 @@ const A_OUT = [332, 356] as const; // S04 淡出
 // S04 內部節奏
 const DEF_START = 44; // 定義句淡入
 
-const EASE = Easing.bezier(0.4, 0, 0.2, 1);
-
 // ── S05 節奏與卡片 ──
 const B_IN = [356, 380] as const; // S05 淡入
 const STORY_CARDS = [
@@ -43,8 +40,7 @@ const STORY_CARDS = [
 ] as const;
 const CARD_FIRST = 380; // 第一張卡進場
 const CARD_STEP = 42; // 卡片間隔
-const SHRINK = [612, 648] as const; // 三卡縮小上移
-const TIP2_IN = [646, 678] as const; // 末尾提示淡入
+const TIP2_IN = [512, 544] as const; // 三卡進場後，藍色提示上升淡入
 
 export const Ch3Page2UserStory: React.FC = () => {
   const frame = useCurrentFrame();
@@ -61,11 +57,9 @@ export const Ch3Page2UserStory: React.FC = () => {
   const aOpacity = interpolate(frame, A_OUT, [1, 0], clamp);
 
   // ── S05 ──
-  const ease = { ...clamp, easing: EASE };
   const bOpacity = interpolate(frame, B_IN, [0, 1], clamp);
-  const groupScale = interpolate(frame, SHRINK, [1, 0.86], ease);
-  const groupRise = interpolate(frame, SHRINK, [0, -130], ease);
   const tip2 = interpolate(frame, TIP2_IN, [0, 1], clamp);
+  const tip2Rise = interpolate(frame, TIP2_IN, [18, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -121,7 +115,6 @@ export const Ch3Page2UserStory: React.FC = () => {
             style={{
               display: "flex",
               gap: 48,
-              transform: `translateY(${groupRise}px) scale(${groupScale})`,
             }}
           >
             {STORY_CARDS.map((c, i) => {
@@ -148,7 +141,18 @@ export const Ch3Page2UserStory: React.FC = () => {
                     gap: 18,
                   }}
                 >
-                  <div style={{ fontSize: 84 }}>{c.icon}</div>
+                  <div
+                    style={{
+                      height: 100,
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      fontSize: 84,
+                      lineHeight: 1,
+                    }}
+                  >
+                    {c.icon}
+                  </div>
                   <div
                     style={{
                       fontSize: 32,
@@ -182,6 +186,7 @@ export const Ch3Page2UserStory: React.FC = () => {
               letterSpacing: 2,
               color: BLUE,
               opacity: tip2,
+              transform: `translateY(${tip2Rise}px)`,
             }}
           >
             先看案例，再一起寫 →
