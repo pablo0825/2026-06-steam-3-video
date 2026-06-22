@@ -30,6 +30,49 @@ const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 
 const LOGO = staticFile("知點LOGO_FIN-03.png"); // 共用品牌素材，置於 public 根目錄
 
+// S02 兩張重點卡：parts 內 hl=true 的片段以黃色強調（僅 User Story／Spec／AI）
+type LinePart = { text: string; hl: boolean };
+
+const FOCUS_CARDS: { badge: string; icon: string; parts: LinePart[] }[] = [
+  {
+    badge: "①",
+    icon: "📝",
+    parts: [
+      { text: "根據 Storyboard 撰寫 ", hl: false },
+      { text: "User Story", hl: true },
+    ],
+  },
+  {
+    badge: "②",
+    icon: "🤖",
+    parts: [
+      { text: "基於 ", hl: false },
+      { text: "Spec", hl: true },
+      { text: " 與 ", hl: false },
+      { text: "AI", hl: true },
+      { text: " 協作開發遊戲", hl: false },
+    ],
+  },
+];
+
+const HiliteLine: React.FC<{ parts: LinePart[] }> = ({ parts }) => (
+  <div
+    style={{
+      fontSize: 40,
+      fontWeight: 800,
+      letterSpacing: 1,
+      lineHeight: 1.4,
+      color: TEXT_DARK,
+    }}
+  >
+    {parts.map((p, i) => (
+      <span key={i} style={{ color: p.hl ? YELLOW : TEXT_DARK }}>
+        {p.text}
+      </span>
+    ))}
+  </div>
+);
+
 // ── 三段節奏（S01：0–210｜S02：210–450｜S03：450–780）──
 const A_OUT = [188, 210] as const; // S01 淡出
 const B_IN = [210, 230] as const; // S02 淡入
@@ -90,6 +133,27 @@ export const Ch3Page1Opening: React.FC = () => {
   const aOpacity = interpolate(frame, A_OUT, [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
+  });
+
+  // ── S02：本次重點 ──────────────────────────────
+  const bOpacity =
+    interpolate(frame, B_IN, [0, 1], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    }) *
+    interpolate(frame, B_OUT, [1, 0], {
+      extrapolateLeft: "clamp",
+      extrapolateRight: "clamp",
+    });
+  const card1 = spring({
+    frame: frame - 238,
+    fps,
+    config: { damping: 15, stiffness: 120 },
+  });
+  const card2 = spring({
+    frame: frame - 270,
+    fps,
+    config: { damping: 15, stiffness: 120 },
   });
 
   return (
@@ -162,7 +226,64 @@ export const Ch3Page1Opening: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* ── S02：本次重點 ── (added in Task 2) */}
+      {/* ── S02：本次重點 ── */}
+      {frame >= 208 && frame < 455 && (
+        <AbsoluteFill
+          style={{
+            opacity: bOpacity,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 64,
+              fontWeight: 800,
+              letterSpacing: 6,
+              color: TEXT_DARK,
+              marginBottom: 64,
+            }}
+          >
+            本次重點
+          </div>
+          <div style={{ display: "flex", flexDirection: "column", gap: 36 }}>
+            {FOCUS_CARDS.map((c, i) => {
+              const s = i === 0 ? card1 : card2;
+              return (
+                <div
+                  key={c.badge}
+                  style={{
+                    width: 1080,
+                    padding: "40px 56px",
+                    background: WHITE,
+                    border: `2px solid ${CARD_BORDER}`,
+                    borderRadius: 28,
+                    boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
+                    opacity: s,
+                    transform: `translateX(${interpolate(s, [0, 1], [-56, 0])}px)`,
+                    display: "flex",
+                    alignItems: "center",
+                    gap: 36,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 48,
+                      fontWeight: 800,
+                      color: YELLOW,
+                      minWidth: 56,
+                    }}
+                  >
+                    {c.badge}
+                  </div>
+                  <div style={{ fontSize: 72 }}>{c.icon}</div>
+                  <HiliteLine parts={c.parts} />
+                </div>
+              );
+            })}
+          </div>
+        </AbsoluteFill>
+      )}
 
       {/* ── S03：知識導覽 ── (added in Task 3) */}
     </AbsoluteFill>
