@@ -16,7 +16,7 @@
 | 頁 | Composition ID | 對應鏡頭 | 內容 | 素材需求 | 狀態 |
 |---|---|---|---|---|---|
 | 1 | `Ch3-Page1-Opening` | S01–S03 | 開場、本次重點、知識導覽 | 知點 logo、SVG 圖示 | ✅ 已完成 |
-| 2 | `Ch3-Page2-UserStory` | S04–S05 | User Story 定義與格式 | SVG 圖示 | ⏳ 待製作 |
+| 2 | `Ch3-Page2-UserStory` | S04–S05 | User Story 定義與格式 | SVG 圖示 | ✅ 已完成 |
 | 3 | `Ch3-Page3-RhythmDoctor` | S06–S07 | Rhythm Doctor 影片與 User Story 範例 | 遊戲影片、透明 Overlay | ⏳ 待製作 |
 | 4 | `Ch3-Page4-Context` | S08–S10 | Context、記憶限制與書櫃比喻 | 書櫃圖片或重製插圖 | ⏳ 待製作 |
 | 5 | `Ch3-Page5-Agents` | S11–S13 | `AGENTS.md` 定義與操作示範 | Codex 螢幕錄影 | ⏳ 待製作 |
