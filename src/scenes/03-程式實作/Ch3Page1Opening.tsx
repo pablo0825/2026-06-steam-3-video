@@ -30,6 +30,12 @@ const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 
 const LOGO = staticFile("知點LOGO_FIN-03.png"); // 共用品牌素材，置於 public 根目錄
 
+// S03 四個知識標籤逐一彈入、僅「User Story」高亮帶入下一頁
+const TAGS = ["User Story", "Context", "AGENTS.md", "Spec"] as const;
+const TAG_STEP = 24; // 每個標籤間隔
+const TAG_FIRST = 488;
+const HILITE = [660, 692] as const; // 「User Story」高亮
+
 // S02 兩張重點卡：parts 內 hl=true 的片段以黃色強調（僅 User Story／Spec／AI）
 type LinePart = { text: string; hl: boolean };
 
@@ -154,6 +160,16 @@ export const Ch3Page1Opening: React.FC = () => {
     frame: frame - 270,
     fps,
     config: { damping: 15, stiffness: 120 },
+  });
+
+  // ── S03：知識導覽 ──────────────────────────────
+  const cOpacity = interpolate(frame, C_IN, [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
+  });
+  const hilite = interpolate(frame, HILITE, [0, 1], {
+    extrapolateLeft: "clamp",
+    extrapolateRight: "clamp",
   });
 
   return (
@@ -285,7 +301,75 @@ export const Ch3Page1Opening: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* ── S03：知識導覽 ── (added in Task 3) */}
+      {/* ── S03：知識導覽 ── */}
+      {frame >= 448 && (
+        <AbsoluteFill
+          style={{
+            opacity: cOpacity,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 46,
+              fontWeight: 600,
+              letterSpacing: 4,
+              color: SUBTLE,
+              marginBottom: 56,
+            }}
+          >
+            先認識幾個重要觀念
+          </div>
+          <div style={{ display: "flex", gap: 40 }}>
+            {TAGS.map((tag, i) => {
+              const inSpring = spring({
+                frame: frame - (TAG_FIRST + i * TAG_STEP),
+                fps,
+                config: { damping: 15, stiffness: 130 },
+              });
+              const isFirst = i === 0;
+              const hi = isFirst ? hilite : 0; // 僅「User Story」高亮
+              const dim = isFirst ? 0 : hilite; // 其餘標籤被淡化
+              return (
+                <div
+                  key={tag}
+                  style={{
+                    fontSize: 48,
+                    fontWeight: 800,
+                    letterSpacing: 3,
+                    color: interpolateColors(hi, [0, 1], [TEXT_DARK, WHITE]),
+                    background: interpolateColors(hi, [0, 1], [CHIP_BG, BLUE]),
+                    padding: "26px 48px",
+                    borderRadius: 999,
+                    opacity: inSpring * interpolate(dim, [0, 1], [1, 0.35]),
+                    transform: `translateY(${interpolate(inSpring, [0, 1], [40, 0])}px) scale(${1 + hi * 0.06})`,
+                    boxShadow:
+                      hi > 0
+                        ? `0 14px 32px ${withAlpha(BLUE, 0.22 * hi)}`
+                        : "none",
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {tag}
+                </div>
+              );
+            })}
+          </div>
+          <div
+            style={{
+              marginTop: 48,
+              fontSize: 32,
+              fontWeight: 600,
+              letterSpacing: 2,
+              color: BLUE,
+              opacity: hilite,
+            }}
+          >
+            先從「User Story」開始 →
+          </div>
+        </AbsoluteFill>
+      )}
     </AbsoluteFill>
   );
 };
