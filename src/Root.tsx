@@ -1,5 +1,5 @@
 import "./index.css";
-import { Composition } from "remotion";
+import {CalculateMetadataFunction, Composition} from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
 import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
 import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
@@ -14,11 +14,21 @@ import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 import { Ch2Page1Opening } from "./scenes/02-遊戲設計/Ch2Page1Opening";
 import { Ch2Page2Constraint } from "./scenes/02-遊戲設計/Ch2Page2Constraint";
 import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
+import {Ch2Page3RhythmDoctorOverlay} from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
 import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
+import {Ch2Page4CorePlayOverlay} from "./scenes/02-遊戲設計/Ch2Page4CorePlayOverlay";
 import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
 import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { FullVideo } from "./FullVideo";
+
+const calculateAlphaOverlayMetadata: CalculateMetadataFunction<Record<string, unknown>> =
+  async () => ({
+    defaultCodec: "prores",
+    defaultVideoImageFormat: "png",
+    defaultPixelFormat: "yuva444p10le",
+    defaultProResProfile: "4444",
+  });
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -146,12 +156,30 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
+        id="Ch2-Page3-RhythmDoctor-Overlay"
+        component={Ch2Page3RhythmDoctorOverlay}
+        durationInFrames={740}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
         id="Ch2-Page4-CorePlay"
         component={Ch2Page4CorePlay}
         durationInFrames={700}
         fps={30}
         width={1920}
         height={1080}
+      />
+      <Composition
+        id="Ch2-Page4-CorePlay-Overlay"
+        component={Ch2Page4CorePlayOverlay}
+        durationInFrames={700}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
       />
       <Composition
         id="Ch2-Page5-CoreLoop"
