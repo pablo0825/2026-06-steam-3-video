@@ -23,6 +23,8 @@ import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard"
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1Opening } from "./scenes/03-程式實作/Ch3Page1Opening";
 import { Ch3Page2UserStory } from "./scenes/03-程式實作/Ch3Page2UserStory";
+import { Ch3Page3RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3RhythmDoctor";
+import { Ch3Page3RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -234,6 +236,23 @@ export const RemotionRoot: React.FC = () => {
         fps={30}
         width={1920}
         height={1080}
+      />
+      <Composition
+        id="Ch3-Page3-RhythmDoctor"
+        component={Ch3Page3RhythmDoctor}
+        durationInFrames={840}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page3-RhythmDoctor-Overlay"
+        component={Ch3Page3RhythmDoctorOverlay}
+        durationInFrames={840}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
       />
     </>
   );
