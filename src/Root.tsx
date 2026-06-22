@@ -1,5 +1,5 @@
 import "./index.css";
-import {CalculateMetadataFunction, Composition} from "remotion";
+import { CalculateMetadataFunction, Composition } from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
 import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
 import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
@@ -14,22 +14,24 @@ import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 import { Ch2Page1Opening } from "./scenes/02-遊戲設計/Ch2Page1Opening";
 import { Ch2Page2Constraint } from "./scenes/02-遊戲設計/Ch2Page2Constraint";
 import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
-import {Ch2Page3RhythmDoctorOverlay} from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
+import { Ch2Page3RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
 import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
-import {Ch2Page4CorePlayOverlay} from "./scenes/02-遊戲設計/Ch2Page4CorePlayOverlay";
+import { Ch2Page4CorePlayOverlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlayOverlay";
 import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
 import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
+import { Ch3Page1Opening } from "./scenes/03-程式實作/Ch3Page1Opening";
 import { FullVideo } from "./FullVideo";
 
-const calculateAlphaOverlayMetadata: CalculateMetadataFunction<Record<string, unknown>> =
-  async () => ({
-    defaultCodec: "prores",
-    defaultVideoImageFormat: "png",
-    defaultPixelFormat: "yuva444p10le",
-    defaultProResProfile: "4444",
-  });
+const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
+  Record<string, unknown>
+> = async () => ({
+  defaultCodec: "prores",
+  defaultVideoImageFormat: "png",
+  defaultPixelFormat: "yuva444p10le",
+  defaultProResProfile: "4444",
+});
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -210,6 +212,16 @@ export const RemotionRoot: React.FC = () => {
         id="Ch2-Page10-Ending"
         component={Ch2Page10Ending}
         durationInFrames={690}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ── 第 3 集・程式實作 ── */}
+      <Composition
+        id="Ch3-Page1-Opening"
+        component={Ch3Page1Opening}
+        durationInFrames={780}
         fps={30}
         width={1920}
         height={1080}
