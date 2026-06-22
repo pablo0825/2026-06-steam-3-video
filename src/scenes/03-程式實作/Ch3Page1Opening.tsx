@@ -108,7 +108,7 @@ export const Ch3Page1Opening: React.FC = () => {
               }),
             }}
           >
-            <Img src={LOGO} style={{ width: logoW, height: "auto" }} from={-102} />
+            <Img src={LOGO} style={{ width: logoW, height: "auto" }} />
           </div>
 
           {frame >= TITLE_START && (
