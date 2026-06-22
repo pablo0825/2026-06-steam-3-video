@@ -39,9 +39,8 @@ const HILITE = [660, 692] as const; // 「User Story」高亮
 // S02 兩張重點卡：parts 內 hl=true 的片段以黃色強調（僅 User Story／Spec／AI）
 type LinePart = { text: string; hl: boolean };
 
-const FOCUS_CARDS: { badge: string; icon: string; parts: LinePart[] }[] = [
+const FOCUS_CARDS: { icon: string; parts: LinePart[] }[] = [
   {
-    badge: "①",
     icon: "📝",
     parts: [
       { text: "根據 Storyboard 撰寫 ", hl: false },
@@ -49,7 +48,6 @@ const FOCUS_CARDS: { badge: string; icon: string; parts: LinePart[] }[] = [
     ],
   },
   {
-    badge: "②",
     icon: "🤖",
     parts: [
       { text: "基於 ", hl: false },
@@ -267,7 +265,7 @@ export const Ch3Page1Opening: React.FC = () => {
               const s = i === 0 ? card1 : card2;
               return (
                 <div
-                  key={c.badge}
+                  key={c.icon}
                   style={{
                     width: 1080,
                     padding: "40px 56px",
@@ -282,16 +280,6 @@ export const Ch3Page1Opening: React.FC = () => {
                     gap: 36,
                   }}
                 >
-                  <div
-                    style={{
-                      fontSize: 48,
-                      fontWeight: 800,
-                      color: YELLOW,
-                      minWidth: 56,
-                    }}
-                  >
-                    {c.badge}
-                  </div>
                   <div style={{ fontSize: 72 }}>{c.icon}</div>
                   <HiliteLine parts={c.parts} />
                 </div>
