@@ -189,7 +189,7 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
           style={{
             position: "absolute",
             left: 960,
-            top: 104,
+            top: 164,
             transform: `translateX(-50%) translateY(${interpolate(headingIn, [0, 1], [16, 0])}px)`,
             opacity: headingIn * infoOut,
             fontSize: 48,
@@ -210,7 +210,7 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
           style={{
             position: "absolute",
             left: 960,
-            top: 196,
+            top: 256,
             transform: "translateX(-50%)",
             width: 1080,
             opacity: headingIn * infoOut,
