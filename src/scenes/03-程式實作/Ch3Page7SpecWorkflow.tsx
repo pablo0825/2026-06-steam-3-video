@@ -110,8 +110,8 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
           stroke={YELLOW}
           strokeWidth="6"
           strokeLinecap="round"
-          strokeDasharray="14 12"
           pathLength="1"
+          strokeDasharray="1"
           strokeDashoffset={1 - fbDraw}
         />
         <g
