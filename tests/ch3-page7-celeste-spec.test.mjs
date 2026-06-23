@@ -72,7 +72,7 @@ test("Overlay 根層保持透明（不可有不透明底色，否則破壞 alpha
   assert.match(overlay, /<AbsoluteFill style=\{\{ fontFamily: FONT \}\}>/);
 });
 
-test("S18 前半呈現一功能一 Spec 的正例與糾結反例", async () => {
+test("S18 前半以左右對比呈現「一功能一份」正例與「混在一份」反例", async () => {
   const perFeature = await read("Ch3Page7SpecPerFeature.tsx");
   assert.match(perFeature, /一個功能，一份 Spec/);
   // 三個功能
@@ -84,10 +84,14 @@ test("S18 前半呈現一功能一 Spec 的正例與糾結反例", async () => {
   assert.match(perFeature, /dash-spec\.md/);
   assert.match(perFeature, /climb-spec\.md/);
   assert.match(perFeature, /all-spec\.md/);
-  // 反例震動
-  assert.match(perFeature, /const shake =/);
-  // 結論
-  assert.match(perFeature, /一個功能 → 一份 Spec/);
+  // ✓ 正例（綠）／ ✗ 反例（紅）判定
+  assert.match(perFeature, /✓/);
+  assert.match(perFeature, /✗/);
+  assert.match(perFeature, /GREEN/);
+  assert.match(perFeature, /\bRED\b/);
+  // 已移除震動與底部結論
+  assert.doesNotMatch(perFeature, /const shake =/);
+  assert.doesNotMatch(perFeature, /一個功能 → 一份 Spec/);
   // 白底
   assert.match(perFeature, /backgroundColor: WHITE/);
 });
