@@ -26,7 +26,7 @@
 | 9 | `Ch3-Page9-SpecBuild` | S20 | User Story、Spec、Plan 與 AI 實作 | Unity、Codex 螢幕錄影 | ⏳ 待錄影 |
 | 10 | `Ch3-Page10-SpecValidation` | S21 | 依驗收項目手動驗證 | Unity 螢幕錄影 | ⏳ 待錄影 |
 | 11 | `Ch3-Page11-UpdateFeature` | S22 | 更新舊功能的文件處理方式 | SVG 文件卡 | ⏳ 待製作 |
-| 12 | `Ch3-Page12-Fundamentals` | S23 | 程式與 Unity 基本功提醒 | SVG 圖示 | ✅ 已完成 |
+| 12 | `Ch3-Page12-Fundamentals` | S23 | 程式與 Unity 基本功提醒 | SVG 圖示 | 🔧 微調中 |
 | 13 | `Ch3-Page13-Ending` | S24 | 感謝與收尾 | 知點 logo | ⏳ 待製作 |
 
 > 場景檔建議放在 `src/scenes/03-程式實作/`，素材建議放在 `public/03-程式實作/`。
