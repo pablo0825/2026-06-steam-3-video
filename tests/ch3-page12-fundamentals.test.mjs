@@ -27,3 +27,21 @@ test("Root 註冊 Ch3-Page12-Fundamentals（315 frame）", async () => {
     /component=\{Ch3Page12Fundamentals\}[\s\S]*?durationInFrames=\{315\}/,
   );
 });
+
+test("S23 結尾：程式碼／Unity 匯入放大鏡並高亮，結論基本功 × AI 協作", async () => {
+  const page = await read("Ch3Page12Fundamentals.tsx");
+  // 三個圖示的標籤
+  assert.match(page, /程式語法/);
+  assert.match(page, />Unity</);
+  assert.match(page, /找到問題/);
+  // 放大鏡（圓 + 握把）
+  assert.match(page, /<circle/);
+  // 匯入與高亮時間軸
+  assert.match(page, /const merge =/);
+  assert.match(page, /const magHi =/);
+  // 結論
+  assert.match(page, /基本功/);
+  assert.match(page, />AI</);
+  assert.match(page, /協作/);
+  assert.match(page, /×/);
+});
