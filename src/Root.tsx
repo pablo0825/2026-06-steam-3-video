@@ -31,6 +31,7 @@ import { Ch3Page5AgentsDemo } from "./scenes/03-程式實作/Ch3Page5AgentsDemo"
 import { Ch3Page6Spec } from "./scenes/03-程式實作/Ch3Page6Spec";
 import { Ch3Page7CelesteSpec } from "./scenes/03-程式實作/Ch3Page7CelesteSpec";
 import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7CelesteSpecOverlay";
+import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -308,6 +309,14 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page7-SpecPractice"
+        component={Ch3Page7SpecPractice}
+        durationInFrames={720}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );

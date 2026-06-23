@@ -106,3 +106,18 @@ test("S18 後半流程圖含五節點、回饋箭頭與開始實作轉場", asyn
   // 白底
   assert.match(wf, /backgroundColor: WHITE/);
 });
+
+test("S18 容器以 Sequence 串接 PerFeature(330) 與 Workflow(390)", async () => {
+  const practice = await read("Ch3Page7SpecPractice.tsx");
+  assert.match(practice, /Ch3Page7SpecPerFeature/);
+  assert.match(practice, /Ch3Page7SpecWorkflow/);
+  assert.match(practice, /durationInFrames=\{330\}/);
+  assert.match(practice, /from=\{330\}\s+durationInFrames=\{390\}/);
+  assert.match(practice, /<AbsoluteFill style=\{\{ backgroundColor: WHITE \}\}>/);
+});
+
+test("Root 註冊 Ch3-Page7-SpecPractice（720 frame）", async () => {
+  const root = await readRoot();
+  assert.match(root, /id="Ch3-Page7-SpecPractice"/);
+  assert.match(root, /component=\{Ch3Page7SpecPractice\}[\s\S]*?durationInFrames=\{720\}/);
+});
