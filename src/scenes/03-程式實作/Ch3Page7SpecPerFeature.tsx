@@ -106,7 +106,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
   const goodLines = interpolate(frame, [70, 120], [0, 1], ease);
   const badIn = interpolate(frame, [140, 175], [0, 1], ease);
   const badFade = interpolate(frame, [250, 280], [1, 0], clamp);
-  const shakeWindow = interpolate(frame, [210, 250], [1, 0], clamp);
+  const shakeWindow = interpolate(frame, [220, 250], [1, 0], clamp);
   const shake = Math.sin(frame * 1.6) * 10 * shakeWindow * badIn;
   const conclusionIn = interpolate(frame, [285, 320], [0, 1], ease);
   const out = interpolate(frame, [310, 330], [1, 0], clamp);

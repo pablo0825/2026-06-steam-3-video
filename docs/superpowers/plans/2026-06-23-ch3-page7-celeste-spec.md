@@ -74,7 +74,7 @@ const readRoot = () => readFile(new URL("../src/Root.tsx", import.meta.url), "ut
 test("S16 overlay 顯示 Spec 案例 / Celeste / 跳躍功能 標題群組", async () => {
   const overlay = await read("Ch3Page7CelesteSpecOverlay.tsx");
   assert.match(overlay, /Spec 案例/);
-  assert.match(overlay, />Celeste</);
+  assert.match(overlay, />\s*Celeste\s*</);
   assert.match(overlay, /跳躍功能/);
   // S16 標題進出場沿用 S06 時間
   assert.match(overlay, /const TITLE_IN = \[10, 38\]/);
@@ -739,7 +739,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
   const goodLines = interpolate(frame, [70, 120], [0, 1], ease);
   const badIn = interpolate(frame, [140, 175], [0, 1], ease);
   const badFade = interpolate(frame, [250, 280], [1, 0], clamp);
-  const shakeWindow = interpolate(frame, [210, 250], [1, 0], clamp);
+  const shakeWindow = interpolate(frame, [220, 250], [1, 0], clamp);
   const shake = Math.sin(frame * 1.6) * 10 * shakeWindow * badIn;
   const conclusionIn = interpolate(frame, [285, 320], [0, 1], ease);
   const out = interpolate(frame, [310, 330], [1, 0], clamp);
