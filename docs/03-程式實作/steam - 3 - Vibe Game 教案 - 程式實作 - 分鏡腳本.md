@@ -20,7 +20,7 @@
 | 3 | `Ch3-Page3-RhythmDoctor` | S06–S07 | Rhythm Doctor 影片與 User Story 範例 | 遊戲影片、透明 Overlay | ✅ 已完成 |
 | 4 | `Ch3-Page4-Context` | S08–S09 | Context 定義與容量限制 | SVG 動畫 | ✅ 已完成 |
 | 5 | `Ch3-Page5-Agents`／`Ch3-Page5-AgentsDemo` | S11–S13 | `AGENTS.md` 定義、運作方式與連續實機示範 | SVG 動畫＋螢幕錄影 | ✅ 已完成 |
-| 6 | `Ch3-Page6-Spec` | S14–S15 | Spec 定義與文件結構 | SVG 卡片 | ⏳ 待製作 |
+| 6 | `Ch3-Page6-Spec` | S14–S15 | Spec 定義、討論收束與六個參考欄位 | SVG 動畫 | ✅ 已完成 |
 | 7 | `Ch3-Page7-CelesteSpec` | S16–S18 | Celeste 跳躍 Spec 與實作流程 | 遊戲影片、流程 SVG | ⏳ 待製作 |
 | 8 | `Ch3-Page8-SpecSetup` | S19 | Spec 實作前準備 | Unity、Codex 螢幕錄影 | ⏳ 待錄影 |
 | 9 | `Ch3-Page9-SpecBuild` | S20 | User Story、Spec、Plan 與 AI 實作 | Unity、Codex 螢幕錄影 | ⏳ 待錄影 |
@@ -83,8 +83,8 @@
 
 | 鏡頭 | 旁白 | 秒 | 畫面 | 呈現 | 動態 |
 |---|---|---:|---|---|---|
-| S14 | Spec 其實就是規格文件。原本你跟 AI 討論功能的紀錄，不會一直保留下來；這些資料會隨著對話逐漸遺失，因為 Context 會把舊資料移出。Spec 的做法，是把這些資料保留下來，整理成一份文件。所以 Spec 就是被壓縮過的 Context。有了這份文件，之後擴充或維護功能都有依據，也不用請 AI 再掃描整個專案，浪費多餘的 Token。 | 27 | 標題「Spec」；定義句「把討論整理成可長期保存的規格文件」；中段動畫為多張對話卡壓縮成一份 `feature-spec.md`；下方兩個效益：「維護與擴充的依據」「減少重複掃描與 Token 消耗」。 | 文字卡＋SVG動畫 | 標題與定義進場 → 對話卡逐漸堆疊 → 卡片收束、壓縮成 Spec 文件 → 兩個效益依序從左右滑入。 |
-| S15 | Spec 文件的結構沒有固定格式，大家可以寫自己覺得重要的資訊。我們列出幾個重要欄位給大家參考：User Story 幫助 AI 快速理解功能需求；Input／Output 是輸入與輸出；Rules 是功能規則；Non-goals 定義這次不做什麼，避免功能過度膨脹；Acceptance Criteria 定義怎樣才算驗收通過；Notes 則記錄特殊設計。接下來先看一部影片，再一起寫一個 Spec。 | 34 | 六張欄位卡分成兩列：User Story／Input & Output／Rules／Non-goals／Acceptance Criteria／Notes；每張卡顯示簡短中文用途與單色 SVG 圖示。 | SVG動畫 | 六張卡依旁白逐項進場；目前說明的卡片放大、黃框高亮，其餘維持淡灰；末尾六卡收束成 Spec 文件，顯示提示「先看案例，再一起寫」。 |
+| S14 | Spec 其實就是規格文件。原本你跟 AI 討論功能的紀錄，不會一直保留下來；這些資料會隨著對話逐漸遺失，因為 Context 會把舊資料移出。Spec 的做法，是把這些資料保留下來，整理成一份文件。所以 Spec 就是被壓縮過的 Context。有了這份文件，之後擴充或維護功能都有依據，也不用請 AI 再掃描整個專案，浪費多餘的 Token。 | 27 | 標題「Spec」與定義「把討論整理成可長期保存的規格文件」；四張討論卡堆疊後收束成 `feature-spec.md`；最後顯示「維護與擴充有依據」「減少重複掃描與 Token 消耗」。 | 文字卡＋SVG動畫 | 標題與定義進場 → 討論卡逐項建立 → 卡片堆疊並壓縮成文件 → 兩個效益依序進場 → 淡出。 |
+| S15 | Spec 文件的結構沒有固定格式，大家可以寫自己覺得重要的資訊。我們列出幾個重要欄位給大家參考：User Story 幫助 AI 快速理解功能需求；Input／Output 是輸入與輸出；Rules 是功能規則；Non-goals 定義這次不做什麼，避免功能過度膨脹；Acceptance Criteria 定義怎樣才算驗收通過；Notes 則記錄特殊設計。接下來先看一部影片，再一起寫一個 Spec。 | 34 | 六張欄位卡分成兩列：User Story／Input & Output／Rules／Non-goals／Acceptance Criteria／Notes；每張卡具有中文用途與單色 SVG 圖示；結尾收束成 `feature-spec.md` 並顯示「先看案例，再一起寫」。 | SVG動畫 | 六張卡依序進場 → 目前說明的卡片放大並以黃框高亮 → 六卡依序收進文件 → 提示淡入 → 淡出至 Celeste 案例。 |
 
 ## 第 7 頁・Celeste 跳躍 Spec 與實作流程（簡報 16–19）
 
