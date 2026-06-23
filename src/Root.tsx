@@ -29,6 +29,9 @@ import { Ch3Page4Context } from "./scenes/03-程式實作/Ch3Page4Context";
 import { Ch3Page5Agents } from "./scenes/03-程式實作/Ch3Page5Agents";
 import { Ch3Page5AgentsDemo } from "./scenes/03-程式實作/Ch3Page5AgentsDemo";
 import { Ch3Page6Spec } from "./scenes/03-程式實作/Ch3Page6Spec";
+import { Ch3Page7CelesteSpec } from "./scenes/03-程式實作/Ch3Page7CelesteSpec";
+import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7CelesteSpecOverlay";
+import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -286,6 +289,31 @@ export const RemotionRoot: React.FC = () => {
         id="Ch3-Page6-Spec"
         component={Ch3Page6Spec}
         durationInFrames={1830}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page7-CelesteSpec"
+        component={Ch3Page7CelesteSpec}
+        durationInFrames={780}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page7-CelesteSpec-Overlay"
+        component={Ch3Page7CelesteSpecOverlay}
+        durationInFrames={780}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page7-SpecPractice"
+        component={Ch3Page7SpecPractice}
+        durationInFrames={720}
         fps={30}
         width={1920}
         height={1080}

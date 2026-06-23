@@ -21,7 +21,7 @@
 | 4 | `Ch3-Page4-Context` | S08–S09 | Context 定義與容量限制 | SVG 動畫 | ✅ 已完成 |
 | 5 | `Ch3-Page5-Agents`／`Ch3-Page5-AgentsDemo` | S11–S13 | `AGENTS.md` 定義、運作方式與連續實機示範 | SVG 動畫＋螢幕錄影 | ✅ 已完成 |
 | 6 | `Ch3-Page6-Spec` | S14–S15 | Spec 定義、討論收束與六個參考欄位 | SVG 動畫 | ✅ 已完成 |
-| 7 | `Ch3-Page7-CelesteSpec` | S16–S18 | Celeste 跳躍 Spec 與實作流程 | 遊戲影片、流程 SVG | ⏳ 待製作 |
+| 7 | `Ch3-Page7-CelesteSpec` | S16–S18 | Celeste 跳躍 Spec 與實作流程 | 遊戲影片、流程 SVG | ✅ 已完成 |
 | 8 | `Ch3-Page8-SpecSetup` | S19 | Spec 實作前準備 | Unity、Codex 螢幕錄影 | ⏳ 待錄影 |
 | 9 | `Ch3-Page9-SpecBuild` | S20 | User Story、Spec、Plan 與 AI 實作 | Unity、Codex 螢幕錄影 | ⏳ 待錄影 |
 | 10 | `Ch3-Page10-SpecValidation` | S21 | 依驗收項目手動驗證 | Unity 螢幕錄影 | ⏳ 待錄影 |
