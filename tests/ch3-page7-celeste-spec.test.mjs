@@ -85,3 +85,24 @@ test("S18 前半呈現一功能一 Spec 的正例與糾結反例", async () => {
   // 白底
   assert.match(perFeature, /backgroundColor: WHITE/);
 });
+
+test("S18 後半流程圖含五節點、回饋箭頭與開始實作轉場", async () => {
+  const wf = await read("Ch3Page7SpecWorkflow.tsx");
+  for (const node of [
+    "User Story",
+    "Spec",
+    "Plan",
+    "AI／使用者實作",
+    "手動驗證",
+  ]) {
+    assert.ok(wf.includes(node), `缺少節點 ${node}`);
+  }
+  // 逐段繪線
+  assert.match(wf, /strokeDashoffset/);
+  // 驗證失敗回饋
+  assert.match(wf, /驗證失敗/);
+  // 收尾轉場
+  assert.match(wf, /開始實作/);
+  // 白底
+  assert.match(wf, /backgroundColor: WHITE/);
+});
