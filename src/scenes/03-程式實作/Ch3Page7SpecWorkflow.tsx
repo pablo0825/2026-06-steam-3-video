@@ -36,25 +36,37 @@ const NODES = [
   "手動驗證",
 ] as const;
 
+// 順流式串接：每個節點出現後，連線往右畫出去帶出下一個節點
+const STRIDE = 44;
+const nodeStart = (i: number) => 6 + i * STRIDE;
+
+// 箭頭長度：連線只畫到箭頭底部，由三角形當尖端，避免線戳出箭頭
+const ARROW_LEN = 30;
+
+// 回饋迴圈：起點離節點底部留間距，整體往下壓，避免黃線貼著黃節點
+const FB_Y = NODE_CY + NODE_H / 2 + 36;
+const FB_DEPTH = 850;
+const FB_LABEL_Y = 786;
+
 export const Ch3Page7SpecWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
-  // 節點間四段連線（i = 0..3）
+  // 節點間四段連線（i = 0..3）：節點出現後才畫，畫到端點時帶出下一個節點
   const segDraw = (i: number) =>
-    interpolate(frame, [80 + i * 30, 110 + i * 30], [0, 1], ease);
+    interpolate(frame, [28 + i * STRIDE, 56 + i * STRIDE], [0, 1], ease);
   const segArrow = (i: number) =>
-    interpolate(frame, [104 + i * 30, 116 + i * 30], [0, 1], clamp);
+    interpolate(frame, [50 + i * STRIDE, 62 + i * STRIDE], [0, 1], clamp);
   // 手動驗證高亮
-  const verifyHi = interpolate(frame, [210, 230], [0, 1], ease);
+  const verifyHi = interpolate(frame, [218, 238], [0, 1], ease);
   // 回饋曲線 + 標籤
-  const fbDraw = interpolate(frame, [240, 300], [0, 1], ease);
-  const fbArrow = interpolate(frame, [292, 304], [0, 1], clamp);
-  const fbLabel = interpolate(frame, [280, 300], [0, 1], ease);
+  const fbDraw = interpolate(frame, [250, 308], [0, 1], ease);
+  const fbArrow = interpolate(frame, [300, 312], [0, 1], clamp);
+  const fbLabel = interpolate(frame, [286, 306], [0, 1], ease);
   // 開始實作
-  const startIn = interpolate(frame, [320, 350], [0, 1], ease);
-  const out = interpolate(frame, [368, 388], [1, 0], clamp);
+  const startIn = interpolate(frame, [320, 348], [0, 1], ease);
+  const out = interpolate(frame, [366, 388], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT, opacity: out }}>
@@ -87,7 +99,7 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
           return (
             <g key={`seg-${i}`}>
               <path
-                d={`M${x1} ${NODE_CY} L${x2} ${NODE_CY}`}
+                d={`M${x1} ${NODE_CY} L${x2 - ARROW_LEN} ${NODE_CY}`}
                 fill="none"
                 stroke={BLUE}
                 strokeWidth="6"
@@ -103,9 +115,9 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
           );
         })}
 
-        {/* 回饋曲線：手動驗證底 → Spec 底（驗證失敗） */}
+        {/* 回饋曲線：手動驗證 → Spec（驗證失敗）；起點離節點底部留間距、整體下壓 */}
         <path
-          d={`M${NODE_CX[4]} ${NODE_CY + NODE_H / 2} C${NODE_CX[4]} 760 ${NODE_CX[1]} 760 ${NODE_CX[1]} ${NODE_CY + NODE_H / 2}`}
+          d={`M${NODE_CX[4]} ${FB_Y} C${NODE_CX[4]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_Y + ARROW_LEN}`}
           fill="none"
           stroke={YELLOW}
           strokeWidth="6"
@@ -116,27 +128,28 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
         />
         <g
           opacity={fbArrow}
-          transform={`translate(${NODE_CX[1]} ${NODE_CY + NODE_H / 2}) rotate(-90)`}
+          transform={`translate(${NODE_CX[1]} ${FB_Y}) rotate(-90)`}
         >
           <path d="M0 0 L-30 -16 L-30 16 Z" fill={YELLOW} />
         </g>
       </svg>
 
-      {/* 回饋標籤 */}
+      {/* 回饋標籤（壓在迴圈底部，白底斷開連線） */}
       <div
         style={{
           position: "absolute",
           left: (NODE_CX[1] + NODE_CX[4]) / 2,
-          top: 730,
+          top: FB_LABEL_Y,
           transform: "translate(-50%, -50%)",
           opacity: fbLabel,
-          padding: "8px 20px",
+          padding: "8px 22px",
           borderRadius: 999,
           fontSize: 28,
           fontWeight: 800,
           color: TEXT_DARK,
-          backgroundColor: withAlpha(YELLOW, 0.16),
+          backgroundColor: WHITE,
           border: `2px solid ${withAlpha(YELLOW, 0.7)}`,
+          boxShadow: `0 6px 16px ${withAlpha(TEXT_DARK, 0.08)}`,
         }}
       >
         驗證失敗 → 回 Spec
@@ -145,7 +158,7 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
       {/* 五節點 */}
       {NODES.map((label, i) => {
         const p = spring({
-          frame: frame - (20 + i * 28),
+          frame: frame - nodeStart(i),
           fps,
           config: { damping: 17, stiffness: 115, overshootClamping: true },
         });
