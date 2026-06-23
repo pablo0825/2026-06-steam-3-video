@@ -43,9 +43,9 @@ test("S17 蓋半透明黑遮罩並置中顯示六欄位 Spec 表格", async () =
   assert.match(overlay, /const VEIL_IN = \[248, 276\]/);
   assert.match(overlay, /const VEIL_OUT = \[756, 780\]/);
   assert.match(overlay, /backgroundColor: BLACK/);
-  // 標題 + 文件卡檔名
-  assert.match(overlay, /跳躍功能 <span/);
+  // 文件卡檔名（標題已移除，只剩卡片作為單一焦點）
   assert.match(overlay, /jump-spec\.md/);
+  assert.doesNotMatch(overlay, /跳躍功能 <span/);
   // 六個欄位名
   for (const field of [
     "User Story",

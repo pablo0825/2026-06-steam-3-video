@@ -183,35 +183,14 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
         <AbsoluteFill style={{ backgroundColor: BLACK, opacity: veilOpacity }} />
       )}
 
-      {/* ── S17：標題 ── */}
+      {/* ── S17：深色半透明 Spec 文件卡（單一焦點，垂直置中） ── */}
       {frame >= S16_END && (
         <div
           style={{
             position: "absolute",
             left: 960,
-            top: 164,
-            transform: `translateX(-50%) translateY(${interpolate(headingIn, [0, 1], [16, 0])}px)`,
-            opacity: headingIn * infoOut,
-            fontSize: 48,
-            fontWeight: 800,
-            letterSpacing: 4,
-            color: WHITE,
-            textShadow: `0 3px 18px ${withAlpha(BLACK, 0.5)}`,
-            whiteSpace: "nowrap",
-          }}
-        >
-          跳躍功能 <span style={{ color: YELLOW }}>Spec</span>
-        </div>
-      )}
-
-      {/* ── S17：深色半透明 Spec 文件卡 ── */}
-      {frame >= S16_END && (
-        <div
-          style={{
-            position: "absolute",
-            left: 960,
-            top: 256,
-            transform: "translateX(-50%)",
+            top: 540,
+            transform: `translate(-50%, -50%) translateY(${interpolate(headingIn, [0, 1], [16, 0])}px)`,
             width: 1080,
             opacity: headingIn * infoOut,
             borderRadius: 22,
