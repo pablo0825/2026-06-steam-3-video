@@ -66,6 +66,12 @@ test("S17 蓋半透明黑遮罩並置中顯示六欄位 Spec 表格", async () =
   assert.match(overlay, /const ROW_START = \[320, 372, 424, 476, 528, 580\]/);
 });
 
+test("Overlay 根層保持透明（不可有不透明底色，否則破壞 alpha 輸出）", async () => {
+  const overlay = await read("Ch3Page7CelesteSpecOverlay.tsx");
+  // 根 AbsoluteFill 只設 fontFamily，沒有 backgroundColor —— 透明 ProRes 4444 的前提
+  assert.match(overlay, /<AbsoluteFill style=\{\{ fontFamily: FONT \}\}>/);
+});
+
 test("S18 前半呈現一功能一 Spec 的正例與糾結反例", async () => {
   const perFeature = await read("Ch3Page7SpecPerFeature.tsx");
   assert.match(perFeature, /一個功能，一份 Spec/);
