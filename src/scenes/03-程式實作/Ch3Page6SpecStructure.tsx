@@ -8,6 +8,7 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
+  BLUE,
   CARD_BORDER,
   SUBTLE,
   TEXT_DARK,
@@ -15,7 +16,6 @@ import {
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
-import { SpecDocumentCard } from "./Ch3Page6SpecShared";
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 const clamp = {
@@ -23,6 +23,14 @@ const clamp = {
   extrapolateRight: "clamp",
 } as const;
 const ease = {
+  ...clamp,
+  easing: Easing.bezier(0.4, 0, 0.2, 1),
+};
+const emphasizeEase = {
+  ...clamp,
+  easing: Easing.bezier(0.16, 1, 0.3, 1),
+};
+const settleEase = {
   ...clamp,
   easing: Easing.bezier(0.4, 0, 0.2, 1),
 };
@@ -140,9 +148,9 @@ export const Ch3Page6SpecStructure: React.FC = () => {
     fps,
     config: { damping: 15, stiffness: 110 },
   });
-  const collect = interpolate(frame, [730, 870], [0, 1], ease);
-  const documentIn = interpolate(frame, [790, 900], [0, 1], ease);
-  const tipIn = interpolate(frame, [870, 915], [0, 1], ease);
+  const groupIn = interpolate(frame, [70, 120], [0, 1], ease);
+  const tipIn = interpolate(frame, [850, 900], [0, 1], ease);
+  const tipRise = interpolate(frame, [850, 900], [18, 0], ease);
   const out = interpolate(frame, [980, 1018], [1, 0], clamp);
 
   return (
@@ -177,29 +185,27 @@ export const Ch3Page6SpecStructure: React.FC = () => {
         const column = index % 3;
         const row = Math.floor(index / 3);
         const startX = 250 + column * 550;
-        const startY = 250 + row * 300;
-        const cardIn = spring({
-          frame: frame - (70 + index * 28),
-          fps,
-          config: { damping: 17, stiffness: 110, overshootClamping: true },
-        });
-        const highlightStart = 250 + index * 80;
-        const highlight = interpolate(
+        const startY = 315 + row * 300;
+        const cardIn = interpolate(
           frame,
-          [
-            highlightStart,
-            highlightStart + 18,
-            highlightStart + 62,
-            highlightStart + 78,
-          ],
-          [0, 1, 1, 0],
-          clamp,
+          [70 + index * 7, 112 + index * 7],
+          [0, 1],
+          ease,
         );
-        const x = interpolate(collect, [0, 1], [startX, 960], ease);
-        const y = interpolate(collect, [0, 1], [startY, 570], ease);
-        const collectScale = interpolate(collect, [0, 1], [1, 0.3], ease);
-        const cardOpacity =
-          cardIn * interpolate(documentIn, [0, 0.72, 1], [1, 1, 0], clamp);
+        const highlightStart = 180 + index * 108;
+        const highlightIn = interpolate(
+          frame,
+          [highlightStart, highlightStart + 18],
+          [0, 1],
+          emphasizeEase,
+        );
+        const highlightOut = interpolate(
+          frame,
+          [highlightStart + 92, highlightStart + 112],
+          [1, 0],
+          settleEase,
+        );
+        const highlight = Math.min(highlightIn, highlightOut);
         const accent = highlight > 0.15 ? YELLOW : SUBTLE;
 
         return (
@@ -207,17 +213,17 @@ export const Ch3Page6SpecStructure: React.FC = () => {
             key={field.title}
             style={{
               position: "absolute",
-              left: x,
-              top: y,
+              left: startX,
+              top: startY,
               width: 470,
               height: 225,
-              transform: `scale(${collectScale * interpolate(
-                highlight,
+              transform: `translateY(${interpolate(
+                cardIn,
                 [0, 1],
-                [1, 1.04],
-              )})`,
+                [22, 0],
+              )}px) scale(${interpolate(highlight, [0, 1], [1, 1.04])})`,
               transformOrigin: "center",
-              opacity: cardOpacity,
+              opacity: cardIn * groupIn,
               borderRadius: 26,
               display: "flex",
               alignItems: "center",
@@ -263,34 +269,20 @@ export const Ch3Page6SpecStructure: React.FC = () => {
         );
       })}
 
-      <SpecDocumentCard
-        opacity={documentIn}
-        scale={interpolate(documentIn, [0, 1], [0.72, 1], ease)}
-        x={960}
-        y={545}
-      />
-
       <div
         style={{
           position: "absolute",
           left: 960,
-          top: 820,
-          transform: `translateX(-50%) translateY(${interpolate(
-            tipIn,
-            [0, 1],
-            [22, 0],
-          )}px)`,
+          top: 900,
+          transform: `translateX(-50%) translateY(${tipRise}px)`,
           opacity: tipIn,
-          padding: "15px 34px",
-          borderRadius: 999,
-          fontSize: 30,
-          fontWeight: 850,
-          color: TEXT_DARK,
-          backgroundColor: withAlpha(YELLOW, 0.11),
-          border: `2px solid ${withAlpha(YELLOW, 0.66)}`,
+          fontSize: 34,
+          fontWeight: 600,
+          letterSpacing: 2,
+          color: BLUE,
         }}
       >
-        先看案例，再一起寫
+        先看案例，再一起寫 →
       </div>
     </AbsoluteFill>
   );
