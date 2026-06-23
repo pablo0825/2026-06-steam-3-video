@@ -40,6 +40,9 @@ const NODES = [
 const STRIDE = 44;
 const nodeStart = (i: number) => 6 + i * STRIDE;
 
+// 箭頭長度：連線只畫到箭頭底部，由三角形當尖端，避免線戳出箭頭
+const ARROW_LEN = 30;
+
 // 回饋迴圈：起點離節點底部留間距，整體往下壓，避免黃線貼著黃節點
 const FB_Y = NODE_CY + NODE_H / 2 + 36;
 const FB_DEPTH = 850;
@@ -96,7 +99,7 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
           return (
             <g key={`seg-${i}`}>
               <path
-                d={`M${x1} ${NODE_CY} L${x2} ${NODE_CY}`}
+                d={`M${x1} ${NODE_CY} L${x2 - ARROW_LEN} ${NODE_CY}`}
                 fill="none"
                 stroke={BLUE}
                 strokeWidth="6"
@@ -114,7 +117,7 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
 
         {/* 回饋曲線：手動驗證 → Spec（驗證失敗）；起點離節點底部留間距、整體下壓 */}
         <path
-          d={`M${NODE_CX[4]} ${FB_Y} C${NODE_CX[4]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_Y}`}
+          d={`M${NODE_CX[4]} ${FB_Y} C${NODE_CX[4]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_Y + ARROW_LEN}`}
           fill="none"
           stroke={YELLOW}
           strokeWidth="6"
