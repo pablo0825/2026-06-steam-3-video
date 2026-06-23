@@ -36,3 +36,32 @@ test("Root 註冊預覽與透明 Overlay 兩個 composition（780 frame）", asy
   );
   assert.match(root, /component=\{Ch3Page7CelesteSpec\}[\s\S]*?durationInFrames=\{780\}/);
 });
+
+test("S17 蓋半透明黑遮罩並置中顯示六欄位 Spec 表格", async () => {
+  const overlay = await read("Ch3Page7CelesteSpecOverlay.tsx");
+  // 半透明黑遮罩
+  assert.match(overlay, /const VEIL_IN = \[248, 276\]/);
+  assert.match(overlay, /const VEIL_OUT = \[756, 780\]/);
+  assert.match(overlay, /backgroundColor: BLACK/);
+  // 標題
+  assert.match(overlay, /跳躍功能 <span/);
+  // 六個欄位名
+  for (const field of [
+    "User Story",
+    "Input / Output",
+    "Rules",
+    "Non-goals",
+    "Acceptance Criteria",
+    "Notes",
+  ]) {
+    assert.ok(overlay.includes(field), `缺少欄位 ${field}`);
+  }
+  // 內容抽樣
+  assert.match(overlay, /身為玩家，我想要控制角色跳上平台、越過障礙。/);
+  assert.match(overlay, /滯空時不可連續跳躍/);
+  // Acceptance Criteria 三項用核取方塊
+  assert.match(overlay, /☑/);
+  assert.match(overlay, /落地後可再次跳躍/);
+  // 六列逐列 stagger
+  assert.match(overlay, /const ROW_START = \[320, 372, 424, 476, 528, 580\]/);
+});
