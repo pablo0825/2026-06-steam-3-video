@@ -65,3 +65,23 @@ test("S17 蓋半透明黑遮罩並置中顯示六欄位 Spec 表格", async () =
   // 六列逐列 stagger
   assert.match(overlay, /const ROW_START = \[320, 372, 424, 476, 528, 580\]/);
 });
+
+test("S18 前半呈現一功能一 Spec 的正例與糾結反例", async () => {
+  const perFeature = await read("Ch3Page7SpecPerFeature.tsx");
+  assert.match(perFeature, /一個功能，一份 Spec/);
+  // 三個功能
+  for (const f of ["跳躍", "衝刺", "攀牆"]) {
+    assert.ok(perFeature.includes(f), `缺少功能 ${f}`);
+  }
+  // 三份獨立文件 + 反例單一文件
+  assert.match(perFeature, /jump-spec\.md/);
+  assert.match(perFeature, /dash-spec\.md/);
+  assert.match(perFeature, /climb-spec\.md/);
+  assert.match(perFeature, /all-spec\.md/);
+  // 反例震動
+  assert.match(perFeature, /const shake =/);
+  // 結論
+  assert.match(perFeature, /一個功能 → 一份 Spec/);
+  // 白底
+  assert.match(perFeature, /backgroundColor: WHITE/);
+});
