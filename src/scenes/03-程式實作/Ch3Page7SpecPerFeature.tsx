@@ -19,8 +19,8 @@ import {
 } from "../../theme/colors";
 
 // 第 3 集・第 7 頁 S18 前半：左右對比「一個功能，一份 Spec」
-//   左＝正例：三個功能各自連到一份獨立文件 → ✓
-//   右＝反例：三個功能全部塞進同一份文件 → ✗
+//   左＝正例：三個功能各自連到一份獨立文件 → ✓（先完整出現）
+//   右＝反例：三個功能全部塞進同一份文件 → ✗（後出現，形成對比）
 //   兩邊用相同的正常顏色，差別只在「結構 ＋ ✓／✗」，靠對比讓觀眾理解。
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
@@ -32,11 +32,14 @@ const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) };
 
 const FEATURES = ["跳躍", "衝刺", "攀牆"] as const;
 const DOC_NAMES = ["jump-spec.md", "dash-spec.md", "climb-spec.md"] as const;
-const ROW_Y = [300, 440, 580] as const;
+const ROW_Y = [356, 496, 636] as const;
 
 const PILL_W = 150;
 const PILL_H = 84;
 const PILL_CY = (i: number) => ROW_Y[i] + PILL_H / 2;
+
+const TITLE_TOP = 118;
+const VERDICT_TOP = 812;
 
 // 正例：左欄膠囊 x ／ 右欄文件 x（面板置中於 x=440）
 const GOOD_PILL_X = 180;
@@ -156,19 +159,22 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const linesDraw = interpolate(frame, [110, 160], [0, 1], ease);
+
+  // 正例先（~0–135），反例後（~140–270），最後兩邊並陳 hold 再淡出
+  const goodLines = interpolate(frame, [62, 104], [0, 1], ease);
+  const badLines = interpolate(frame, [196, 238], [0, 1], ease);
   const badDocIn = spring({
-    frame: frame - 60,
+    frame: frame - 170,
     fps,
     config: { damping: 18, stiffness: 120 },
   });
   const passIn = spring({
-    frame: frame - 172,
+    frame: frame - 110,
     fps,
     config: { damping: 12, stiffness: 140 },
   });
   const failIn = spring({
-    frame: frame - 188,
+    frame: frame - 244,
     fps,
     config: { damping: 12, stiffness: 140 },
   });
@@ -183,7 +189,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
         style={{
           position: "absolute",
           left: 960,
-          top: 96,
+          top: TITLE_TOP,
           transform: `translateX(-50%) scale(${interpolate(titleIn, [0, 1], [0.94, 1])})`,
           opacity: titleIn,
           fontSize: 64,
@@ -200,8 +206,8 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
         style={{
           position: "absolute",
           left: 960,
-          top: 250,
-          height: 470,
+          top: 308,
+          height: 480,
           transform: "translateX(-50%)",
           borderLeft: `2px dashed ${withAlpha(SUBTLE, 0.35)}`,
           opacity: titleIn,
@@ -226,7 +232,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
             strokeLinecap="round"
             pathLength="1"
             strokeDasharray="1"
-            strokeDashoffset={1 - linesDraw}
+            strokeDashoffset={1 - goodLines}
           />
         ))}
         {/* 反例：三個功能 → 匯聚到單一文件 */}
@@ -240,7 +246,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
             strokeLinecap="round"
             pathLength="1"
             strokeDasharray="1"
-            strokeDashoffset={1 - linesDraw}
+            strokeDashoffset={1 - badLines}
           />
         ))}
       </svg>
@@ -248,7 +254,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
       {/* 正例：左功能膠囊 */}
       {FEATURES.map((label, i) => {
         const p = spring({
-          frame: frame - (24 + i * 12),
+          frame: frame - (8 + i * 10),
           fps,
           config: { damping: 17, stiffness: 120 },
         });
@@ -271,7 +277,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
       {/* 正例：右獨立文件 */}
       {DOC_NAMES.map((name, i) => {
         const p = spring({
-          frame: frame - (54 + i * 12),
+          frame: frame - (34 + i * 10),
           fps,
           config: { damping: 18, stiffness: 120 },
         });
@@ -291,10 +297,10 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
         );
       })}
 
-      {/* 反例：左功能膠囊 */}
+      {/* 反例：左功能膠囊（後出現） */}
       {FEATURES.map((label, i) => {
         const p = spring({
-          frame: frame - (24 + i * 12),
+          frame: frame - (140 + i * 10),
           fps,
           config: { damping: 17, stiffness: 120 },
         });
@@ -332,7 +338,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
         style={{
           position: "absolute",
           left: GOOD_DOC_X,
-          top: 772,
+          top: VERDICT_TOP,
           transform: "translateX(-50%)",
           opacity: passIn,
         }}
@@ -343,7 +349,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
         style={{
           position: "absolute",
           left: BAD_DOC_X,
-          top: 772,
+          top: VERDICT_TOP,
           transform: "translateX(-50%)",
           opacity: failIn,
         }}
