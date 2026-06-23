@@ -29,8 +29,8 @@ const ease = {
 
 const CARD_STYLE: React.CSSProperties = {
   position: "absolute",
-  width: 390,
-  height: 150,
+  width: 420,
+  height: 130,
   borderRadius: 24,
   display: "flex",
   flexDirection: "column",
@@ -50,21 +50,23 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const questionIn = interpolate(frame, [42, 72], [0, 1], ease);
-  const rulesIn = interpolate(frame, [82, 112], [0, 1], ease);
-  const inputLines = interpolate(frame, [118, 158], [0, 1], ease);
+  const questionIn = interpolate(frame, [30, 52], [0, 1], ease);
+  const contextIn = interpolate(frame, [48, 70], [0, 1], ease);
+  const rulesIn = interpolate(frame, [66, 88], [0, 1], ease);
+  const inputLines = interpolate(frame, [104, 146], [0, 1], ease);
+  const inputArrows = interpolate(frame, [138, 150], [0, 1], ease);
   const aiIn = spring({
     frame: frame - 148,
     fps,
     config: { damping: 17, stiffness: 115, overshootClamping: true },
   });
-  const outputLine = interpolate(frame, [196, 230], [0, 1], ease);
+  const outputLine = interpolate(frame, [195, 235], [0, 1], ease);
+  const outputArrow = interpolate(frame, [227, 239], [0, 1], ease);
   const answerIn = spring({
-    frame: frame - 220,
+    frame: frame - 245,
     fps,
     config: { damping: 18, stiffness: 115, overshootClamping: true },
   });
-  const transitionIn = interpolate(frame, [306, 334], [0, 1], ease);
   const out = interpolate(frame, [338, 358], [1, 0], clamp);
 
   return (
@@ -93,19 +95,19 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
           whiteSpace: "nowrap",
         }}
       >
-        每次對話，AI 都會參考兩項資訊
+        AI 會綜合多項資訊回答
       </div>
 
       <div
         style={{
           ...CARD_STYLE,
-          left: 250,
-          top: 270,
+          left: 170,
+          top: 355,
           opacity: questionIn,
-          transform: `translateY(${interpolate(
+          transform: `translateX(${interpolate(
             questionIn,
             [0, 1],
-            [28, 0],
+            [-28, 0],
           )}px)`,
         }}
       >
@@ -127,14 +129,38 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
       <div
         style={{
           ...CARD_STYLE,
-          right: 250,
-          top: 270,
-          opacity: rulesIn,
-          transform: `translateY(${interpolate(
-            rulesIn,
+          left: 170,
+          top: 555,
+          opacity: contextIn,
+          transform: `translateX(${interpolate(
+            contextIn,
             [0, 1],
-            [28, 0],
+            [-28, 0],
           )}px)`,
+        }}
+      >
+        <div style={{ fontSize: 26, fontWeight: 800, color: SUBTLE }}>
+          對話脈絡
+        </div>
+        <div
+          style={{
+            marginTop: 10,
+            fontSize: 38,
+            fontWeight: 900,
+            color: BLUE,
+          }}
+        >
+          Context
+        </div>
+      </div>
+
+      <div
+        style={{
+          ...CARD_STYLE,
+          left: 170,
+          top: 755,
+          opacity: rulesIn,
+          transform: `translateX(${interpolate(rulesIn, [0, 1], [-28, 0])}px)`,
         }}
       >
         <div style={{ fontSize: 26, fontWeight: 800, color: SUBTLE }}>
@@ -158,68 +184,65 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
         viewBox="0 0 1920 1080"
         style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
       >
-        <defs>
-          <marker
-            id="agents-arrow-blue"
-            markerWidth="12"
-            markerHeight="12"
-            refX="10"
-            refY="6"
-            orient="auto"
-          >
-            <path d="M0,0 L12,6 L0,12 Z" fill={BLUE} />
-          </marker>
-          <marker
-            id="agents-arrow-yellow"
-            markerWidth="12"
-            markerHeight="12"
-            refX="10"
-            refY="6"
-            orient="auto"
-          >
-            <path d="M0,0 L12,6 L0,12 Z" fill={YELLOW} />
-          </marker>
-        </defs>
         <path
-          d="M640 345 C735 345 780 430 850 478"
+          d="M590 420 C720 420 800 500 898 571"
           fill="none"
           stroke={BLUE}
           strokeWidth="6"
           strokeLinecap="round"
-          markerEnd="url(#agents-arrow-blue)"
           pathLength="1"
           strokeDasharray="1"
           strokeDashoffset={1 - inputLines}
         />
         <path
-          d="M1280 345 C1185 345 1140 430 1070 478"
+          d="M590 620 L889 620"
           fill="none"
           stroke={BLUE}
           strokeWidth="6"
           strokeLinecap="round"
-          markerEnd="url(#agents-arrow-blue)"
           pathLength="1"
           strokeDasharray="1"
           strokeDashoffset={1 - inputLines}
         />
         <path
-          d="M960 620 L960 735"
+          d="M590 820 C720 820 800 740 898 669"
+          fill="none"
+          stroke={BLUE}
+          strokeWidth="6"
+          strokeLinecap="round"
+          pathLength="1"
+          strokeDasharray="1"
+          strokeDashoffset={1 - inputLines}
+        />
+        <g opacity={inputArrows} transform="translate(934 584) rotate(21)">
+          <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+        </g>
+        <g opacity={inputArrows} transform="translate(927 620)">
+          <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+        </g>
+        <g opacity={inputArrows} transform="translate(934 656) rotate(-21)">
+          <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+        </g>
+        <path
+          d="M1133 620 L1340 620"
           fill="none"
           stroke={YELLOW}
           strokeWidth="7"
           strokeLinecap="round"
-          markerEnd="url(#agents-arrow-yellow)"
           pathLength="1"
           strokeDasharray="1"
           strokeDashoffset={1 - outputLine}
         />
+        <g opacity={outputArrow} transform="translate(1360 620)">
+          <path d="M0 0 L-38 -21 L-38 21 Z" fill={YELLOW} />
+        </g>
       </svg>
 
       <div
         style={{
           position: "absolute",
-          left: 960,
-          top: 540,
+          left: 1030,
+          top: 620,
           width: 190,
           height: 190,
           transform: `translate(-50%, -50%) scale(${interpolate(
@@ -246,15 +269,11 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: 960,
-          top: 830,
-          width: 760,
-          minHeight: 128,
-          transform: `translate(-50%, -50%) translateY(${interpolate(
-            answerIn,
-            [0, 1],
-            [28, 0],
-          )}px)`,
+          left: 1380,
+          top: 555,
+          width: 440,
+          height: 130,
+          transform: `translateX(${interpolate(answerIn, [0, 1], [28, 0])}px)`,
           opacity: answerIn,
           borderRadius: 24,
           display: "flex",
@@ -270,26 +289,6 @@ export const Ch3Page5AgentsFlow: React.FC = () => {
         符合
         <span style={{ color: YELLOW, margin: "0 10px" }}>專案規則</span>
         的回答
-      </div>
-
-      <div
-        style={{
-          position: "absolute",
-          left: 960,
-          bottom: 58,
-          transform: `translateX(-50%) translateY(${interpolate(
-            transitionIn,
-            [0, 1],
-            [18, 0],
-          )}px)`,
-          opacity: transitionIn,
-          fontSize: 28,
-          fontWeight: 800,
-          color: BLUE,
-          letterSpacing: 2,
-        }}
-      >
-        接下來實際建立並驗證 AGENTS.md →
       </div>
     </AbsoluteFill>
   );
