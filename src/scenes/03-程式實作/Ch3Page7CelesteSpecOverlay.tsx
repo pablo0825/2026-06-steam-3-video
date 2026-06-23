@@ -9,8 +9,7 @@ import {
 } from "remotion";
 import {
   BLACK,
-  NEUTRAL_300,
-  TEXT_DARK,
+  BLUE,
   WHITE,
   YELLOW,
   withAlpha,
@@ -18,7 +17,7 @@ import {
 
 // 第 3 集・第 7 頁 透明 Overlay（Celeste Spec）— 真實 gameplay 由剪輯軟體放下層
 //   S16（0–240）：放射柔光 ＋ 置中標題群組（Spec 案例／Celeste／跳躍功能／黃線）
-//   S17（240–780）：半透明黑遮罩 ＋ 置中「跳躍功能 Spec」表格（Task 2 補上）
+//   S17（240–780）：半透明黑遮罩 ＋ 置中深色半透明 Spec 文件卡
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 const EASE = Easing.bezier(0.4, 0, 0.2, 1);
@@ -184,43 +183,58 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
         <AbsoluteFill style={{ backgroundColor: BLACK, opacity: veilOpacity }} />
       )}
 
-      {/* ── S17：標題 + Spec 表格 ── */}
+      {/* ── S17：深色半透明 Spec 文件卡（單一焦點，垂直置中） ── */}
       {frame >= S16_END && (
         <div
           style={{
             position: "absolute",
             left: 960,
-            top: 150,
-            transform: "translateX(-50%)",
-            width: 1240,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
+            top: 540,
+            transform: `translate(-50%, -50%) translateY(${interpolate(headingIn, [0, 1], [16, 0])}px)`,
+            width: 1080,
+            opacity: headingIn * infoOut,
+            borderRadius: 22,
+            overflow: "hidden",
+            border: `1px solid ${withAlpha(WHITE, 0.14)}`,
+            backgroundColor: withAlpha(BLACK, 0.82),
+            boxShadow: `0 30px 70px ${withAlpha(BLACK, 0.5)}`,
           }}
         >
+          {/* 檔名標題列 */}
           <div
             style={{
-              opacity: headingIn * infoOut,
-              transform: `translateY(${interpolate(headingIn, [0, 1], [16, 0])}px)`,
-              fontSize: 52,
-              fontWeight: 800,
-              letterSpacing: 4,
+              height: 64,
+              display: "flex",
+              alignItems: "center",
+              gap: 14,
+              padding: "0 30px",
               color: WHITE,
-              textShadow: `0 3px 18px ${withAlpha(BLACK, 0.5)}`,
+              backgroundColor: BLUE,
             }}
           >
-            跳躍功能 <span style={{ color: YELLOW }}>Spec</span>
+            <svg width="26" height="32" viewBox="0 0 34 40" aria-hidden="true">
+              <path
+                d="M5 2h16l8 8v28H5z"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M21 2v9h8"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: 0.5 }}>
+              jump-spec.md
+            </div>
           </div>
 
-          <div
-            style={{
-              marginTop: 44,
-              width: "100%",
-              display: "flex",
-              flexDirection: "column",
-              gap: 22,
-            }}
-          >
+          {/* 欄位列 */}
+          <div style={{ padding: "0 36px" }}>
             {SPEC_ROWS.map((row, index) => {
               const progress = spring({
                 frame: frame - ROW_START[index],
@@ -233,26 +247,25 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
                   style={{
                     display: "flex",
                     alignItems: "flex-start",
-                    gap: 26,
-                    transform: `translateY(${interpolate(progress, [0, 1], [24, 0])}px)`,
+                    gap: 28,
+                    padding: "18px 0",
+                    borderBottom:
+                      index < SPEC_ROWS.length - 1
+                        ? `1px solid ${withAlpha(WHITE, 0.1)}`
+                        : "none",
                     opacity: progress * infoOut,
-                    textShadow: `0 3px 18px ${withAlpha(BLACK, 0.5)}`,
+                    transform: `translateY(${interpolate(progress, [0, 1], [12, 0])}px)`,
                   }}
                 >
                   <div
                     style={{
-                      width: 300,
+                      width: 250,
                       flexShrink: 0,
-                      textAlign: "center",
-                      padding: "12px 0",
-                      borderRadius: 14,
-                      fontSize: 26,
+                      paddingTop: 2,
+                      fontSize: 24,
                       fontWeight: 800,
-                      letterSpacing: 1,
-                      color: TEXT_DARK,
-                      backgroundColor: NEUTRAL_300,
-                      boxShadow: `0 10px 24px ${withAlpha(BLACK, 0.2)}`,
-                      textShadow: "none",
+                      letterSpacing: 0.5,
+                      color: withAlpha(WHITE, 0.6),
                     }}
                   >
                     {row.field}
@@ -260,11 +273,9 @@ export const Ch3Page7CelesteSpecOverlay: React.FC = () => {
                   <div
                     style={{
                       flex: 1,
-                      paddingTop: 6,
-                      textAlign: "left",
-                      fontSize: 32,
-                      fontWeight: 700,
-                      lineHeight: 1.4,
+                      fontSize: 30,
+                      fontWeight: 600,
+                      lineHeight: 1.45,
                       color: WHITE,
                     }}
                   >
