@@ -25,6 +25,7 @@ import { Ch3Page1Opening } from "./scenes/03-程式實作/Ch3Page1Opening";
 import { Ch3Page2UserStory } from "./scenes/03-程式實作/Ch3Page2UserStory";
 import { Ch3Page3RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3RhythmDoctor";
 import { Ch3Page3RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay";
+import { Ch3Page4Context } from "./scenes/03-程式實作/Ch3Page4Context";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -253,6 +254,14 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page4-Context"
+        component={Ch3Page4Context}
+        durationInFrames={690}
+        fps={30}
+        width={1920}
+        height={1080}
       />
     </>
   );
