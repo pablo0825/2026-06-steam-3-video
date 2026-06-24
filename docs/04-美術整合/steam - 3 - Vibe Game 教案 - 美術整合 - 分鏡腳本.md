@@ -18,7 +18,7 @@
 | 1 | `Ch4-Page1-Opening` | S01–S04 | 開場、AI 生圖定位、本次重點 | 知點 logo、SVG 流程圖 | ✅ 已完成 |
 | 2 | `Ch4-Page2-RelatedKnowledge` | S05–S08 | 相關知識導覽、遊戲畫面大小、橫式／直式範例 | SVG 圖示、簡報 P7/P8 參考圖 | ✅ 已完成 |
 | 3 | `Ch4-Page3-ScreenSizeDemo` | S09 | 實機示範：依螢幕尺寸估算素材大小 | Figma／Storyboard／Unity 螢幕錄影 | ⏳ 待錄影 |
-| 4 | `Ch4-Page4-PPU` | S10–S12 | Unity unit、px 與 PPU 轉換 | SVG 尺寸圖、PPU 對比圖 | ⏳ 待製作 |
+| 4 | `Ch4-Page4-PPU` | S10–S12 | Unity unit、px 與 PPU 轉換 | SVG 尺寸圖、PPU 對比圖 | ✅ 已完成 |
 | 5 | `Ch4-Page5-PPUDemo` | S13 | 實機示範：設定圖片 PPU | Unity 螢幕錄影 | ⏳ 待錄影 |
 | 6 | `Ch4-Page6-SpriteSheet` | S14–S16 | Sprite Sheet 定義、管理對比與範例圖 | Sprite Sheet 圖片素材 | ⏳ 待製作 |
 | 7 | `Ch4-Page7-SpriteSheetDemo` | S17 | 實機示範：Unity 產生或切割 Sprite Sheet | Unity 螢幕錄影 | ⏳ 待錄影 |
