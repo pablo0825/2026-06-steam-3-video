@@ -34,6 +34,8 @@ const clamp = {
   extrapolateLeft: "clamp",
   extrapolateRight: "clamp",
 } as const;
+const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) } as const;
+const ARROW_LEN = 30; // 連線只畫到箭頭底部，由三角形當尖端
 
 // ── 四段節奏 ──
 // S01：0–210｜S02：210–720（對比 210–410、流程 410–720）｜S03：720–1020｜S04：1020–1260
@@ -174,16 +176,25 @@ export const Ch4Page1Opening: React.FC = () => {
       fps,
       config: { damping: 15, stiffness: 120 },
     });
-  const fwdArrowProgress = (i: number) =>
+  // 連線 eased 畫出；箭頭在尾段短暫 pop（仿 Ch3Page7SpecWorkflow）
+  const fwdLine = (i: number) =>
     interpolate(
       frame,
-      [NODE_FIRST + i * NODE_STEP + 30, NODE_FIRST + i * NODE_STEP + 54],
+      [NODE_FIRST + i * NODE_STEP + 30, NODE_FIRST + i * NODE_STEP + 58],
+      [0, 1],
+      ease,
+    );
+  const fwdArrow = (i: number) =>
+    interpolate(
+      frame,
+      [NODE_FIRST + i * NODE_STEP + 52, NODE_FIRST + i * NODE_STEP + 64],
       [0, 1],
       clamp,
     );
 
   // ── S03：回饋＋主句 ────────────────────────────
-  const fbDraw = interpolate(frame, FB_DRAW, [0, 1], clamp);
+  const fbDraw = interpolate(frame, FB_DRAW, [0, 1], ease);
+  const fbArrow = interpolate(frame, [FB_DRAW[1] - 12, FB_DRAW[1]], [0, 1], clamp);
   const problemSpring = spring({
     frame: frame - PROBLEM_IN,
     fps,
@@ -390,33 +401,29 @@ export const Ch4Page1Opening: React.FC = () => {
               {[0, 1, 2].map((i) => {
                 const x1 = NODE_X[i] + 140; // 左節點右緣
                 const x2 = NODE_X[i + 1] - 140; // 右節點左緣
-                const p = fwdArrowProgress(i);
                 return (
                   <g key={i}>
                     <line
                       x1={x1}
                       y1={NODE_Y}
-                      x2={x2 - 22}
+                      x2={x2 - ARROW_LEN}
                       y2={NODE_Y}
                       stroke={BLUE}
                       strokeWidth={6}
                       strokeLinecap="round"
                       pathLength={1}
                       strokeDasharray={1}
-                      strokeDashoffset={1 - p}
+                      strokeDashoffset={1 - fwdLine(i)}
                     />
-                    <g
-                      opacity={interpolate(p, [0.82, 1], [0, 1], clamp)}
-                      transform={`translate(${x2} ${NODE_Y})`}
-                    >
-                      <path d="M0 0 L-22 -13 L-22 13 Z" fill={BLUE} />
+                    <g opacity={fwdArrow(i)} transform={`translate(${x2} ${NODE_Y})`}>
+                      <path d="M0 0 L-30 -16 L-30 16 Z" fill={BLUE} />
                     </g>
                   </g>
                 );
               })}
               {/* 回饋箭頭「修正規格」：驗證規格 → AI 生假素材 */}
               <path
-                d={`M ${NODE_X[2]} ${NODE_Y + 60} C ${NODE_X[2]} 810, ${NODE_X[0]} 810, ${NODE_X[0]} ${NODE_Y + 66}`}
+                d={`M ${NODE_X[2]} ${NODE_Y + 60} C ${NODE_X[2]} 810, ${NODE_X[0]} 810, ${NODE_X[0]} ${NODE_Y + 60 + ARROW_LEN}`}
                 fill="none"
                 stroke={YELLOW}
                 strokeWidth={6}
@@ -426,10 +433,10 @@ export const Ch4Page1Opening: React.FC = () => {
                 strokeDashoffset={1 - fbDraw}
               />
               <g
-                opacity={interpolate(fbDraw, [0.82, 1], [0, 1], clamp)}
-                transform={`translate(${NODE_X[0]} ${NODE_Y + 62})`}
+                opacity={fbArrow}
+                transform={`translate(${NODE_X[0]} ${NODE_Y + 60}) rotate(-90)`}
               >
-                <path d="M0 0 L-13 22 L13 22 Z" fill={YELLOW} />
+                <path d="M0 0 L-30 -16 L-30 16 Z" fill={YELLOW} />
               </g>
               <text
                 x={(NODE_X[0] + NODE_X[2]) / 2}
