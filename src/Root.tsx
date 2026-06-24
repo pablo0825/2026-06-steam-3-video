@@ -34,6 +34,7 @@ import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7Cel
 import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
 import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
+import { Ch4Page1Opening } from "./scenes/04-美術整合/Ch4Page1Opening";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -332,6 +333,16 @@ export const RemotionRoot: React.FC = () => {
         id="Ch3-Page13-Ending"
         component={Ch3Page13Ending}
         durationInFrames={690}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ── 第 4 集・美術整合 ── */}
+      <Composition
+        id="Ch4-Page1-Opening"
+        component={Ch4Page1Opening}
+        durationInFrames={1260}
         fps={30}
         width={1920}
         height={1080}
