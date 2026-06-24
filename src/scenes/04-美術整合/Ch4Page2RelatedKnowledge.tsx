@@ -18,7 +18,6 @@ import {
   SUBTLE,
   TEXT_DARK,
   WHITE,
-  YELLOW,
   withAlpha,
 } from "../../theme/colors";
 
@@ -50,7 +49,6 @@ const S06_IN = [330, 354] as const;
 const S06_OUT = [516, 540] as const;
 const CARD_FIRST = 374;
 const CARD_STEP = 26;
-const NUMBER_HI = [430, 484] as const;
 
 // S07：橫式圖片
 const S07_IN = [540, 564] as const;
@@ -114,7 +112,6 @@ type SizeCardProps = {
   index: number;
   frame: number;
   fps: number;
-  numberHighlight: number;
 };
 
 const SizeCard: React.FC<SizeCardProps> = ({
@@ -123,7 +120,6 @@ const SizeCard: React.FC<SizeCardProps> = ({
   index,
   frame,
   fps,
-  numberHighlight,
 }) => {
   const entrance = spring({
     frame: frame - (CARD_FIRST + index * CARD_STEP),
@@ -152,7 +148,6 @@ const SizeCard: React.FC<SizeCardProps> = ({
     >
       <div
         style={{
-          position: "relative",
           fontSize: 72,
           fontWeight: 900,
           letterSpacing: 1,
@@ -160,20 +155,7 @@ const SizeCard: React.FC<SizeCardProps> = ({
           lineHeight: 1,
         }}
       >
-        <span style={{ position: "relative", zIndex: 1 }}>{title}</span>
-        <div
-          style={{
-            position: "absolute",
-            left: 0,
-            right: 0,
-            bottom: -8,
-            height: 12,
-            borderRadius: 999,
-            background: YELLOW,
-            transform: `scaleX(${numberHighlight})`,
-            transformOrigin: "left center",
-          }}
-        />
+        {title}
       </div>
       <div
         style={{
@@ -201,11 +183,10 @@ const DimensionLabel: React.FC<DimensionLabelProps> = ({ text, opacity }) => (
   <div
     style={{
       position: "absolute",
-      left: "50%",
-      bottom: 34,
-      transform: "translateX(-50%)",
+      left: 32,
+      top: 32,
       opacity,
-      padding: "8px 20px",
+      padding: "10px 22px",
       borderRadius: 999,
       background: withAlpha(TEXT_DARK, 0.58),
       color: WHITE,
@@ -227,7 +208,10 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
   // S05
   const s05Opacity = interpolate(frame, S05_OUT, [1, 0], clamp);
   const promptOpacity = interpolate(frame, [36, 62], [0, 1], clamp);
-  const highlight = interpolate(frame, HIGHLIGHT, [0, 1], clamp);
+  const highlight = interpolate(frame, HIGHLIGHT, [0, 1], {
+    ...clamp,
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
 
   // S06
   const s06Opacity =
@@ -237,10 +221,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
     frame: frame - 346,
     fps,
     config: { damping: 15, stiffness: 120 },
-  });
-  const numberHighlight = interpolate(frame, NUMBER_HI, [0, 1], {
-    ...clamp,
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
 
   // S07
@@ -336,7 +316,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
               index={0}
               frame={frame}
               fps={fps}
-              numberHighlight={numberHighlight}
             />
             <SizeCard
               title="1080×1920"
@@ -344,7 +323,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
               index={1}
               frame={frame}
               fps={fps}
-              numberHighlight={numberHighlight}
             />
           </div>
         </AbsoluteFill>
