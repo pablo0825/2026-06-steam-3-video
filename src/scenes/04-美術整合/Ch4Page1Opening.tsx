@@ -63,6 +63,12 @@ const FLOW_RAISE = [740, 810] as const; // S03：流程群組上移縮小
 const S3_OUT = [998, 1020] as const; // S03 淡出
 const HI_LAST = [664, 696] as const; // 「降低重工」高亮
 
+// S03：回饋箭頭、問題卡、主句
+const FB_DRAW = [820, 884] as const; // 回饋箭頭 draw-on
+const PROBLEM_IN = 800; // 問題卡 spring 起點
+const PHRASE_IN = 884; // 主句 spring 起點
+const PHRASE_RULE = [904, 940] as const; // 主句黃色底線 wipe
+
 export const Ch4Page1Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -144,6 +150,24 @@ export const Ch4Page1Opening: React.FC = () => {
       [0, 1],
       clamp,
     );
+
+  // ── S03：回饋＋主句 ────────────────────────────
+  const fbDraw = interpolate(frame, FB_DRAW, [0, 1], clamp);
+  const problemSpring = spring({
+    frame: frame - PROBLEM_IN,
+    fps,
+    config: { damping: 14, stiffness: 130 },
+  });
+  const phraseSpring = spring({
+    frame: frame - PHRASE_IN,
+    fps,
+    config: { damping: 15, stiffness: 120 },
+  });
+  const phraseRuleW = interpolate(frame, PHRASE_RULE, [0, 360], {
+    ...clamp,
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
+  const s3Out = interpolate(frame, S3_OUT, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -354,7 +378,35 @@ export const Ch4Page1Opening: React.FC = () => {
                   </g>
                 );
               })}
-              {/* 回饋箭頭「修正規格」── (added in Task 4) */}
+              {/* 回饋箭頭「修正規格」：驗證規格 → AI 生假素材 */}
+              <path
+                d={`M ${NODE_X[2]} ${NODE_Y + 60} C ${NODE_X[2]} 810, ${NODE_X[0]} 810, ${NODE_X[0]} ${NODE_Y + 66}`}
+                fill="none"
+                stroke={YELLOW}
+                strokeWidth={6}
+                strokeLinecap="round"
+                pathLength={1}
+                strokeDasharray={1}
+                strokeDashoffset={1 - fbDraw}
+              />
+              <g
+                opacity={fbDraw}
+                transform={`translate(${NODE_X[0]} ${NODE_Y + 62})`}
+              >
+                <path d="M0 0 L-13 22 L13 22 Z" fill={YELLOW} />
+              </g>
+              <text
+                x={(NODE_X[0] + NODE_X[2]) / 2}
+                y={808}
+                textAnchor="middle"
+                fill={YELLOW}
+                fontSize={30}
+                fontWeight={800}
+                fontFamily={FONT}
+                opacity={fbDraw}
+              >
+                修正規格
+              </text>
             </svg>
 
             {NODES.map((label, i) => {
@@ -394,12 +446,63 @@ export const Ch4Page1Opening: React.FC = () => {
               );
             })}
 
-            {/* 問題卡「規格不符？」── (added in Task 4) */}
+            <div
+              style={{
+                position: "absolute",
+                left: NODE_X[2],
+                top: NODE_Y - 150,
+                transform: `translate(-50%, -50%) scale(${interpolate(problemSpring, [0, 1], [0.8, 1])})`,
+                opacity: problemSpring,
+                padding: "16px 30px",
+                background: withAlpha(RED, 0.1),
+                border: `3px solid ${withAlpha(RED, 0.7)}`,
+                borderRadius: 16,
+                fontSize: 32,
+                fontWeight: 800,
+                letterSpacing: 1,
+                color: RED,
+                whiteSpace: "nowrap",
+              }}
+            >
+              規格不符？
+            </div>
           </div>
         </AbsoluteFill>
       )}
 
-      {/* ── S03：主句「提早讓問題出現」── (added in Task 4) */}
+      {/* ── S03：主句「提早讓問題出現」── */}
+      {frame >= 790 && frame < 1022 && (
+        <AbsoluteFill style={{ opacity: s3Out }}>
+          <div
+            style={{
+              position: "absolute",
+              left: 960,
+              top: 880,
+              transform: `translate(-50%, -50%) scale(${interpolate(phraseSpring, [0, 1], [0.9, 1])})`,
+              opacity: phraseSpring,
+              fontSize: 76,
+              fontWeight: 900,
+              letterSpacing: 4,
+              color: TEXT_DARK,
+              whiteSpace: "nowrap",
+            }}
+          >
+            <span style={{ color: YELLOW }}>提早</span>讓問題出現
+          </div>
+          <div
+            style={{
+              position: "absolute",
+              left: 960,
+              top: 938,
+              transform: "translateX(-50%)",
+              width: phraseRuleW,
+              height: 8,
+              borderRadius: 999,
+              background: YELLOW,
+            }}
+          />
+        </AbsoluteFill>
+      )}
 
       {/* ── S04：本次重點三卡 ── (added in Task 5) */}
     </AbsoluteFill>
