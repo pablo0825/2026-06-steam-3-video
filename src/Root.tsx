@@ -33,6 +33,8 @@ import { Ch3Page7CelesteSpec } from "./scenes/03-程式實作/Ch3Page7CelesteSpe
 import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7CelesteSpecOverlay";
 import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
+import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
+import { Ch4Page1Opening } from "./scenes/04-美術整合/Ch4Page1Opening";
 import { Ch4Page2RelatedKnowledge } from "./scenes/04-美術整合/Ch4Page2RelatedKnowledge";
 import { FullVideo } from "./FullVideo";
 
@@ -323,7 +325,25 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page12-Fundamentals"
         component={Ch3Page12Fundamentals}
-        durationInFrames={315}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page13-Ending"
+        component={Ch3Page13Ending}
+        durationInFrames={690}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+
+      {/* ── 第 4 集・美術整合 ── */}
+      <Composition
+        id="Ch4-Page1-Opening"
+        component={Ch4Page1Opening}
+        durationInFrames={1260}
         fps={30}
         width={1920}
         height={1080}

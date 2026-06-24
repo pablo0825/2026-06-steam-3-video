@@ -11,20 +11,20 @@ test("S23 標題與兩段重點", async () => {
   assert.match(page, /提醒：/);
   assert.match(page, /基本功/);
   assert.match(page, /很重要/);
-  // 兩段重點關鍵字
-  assert.match(page, /不代表程式語法或 Unity 操作不重要/);
+  // 兩段重點關鍵字（短句版）
+  assert.match(page, /基本功一樣重要/);
   assert.match(page, /更快找到問題/);
-  assert.match(page, /並清楚描述給 AI/);
+  assert.match(page, /清楚描述給 AI/);
   // 白底
   assert.match(page, /backgroundColor: WHITE/);
 });
 
-test("Root 註冊 Ch3-Page12-Fundamentals（315 frame）", async () => {
+test("Root 註冊 Ch3-Page12-Fundamentals（330 frame）", async () => {
   const root = await readRoot();
   assert.match(root, /id="Ch3-Page12-Fundamentals"/);
   assert.match(
     root,
-    /component=\{Ch3Page12Fundamentals\}[\s\S]*?durationInFrames=\{315\}/,
+    /component=\{Ch3Page12Fundamentals\}[\s\S]*?durationInFrames=\{330\}/,
   );
 });
 
