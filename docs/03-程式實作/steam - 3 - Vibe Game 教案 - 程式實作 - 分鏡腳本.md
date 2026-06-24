@@ -27,7 +27,7 @@
 | 10 | `Ch3-Page10-SpecValidation` | S21 | 依驗收項目手動驗證 | Unity 螢幕錄影 | ⏳ 待錄影 |
 | 11 | `Ch3-Page11-UpdateFeature` | S22 | 更新舊功能的文件處理方式 | SVG 文件卡 | ⏳ 待製作 |
 | 12 | `Ch3-Page12-Fundamentals` | S23 | 程式與 Unity 基本功提醒 | SVG 圖示 | 🔧 微調中 |
-| 13 | `Ch3-Page13-Ending` | S24 | 感謝與收尾 | 知點 logo | ⏳ 待製作 |
+| 13 | `Ch3-Page13-Ending` | S24 | 感謝與收尾 | 知點 logo | ✅ 已完成 |
 
 > 場景檔建議放在 `src/scenes/03-程式實作/`，素材建議放在 `public/03-程式實作/`。
 > 遊戲影片由 DaVinci Resolve 放在下方軌道；如需疊加標題，可由 Remotion 輸出透明 Overlay。
