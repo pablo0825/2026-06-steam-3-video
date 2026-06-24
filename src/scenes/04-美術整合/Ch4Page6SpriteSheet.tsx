@@ -3,6 +3,7 @@ import {
   AbsoluteFill,
   Easing,
   interpolate,
+  interpolateColors,
   spring,
   useCurrentFrame,
   useVideoConfig,
@@ -39,20 +40,27 @@ const S15_IN = [228, 262] as const;
 const HighlightWord: React.FC<{ children: React.ReactNode; show: number }> = ({
   children,
   show,
-}) => (
-  <span
-    style={{
-      padding: "2px 10px",
-      margin: "0 4px",
-      borderRadius: 8,
-      backgroundColor: withAlpha(YELLOW, 0.3 * show),
-      color: TEXT_DARK,
-      fontWeight: 800,
-    }}
-  >
-    {children}
-  </span>
-);
+}) => {
+  // 文字顏色由 SUBTLE 漸變到 TEXT_DARK；字重靠 webkit text-stroke 連續加粗，
+  // 避免固定字重字型在 800 門檻瞬間跳變。
+  const textColor = interpolateColors(show, [0, 1], [SUBTLE, TEXT_DARK]);
+  return (
+    <span
+      style={{
+        padding: "2px 10px",
+        margin: "0 4px",
+        borderRadius: 8,
+        backgroundColor: withAlpha(YELLOW, 0.3 * show),
+        color: textColor,
+        fontWeight: Math.round(interpolate(show, [0, 1], [600, 800], clamp)),
+        WebkitTextStrokeColor: textColor,
+        WebkitTextStrokeWidth: interpolate(show, [0, 1], [0, 0.5], clamp),
+      }}
+    >
+      {children}
+    </span>
+  );
+};
 
 type TileKind = "floor" | "brick" | "spike" | "coin" | "grass" | "box" | "gem";
 
@@ -183,13 +191,7 @@ const ContrastLabel: React.FC<{ kind: "cross" | "check"; show: number }> = ({
           color: isCross ? SUBTLE : TEXT_DARK,
         }}
       >
-        {isCross ? (
-          "多檔案管理困難"
-        ) : (
-          <>
-            一張圖<span style={{ color: YELLOW }}>集中管理</span>
-          </>
-        )}
+        {isCross ? "多檔案管理困難" : <>一張圖集中管理</>}
       </span>
     </div>
   );
@@ -273,7 +275,7 @@ export const Ch4Page6SpriteSheet: React.FC = () => {
               marginTop: 56,
               fontSize: 46,
               fontWeight: 600,
-              color: TEXT_DARK,
+              color: SUBTLE,
               letterSpacing: 1,
               opacity: defLine,
               transform: `translateY(${interpolate(defLine, [0, 1], [28, 0])}px)`,
