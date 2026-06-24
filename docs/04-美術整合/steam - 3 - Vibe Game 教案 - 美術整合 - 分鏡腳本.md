@@ -20,7 +20,7 @@
 | 3 | `Ch4-Page3-ScreenSizeDemo` | S09 | 實機示範：依螢幕尺寸估算素材大小 | Figma／Storyboard／Unity 螢幕錄影 | ⏳ 待錄影 |
 | 4 | `Ch4-Page4-PPU` | S10–S12 | Unity unit、px 與 PPU 轉換 | SVG 尺寸圖、PPU 對比圖 | ✅ 已完成 |
 | 5 | `Ch4-Page5-PPUDemo` | S13 | 實機示範：設定圖片 PPU | Unity 螢幕錄影 | ⏳ 待錄影 |
-| 6 | `Ch4-Page6-SpriteSheet` | S14–S16 | Sprite Sheet 定義、管理對比與範例圖 | Sprite Sheet 圖片素材 | ⏳ 待製作 |
+| 6 | `Ch4-Page6-SpriteSheet` | S14–S16 | Sprite Sheet 定義、管理對比與範例圖 | Sprite Sheet 圖片素材 | 🔧 S14–S15 已完成（S16 待素材） |
 | 7 | `Ch4-Page7-SpriteSheetDemo` | S17 | 實機示範：Unity 產生或切割 Sprite Sheet | Unity 螢幕錄影 | ⏳ 待錄影 |
 | 8 | `Ch4-Page8-ArtWorkflow` | S18 | 美術整合實作流程 | SVG 流程圖 | ⏳ 待製作 |
 | 9 | `Ch4-Page9-ArtSpec` | S19–S20 | 美術規格表與 AI 生假素材 | SVG 表格、Prompt 卡、假素材示意 | ⏳ 待製作 |
