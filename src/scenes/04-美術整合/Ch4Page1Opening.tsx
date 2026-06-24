@@ -44,6 +44,14 @@ const LOGO_MOVE = [40, 70] as const; // logo 上移縮小
 const TITLE_START = 72;
 const SUB_START = 96;
 
+// S02 Beat A：AI 生圖的角色＋左右對比
+const S2_IN = [210, 232] as const; // S02 標題淡入
+const TITLE_OUT = [700, 740] as const; // S02 標題在進入 S03 時淡出
+const CONTRAST_IN = [232, 256] as const; // 對比卡淡入
+const CONTRAST_OUT = [360, 410] as const; // 對比卡淡出後才建流程
+const LEFT_CARD = 244; // 左卡 spring 起點
+const RIGHT_CARD = 276; // 右卡 spring 起點
+
 export const Ch4Page1Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -85,6 +93,24 @@ export const Ch4Page1Opening: React.FC = () => {
     clamp,
   );
   const aOpacity = interpolate(frame, A_OUT, [1, 0], clamp);
+
+  // ── S02 Beat A：AI 生圖的角色＋對比 ─────────────
+  const s2TitleOpacity =
+    interpolate(frame, S2_IN, [0, 1], clamp) *
+    interpolate(frame, TITLE_OUT, [1, 0], clamp);
+  const contrastOpacity =
+    interpolate(frame, CONTRAST_IN, [0, 1], clamp) *
+    interpolate(frame, CONTRAST_OUT, [1, 0], clamp);
+  const leftCard = spring({
+    frame: frame - LEFT_CARD,
+    fps,
+    config: { damping: 15, stiffness: 120 },
+  });
+  const rightCard = spring({
+    frame: frame - RIGHT_CARD,
+    fps,
+    config: { damping: 15, stiffness: 120 },
+  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -156,7 +182,100 @@ export const Ch4Page1Opening: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* ── S02 Beat A：AI 生圖的角色＋左右對比 ── (added in Task 2) */}
+      {/* ── S02 Beat A：AI 生圖的角色＋左右對比 ── */}
+      {frame >= 205 && frame < 742 && (
+        <AbsoluteFill>
+          <div
+            style={{
+              position: "absolute",
+              left: 960,
+              top: 175,
+              transform: "translateX(-50%)",
+              opacity: s2TitleOpacity,
+              fontSize: 60,
+              fontWeight: 900,
+              letterSpacing: 4,
+              color: TEXT_DARK,
+              whiteSpace: "nowrap",
+            }}
+          >
+            AI 生圖的角色
+          </div>
+
+          {frame < 412 && (
+            <div
+              style={{
+                position: "absolute",
+                left: 960,
+                top: 560,
+                transform: "translate(-50%, -50%)",
+                opacity: contrastOpacity,
+                display: "flex",
+                gap: 56,
+              }}
+            >
+              {[
+                {
+                  s: leftCard,
+                  label: "AI 不是",
+                  main: "取代美術人員",
+                  accent: SUBTLE,
+                  border: CARD_BORDER,
+                  dir: -1,
+                },
+                {
+                  s: rightCard,
+                  label: "而是",
+                  main: "優化美術工作",
+                  accent: YELLOW,
+                  border: withAlpha(YELLOW, 0.7),
+                  dir: 1,
+                },
+              ].map((c) => (
+                <div
+                  key={c.main}
+                  style={{
+                    width: 560,
+                    padding: "48px 40px",
+                    background: WHITE,
+                    border: `3px solid ${c.border}`,
+                    borderRadius: 28,
+                    boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
+                    opacity: c.s,
+                    transform: `translateX(${interpolate(c.s, [0, 1], [c.dir * 48, 0])}px)`,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 18,
+                  }}
+                >
+                  <div
+                    style={{
+                      fontSize: 32,
+                      fontWeight: 700,
+                      letterSpacing: 2,
+                      color: c.accent,
+                    }}
+                  >
+                    {c.label}
+                  </div>
+                  <div
+                    style={{
+                      fontSize: 52,
+                      fontWeight: 900,
+                      letterSpacing: 2,
+                      color: c.accent === YELLOW ? YELLOW : TEXT_DARK,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {c.main}
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </AbsoluteFill>
+      )}
 
       {/* ── S02 Beat B / S03：四節點流程（連續，不重建）── (added in Task 3, extended in Task 4) */}
 
