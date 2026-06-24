@@ -9,7 +9,7 @@ import { Ch3Page7SpecWorkflow } from "./Ch3Page7SpecWorkflow";
 export const Ch3Page7SpecPractice: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE }}>
-      <Sequence durationInFrames={330}>
+      <Sequence durationInFrames={330} from={2}>
         <Ch3Page7SpecPerFeature />
       </Sequence>
       <Sequence from={330} durationInFrames={390}>
