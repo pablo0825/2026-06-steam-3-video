@@ -198,6 +198,7 @@ export const Ch4Page1Opening: React.FC = () => {
   // ── S03：回饋＋主句 ────────────────────────────
   const fbDraw = interpolate(frame, FB_DRAW, [0, 1], ease);
   const fbArrow = interpolate(frame, [FB_DRAW[1] - 12, FB_DRAW[1]], [0, 1], clamp);
+  const fbLabel = interpolate(frame, [FB_DRAW[1] - 28, FB_DRAW[1] - 6], [0, 1], clamp);
   const problemSpring = spring({
     frame: frame - PROBLEM_IN,
     fps,
@@ -441,18 +442,6 @@ export const Ch4Page1Opening: React.FC = () => {
               >
                 <path d="M0 0 L-30 -16 L-30 16 Z" fill={YELLOW} />
               </g>
-              <text
-                x={(NODE_X[0] + NODE_X[2]) / 2}
-                y={808}
-                textAnchor="middle"
-                fill={YELLOW}
-                fontSize={30}
-                fontWeight={800}
-                fontFamily={FONT}
-                opacity={fbDraw}
-              >
-                修正規格
-              </text>
             </svg>
 
             {NODES.map((label, i) => {
@@ -511,6 +500,28 @@ export const Ch4Page1Opening: React.FC = () => {
               }}
             >
               規格不符？
+            </div>
+
+            {/* 修正規格 標籤：白底黃框深字，壓在回饋線上斷開連線 */}
+            <div
+              style={{
+                position: "absolute",
+                left: (NODE_X[0] + NODE_X[2]) / 2,
+                top: 776,
+                transform: "translate(-50%, -50%)",
+                opacity: fbLabel,
+                padding: "8px 22px",
+                borderRadius: 999,
+                fontSize: 28,
+                fontWeight: 800,
+                color: TEXT_DARK,
+                backgroundColor: WHITE,
+                border: `2px solid ${withAlpha(YELLOW, 0.7)}`,
+                boxShadow: `0 6px 16px ${withAlpha(TEXT_DARK, 0.08)}`,
+                whiteSpace: "nowrap",
+              }}
+            >
+              修正規格
             </div>
           </div>
         </AbsoluteFill>
