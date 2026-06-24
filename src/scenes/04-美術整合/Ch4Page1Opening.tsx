@@ -69,7 +69,7 @@ const PROBLEM_IN = 800; // 問題卡 spring 起點
 const PHRASE_IN = 884; // 主句 spring 起點
 const PHRASE_RULE = [904, 940] as const; // 主句黃色底線 wipe
 
-// S04：本次重點三卡（parts 內 hl 片段以強調色顯示）
+// S04：本次重點三卡（parts 內每段文字以各自 color 上色）
 const S4_IN = [1020, 1044] as const;
 const FOCUS_FIRST = 1052;
 const FOCUS_STEP = 26;
