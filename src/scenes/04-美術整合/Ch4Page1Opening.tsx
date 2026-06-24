@@ -59,9 +59,10 @@ const NODE_Y = 600; // Beat B 時節點中心 y（group transform 之前）
 const NODE_FIRST = 430; // 第一個節點 spring 起點
 const NODE_STEP = 60; // 每個節點＋箭頭一拍的間隔
 const FLOW_IN = [410, 432] as const; // 流程層淡入
-const FLOW_RAISE = [740, 810] as const; // S03：流程群組上移縮小
+const FLOW_RAISE = [740, 786] as const; // S03：流程群組上移縮小（ease-out）
 const S3_OUT = [998, 1020] as const; // S03 淡出
 const HI_LAST = [664, 696] as const; // 「降低重工」高亮
+const HI_LAST_OFF = [740, 770] as const; // 進入 S03 時「降低重工」恢復正常
 
 // S03：回饋箭頭、問題卡、主句
 const FB_DRAW = [820, 884] as const; // 回饋箭頭 draw-on
@@ -158,10 +159,15 @@ export const Ch4Page1Opening: React.FC = () => {
   const flowOpacity =
     interpolate(frame, FLOW_IN, [0, 1], clamp) *
     interpolate(frame, S3_OUT, [1, 0], clamp);
-  const flowRaise = interpolate(frame, FLOW_RAISE, [0, 1], clamp);
+  const flowRaise = interpolate(frame, FLOW_RAISE, [0, 1], {
+    ...clamp,
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
+  });
   const groupTy = interpolate(flowRaise, [0, 1], [0, -150]);
   const groupScale = interpolate(flowRaise, [0, 1], [1, 0.82]);
-  const hiLast = interpolate(frame, HI_LAST, [0, 1], clamp);
+  const hiLast =
+    interpolate(frame, HI_LAST, [0, 1], clamp) *
+    interpolate(frame, HI_LAST_OFF, [1, 0], clamp);
   const nodeSpring = (i: number) =>
     spring({
       frame: frame - (NODE_FIRST + i * NODE_STEP),
@@ -399,7 +405,10 @@ export const Ch4Page1Opening: React.FC = () => {
                       strokeDasharray={1}
                       strokeDashoffset={1 - p}
                     />
-                    <g opacity={p} transform={`translate(${x2} ${NODE_Y})`}>
+                    <g
+                      opacity={interpolate(p, [0.82, 1], [0, 1], clamp)}
+                      transform={`translate(${x2} ${NODE_Y})`}
+                    >
                       <path d="M0 0 L-22 -13 L-22 13 Z" fill={BLUE} />
                     </g>
                   </g>
@@ -417,7 +426,7 @@ export const Ch4Page1Opening: React.FC = () => {
                 strokeDashoffset={1 - fbDraw}
               />
               <g
-                opacity={fbDraw}
+                opacity={interpolate(fbDraw, [0.82, 1], [0, 1], clamp)}
                 transform={`translate(${NODE_X[0]} ${NODE_Y + 62})`}
               >
                 <path d="M0 0 L-13 22 L13 22 Z" fill={YELLOW} />
