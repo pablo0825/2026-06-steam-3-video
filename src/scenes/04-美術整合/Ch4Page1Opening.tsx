@@ -168,7 +168,10 @@ export const Ch4Page1Opening: React.FC = () => {
   const groupTy = interpolate(flowRaise, [0, 1], [0, -150]);
   const groupScale = interpolate(flowRaise, [0, 1], [1, 0.82]);
   const hiLast =
-    interpolate(frame, HI_LAST, [0, 1], clamp) *
+    interpolate(frame, HI_LAST, [0, 1], {
+      ...clamp,
+      easing: Easing.bezier(0.16, 1, 0.3, 1), // 前中快、後面慢（ease-out）
+    }) *
     interpolate(frame, HI_LAST_OFF, [1, 0], clamp);
   const nodeSpring = (i: number) =>
     spring({
