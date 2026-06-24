@@ -213,7 +213,11 @@ export const Ch4Page1Opening: React.FC = () => {
               }),
             }}
           >
-            <Img src={LOGO} style={{ width: logoW, height: "auto" }} />
+            <Img
+              src={LOGO}
+              style={{ width: logoW, height: "auto" }}
+              from={-51}
+            />
           </div>
 
           {frame >= TITLE_START && (
@@ -266,7 +270,6 @@ export const Ch4Page1Opening: React.FC = () => {
           )}
         </AbsoluteFill>
       )}
-
       {/* ── S02 Beat A：AI 生圖的角色＋左右對比 ── */}
       {frame >= 205 && frame < 742 && (
         <AbsoluteFill>
@@ -361,7 +364,6 @@ export const Ch4Page1Opening: React.FC = () => {
           )}
         </AbsoluteFill>
       )}
-
       {/* ── S02 Beat B / S03：四節點流程（連續，不重建）── */}
       {frame >= 405 && frame < 1022 && (
         <AbsoluteFill style={{ opacity: flowOpacity }}>
@@ -397,10 +399,7 @@ export const Ch4Page1Opening: React.FC = () => {
                       strokeDasharray={1}
                       strokeDashoffset={1 - p}
                     />
-                    <g
-                      opacity={p}
-                      transform={`translate(${x2} ${NODE_Y})`}
-                    >
+                    <g opacity={p} transform={`translate(${x2} ${NODE_Y})`}>
                       <path d="M0 0 L-22 -13 L-22 13 Z" fill={BLUE} />
                     </g>
                   </g>
@@ -497,7 +496,6 @@ export const Ch4Page1Opening: React.FC = () => {
           </div>
         </AbsoluteFill>
       )}
-
       {/* ── S03：主句「提早讓問題出現」── */}
       {frame >= 790 && frame < 1022 && (
         <AbsoluteFill style={{ opacity: s3Out }}>
@@ -531,7 +529,6 @@ export const Ch4Page1Opening: React.FC = () => {
           />
         </AbsoluteFill>
       )}
-
       {/* ── S04：本次重點三卡 ── */}
       {frame >= 1015 && (
         <AbsoluteFill
@@ -577,9 +574,7 @@ export const Ch4Page1Opening: React.FC = () => {
                     gap: 20,
                   }}
                 >
-                  <div
-                    style={{ fontSize: 44, fontWeight: 800, color: YELLOW }}
-                  >
+                  <div style={{ fontSize: 44, fontWeight: 800, color: YELLOW }}>
                     {c.badge}
                   </div>
                   <div style={{ fontSize: 76 }}>{c.icon}</div>
