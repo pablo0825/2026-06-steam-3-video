@@ -51,7 +51,8 @@ const SUB_START = 96;
 const S2_IN = [210, 232] as const; // S02 標題淡入
 const TITLE_OUT = [700, 740] as const; // S02 標題在進入 S03 時淡出
 const CONTRAST_IN = [232, 256] as const; // 對比卡淡入
-const CONTRAST_OUT = [360, 410] as const; // 對比卡淡出後才建流程
+const CONTRAST_OUT = [378, 414] as const; // 對比卡淡出後才建流程
+const CONTRAST_EMPH = [315, 350] as const; // 兩卡到位後：左淡、右放大強調
 const LEFT_CARD = 244; // 左卡 spring 起點
 const RIGHT_CARD = 276; // 右卡 spring 起點
 
@@ -150,12 +151,18 @@ export const Ch4Page1Opening: React.FC = () => {
   const leftCard = spring({
     frame: frame - LEFT_CARD,
     fps,
-    config: { damping: 15, stiffness: 120 },
+    config: { damping: 13, stiffness: 120 },
   });
   const rightCard = spring({
     frame: frame - RIGHT_CARD,
     fps,
-    config: { damping: 15, stiffness: 120 },
+    config: { damping: 13, stiffness: 120 },
+  });
+  // 進場後：左卡 ✗ 淡化、右卡 ✓ 放大強調（仿 Page3Prototype S9）
+  const leftDim = interpolate(frame, CONTRAST_EMPH, [1, 0.35], clamp);
+  const rightGrow = interpolate(frame, CONTRAST_EMPH, [1, 1.12], {
+    ...clamp,
+    easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
 
   // ── S02 Beat B / S03：流程圖（連續）─────────────
@@ -312,7 +319,7 @@ export const Ch4Page1Opening: React.FC = () => {
             AI 生圖的角色
           </div>
 
-          {frame < 412 && (
+          {frame < 416 && (
             <div
               style={{
                 position: "absolute",
@@ -321,7 +328,7 @@ export const Ch4Page1Opening: React.FC = () => {
                 transform: "translate(-50%, -50%)",
                 opacity: contrastOpacity,
                 display: "flex",
-                gap: 56,
+                gap: 160,
               }}
             >
               {[
@@ -333,7 +340,6 @@ export const Ch4Page1Opening: React.FC = () => {
                   markColor: RED,
                   title: "取代美術人員",
                   border: CARD_BORDER,
-                  dir: -1,
                 },
                 {
                   s: rightCard,
@@ -343,14 +349,13 @@ export const Ch4Page1Opening: React.FC = () => {
                   markColor: GREEN,
                   title: "優化美術工作",
                   border: GREEN,
-                  dir: 1,
                 },
-              ].map((c) => (
+              ].map((c, i) => (
                 <div
                   key={c.title}
                   style={{
-                    opacity: c.s,
-                    transform: `translateX(${interpolate(c.s, [0, 1], [c.dir * 48, 0])}px)`,
+                    opacity: c.s * (i === 0 ? leftDim : 1),
+                    transform: `scale(${c.s * (i === 1 ? rightGrow : 1)})`,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
@@ -371,8 +376,8 @@ export const Ch4Page1Opening: React.FC = () => {
                   {/* 框內：✗／✓ + 說明 */}
                   <div
                     style={{
-                      width: 440,
-                      height: 230,
+                      width: 480,
+                      height: 280,
                       background: WHITE,
                       border: `5px solid ${c.border}`,
                       borderRadius: 28,
@@ -381,12 +386,12 @@ export const Ch4Page1Opening: React.FC = () => {
                       flexDirection: "column",
                       alignItems: "center",
                       justifyContent: "center",
-                      gap: 14,
+                      gap: 18,
                     }}
                   >
                     <div
                       style={{
-                        fontSize: 96,
+                        fontSize: 110,
                         fontWeight: 900,
                         lineHeight: 1,
                         color: c.markColor,
@@ -396,7 +401,7 @@ export const Ch4Page1Opening: React.FC = () => {
                     </div>
                     <div
                       style={{
-                        fontSize: 46,
+                        fontSize: 52,
                         fontWeight: 800,
                         letterSpacing: 2,
                         color: TEXT_DARK,
