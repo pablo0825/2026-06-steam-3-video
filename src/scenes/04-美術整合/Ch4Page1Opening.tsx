@@ -12,6 +12,7 @@ import {
 } from "remotion";
 import {
   BLUE,
+  GREEN,
   RED,
   SUBTLE,
   TEXT_DARK,
@@ -326,58 +327,84 @@ export const Ch4Page1Opening: React.FC = () => {
               {[
                 {
                   s: leftCard,
-                  label: "AI 不是",
-                  main: "取代美術人員",
-                  accent: SUBTLE,
+                  cap: "AI 不是",
+                  capColor: SUBTLE,
+                  mark: "✗",
+                  markColor: RED,
+                  title: "取代美術人員",
                   border: CARD_BORDER,
                   dir: -1,
                 },
                 {
                   s: rightCard,
-                  label: "而是",
-                  main: "優化美術工作",
-                  accent: YELLOW,
-                  border: withAlpha(YELLOW, 0.7),
+                  cap: "而是",
+                  capColor: GREEN,
+                  mark: "✓",
+                  markColor: GREEN,
+                  title: "優化美術工作",
+                  border: GREEN,
                   dir: 1,
                 },
               ].map((c) => (
                 <div
-                  key={c.main}
+                  key={c.title}
                   style={{
-                    width: 560,
-                    padding: "48px 40px",
-                    background: WHITE,
-                    border: `3px solid ${c.border}`,
-                    borderRadius: 28,
-                    boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
                     opacity: c.s,
                     transform: `translateX(${interpolate(c.s, [0, 1], [c.dir * 48, 0])}px)`,
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: 18,
                   }}
                 >
+                  {/* caption 在框外上方 */}
                   <div
                     style={{
-                      fontSize: 32,
+                      fontSize: 34,
                       fontWeight: 700,
                       letterSpacing: 2,
-                      color: c.accent,
+                      color: c.capColor,
+                      marginBottom: 18,
                     }}
                   >
-                    {c.label}
+                    {c.cap}
                   </div>
+                  {/* 框內：✗／✓ + 說明 */}
                   <div
                     style={{
-                      fontSize: 52,
-                      fontWeight: 900,
-                      letterSpacing: 2,
-                      color: c.accent === YELLOW ? YELLOW : TEXT_DARK,
-                      whiteSpace: "nowrap",
+                      width: 440,
+                      height: 230,
+                      background: WHITE,
+                      border: `5px solid ${c.border}`,
+                      borderRadius: 28,
+                      boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
+                      display: "flex",
+                      flexDirection: "column",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 14,
                     }}
                   >
-                    {c.main}
+                    <div
+                      style={{
+                        fontSize: 96,
+                        fontWeight: 900,
+                        lineHeight: 1,
+                        color: c.markColor,
+                      }}
+                    >
+                      {c.mark}
+                    </div>
+                    <div
+                      style={{
+                        fontSize: 46,
+                        fontWeight: 800,
+                        letterSpacing: 2,
+                        color: TEXT_DARK,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {c.title}
+                    </div>
                   </div>
                 </div>
               ))}
