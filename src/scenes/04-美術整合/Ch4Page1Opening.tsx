@@ -69,6 +69,31 @@ const PROBLEM_IN = 800; // 問題卡 spring 起點
 const PHRASE_IN = 884; // 主句 spring 起點
 const PHRASE_RULE = [904, 940] as const; // 主句黃色底線 wipe
 
+// S04：本次重點三卡（parts 內 hl 片段以強調色顯示）
+const S4_IN = [1020, 1044] as const;
+const FOCUS_FIRST = 1052;
+const FOCUS_STEP = 26;
+type FocusPart = { text: string; color: string };
+const FOCUS_CARDS: { badge: string; icon: string; parts: FocusPart[] }[] = [
+  { badge: "①", icon: "📋", parts: [{ text: "美術規格表", color: YELLOW }] },
+  {
+    badge: "②",
+    icon: "🤖",
+    parts: [
+      { text: "AI", color: YELLOW },
+      { text: " 生假素材", color: TEXT_DARK },
+    ],
+  },
+  {
+    badge: "③",
+    icon: "✅",
+    parts: [
+      { text: "Unity", color: BLUE },
+      { text: " 驗證規格", color: TEXT_DARK },
+    ],
+  },
+];
+
 export const Ch4Page1Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -168,6 +193,9 @@ export const Ch4Page1Opening: React.FC = () => {
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });
   const s3Out = interpolate(frame, S3_OUT, [1, 0], clamp);
+
+  // ── S04：本次重點 ──────────────────────────────
+  const s4Opacity = interpolate(frame, S4_IN, [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -504,7 +532,77 @@ export const Ch4Page1Opening: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* ── S04：本次重點三卡 ── (added in Task 5) */}
+      {/* ── S04：本次重點三卡 ── */}
+      {frame >= 1015 && (
+        <AbsoluteFill
+          style={{
+            opacity: s4Opacity,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <div
+            style={{
+              fontSize: 64,
+              fontWeight: 800,
+              letterSpacing: 6,
+              color: TEXT_DARK,
+              marginBottom: 64,
+            }}
+          >
+            本次重點
+          </div>
+          <div style={{ display: "flex", gap: 48 }}>
+            {FOCUS_CARDS.map((c, i) => {
+              const s = spring({
+                frame: frame - (FOCUS_FIRST + i * FOCUS_STEP),
+                fps,
+                config: { damping: 15, stiffness: 120 },
+              });
+              return (
+                <div
+                  key={c.badge}
+                  style={{
+                    width: 440,
+                    padding: "52px 36px",
+                    background: WHITE,
+                    border: `2px solid ${CARD_BORDER}`,
+                    borderRadius: 28,
+                    boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
+                    opacity: s,
+                    transform: `translateY(${interpolate(s, [0, 1], [48, 0])}px)`,
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 20,
+                  }}
+                >
+                  <div
+                    style={{ fontSize: 44, fontWeight: 800, color: YELLOW }}
+                  >
+                    {c.badge}
+                  </div>
+                  <div style={{ fontSize: 76 }}>{c.icon}</div>
+                  <div
+                    style={{
+                      fontSize: 40,
+                      fontWeight: 800,
+                      letterSpacing: 1,
+                      whiteSpace: "nowrap",
+                    }}
+                  >
+                    {c.parts.map((p, j) => (
+                      <span key={j} style={{ color: p.color }}>
+                        {p.text}
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              );
+            })}
+          </div>
+        </AbsoluteFill>
+      )}
     </AbsoluteFill>
   );
 };
