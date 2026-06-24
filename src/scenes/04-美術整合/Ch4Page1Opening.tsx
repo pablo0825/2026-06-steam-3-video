@@ -52,6 +52,17 @@ const CONTRAST_OUT = [360, 410] as const; // 對比卡淡出後才建流程
 const LEFT_CARD = 244; // 左卡 spring 起點
 const RIGHT_CARD = 276; // 右卡 spring 起點
 
+// S02 Beat B / S03：四節點水平流程（連續，不重建）
+const NODES = ["AI 生假素材", "匯入 Unity", "驗證規格", "降低重工"] as const;
+const NODE_X = [360, 760, 1160, 1560] as const; // 節點中心 x（節點寬 280）
+const NODE_Y = 600; // Beat B 時節點中心 y（group transform 之前）
+const NODE_FIRST = 430; // 第一個節點 spring 起點
+const NODE_STEP = 60; // 每個節點＋箭頭一拍的間隔
+const FLOW_IN = [410, 432] as const; // 流程層淡入
+const FLOW_RAISE = [740, 810] as const; // S03：流程群組上移縮小
+const S3_OUT = [998, 1020] as const; // S03 淡出
+const HI_LAST = [664, 696] as const; // 「降低重工」高亮
+
 export const Ch4Page1Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -111,6 +122,28 @@ export const Ch4Page1Opening: React.FC = () => {
     fps,
     config: { damping: 15, stiffness: 120 },
   });
+
+  // ── S02 Beat B / S03：流程圖（連續）─────────────
+  const flowOpacity =
+    interpolate(frame, FLOW_IN, [0, 1], clamp) *
+    interpolate(frame, S3_OUT, [1, 0], clamp);
+  const flowRaise = interpolate(frame, FLOW_RAISE, [0, 1], clamp);
+  const groupTy = interpolate(flowRaise, [0, 1], [0, -150]);
+  const groupScale = interpolate(flowRaise, [0, 1], [1, 0.82]);
+  const hiLast = interpolate(frame, HI_LAST, [0, 1], clamp);
+  const nodeSpring = (i: number) =>
+    spring({
+      frame: frame - (NODE_FIRST + i * NODE_STEP),
+      fps,
+      config: { damping: 15, stiffness: 120 },
+    });
+  const fwdArrowProgress = (i: number) =>
+    interpolate(
+      frame,
+      [NODE_FIRST + i * NODE_STEP + 30, NODE_FIRST + i * NODE_STEP + 54],
+      [0, 1],
+      clamp,
+    );
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -277,7 +310,94 @@ export const Ch4Page1Opening: React.FC = () => {
         </AbsoluteFill>
       )}
 
-      {/* ── S02 Beat B / S03：四節點流程（連續，不重建）── (added in Task 3, extended in Task 4) */}
+      {/* ── S02 Beat B / S03：四節點流程（連續，不重建）── */}
+      {frame >= 405 && frame < 1022 && (
+        <AbsoluteFill style={{ opacity: flowOpacity }}>
+          <div
+            style={{
+              position: "absolute",
+              inset: 0,
+              transform: `translateY(${groupTy}px) scale(${groupScale})`,
+              transformOrigin: "960px 600px",
+            }}
+          >
+            <svg
+              width="1920"
+              height="1080"
+              viewBox="0 0 1920 1080"
+              style={{ position: "absolute", inset: 0, overflow: "visible" }}
+            >
+              {[0, 1, 2].map((i) => {
+                const x1 = NODE_X[i] + 140; // 左節點右緣
+                const x2 = NODE_X[i + 1] - 140; // 右節點左緣
+                const p = fwdArrowProgress(i);
+                return (
+                  <g key={i}>
+                    <line
+                      x1={x1}
+                      y1={NODE_Y}
+                      x2={x2 - 22}
+                      y2={NODE_Y}
+                      stroke={BLUE}
+                      strokeWidth={6}
+                      strokeLinecap="round"
+                      pathLength={1}
+                      strokeDasharray={1}
+                      strokeDashoffset={1 - p}
+                    />
+                    <g
+                      opacity={p}
+                      transform={`translate(${x2} ${NODE_Y})`}
+                    >
+                      <path d="M0 0 L-22 -13 L-22 13 Z" fill={BLUE} />
+                    </g>
+                  </g>
+                );
+              })}
+              {/* 回饋箭頭「修正規格」── (added in Task 4) */}
+            </svg>
+
+            {NODES.map((label, i) => {
+              const s = nodeSpring(i);
+              const isLast = i === 3;
+              const hi = isLast ? hiLast : 0;
+              return (
+                <div
+                  key={label}
+                  style={{
+                    position: "absolute",
+                    left: NODE_X[i],
+                    top: NODE_Y,
+                    width: 280,
+                    height: 120,
+                    transform: `translate(-50%, -50%) scale(${interpolate(s, [0, 1], [0.84, isLast ? 1 + hi * 0.05 : 1])})`,
+                    opacity: s,
+                    borderRadius: 22,
+                    background: WHITE,
+                    border: `3px solid ${interpolateColors(hi, [0, 1], [CARD_BORDER, YELLOW])}`,
+                    boxShadow:
+                      hi > 0
+                        ? `0 16px 38px ${withAlpha(YELLOW, 0.22 * hi)}`
+                        : `0 14px 32px ${withAlpha(TEXT_DARK, 0.08)}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 34,
+                    fontWeight: 800,
+                    letterSpacing: 1,
+                    color: interpolateColors(hi, [0, 1], [TEXT_DARK, YELLOW]),
+                    whiteSpace: "nowrap",
+                  }}
+                >
+                  {label}
+                </div>
+              );
+            })}
+
+            {/* 問題卡「規格不符？」── (added in Task 4) */}
+          </div>
+        </AbsoluteFill>
+      )}
 
       {/* ── S03：主句「提早讓問題出現」── (added in Task 4) */}
 
