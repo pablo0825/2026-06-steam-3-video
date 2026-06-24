@@ -74,29 +74,14 @@ const PROBLEM_IN = 800; // 問題卡 spring 起點
 const PHRASE_IN = 884; // 主句 spring 起點
 const PHRASE_RULE = [904, 940] as const; // 主句黃色底線 wipe
 
-// S04：本次重點三卡（parts 內每段文字以各自 color 上色）
+// S04：本次重點三卡（單行說明，深色字）
 const S4_IN = [1020, 1044] as const;
 const FOCUS_FIRST = 1052;
 const FOCUS_STEP = 26;
-type FocusPart = { text: string; color: string };
-const FOCUS_CARDS: { badge: string; icon: string; parts: FocusPart[] }[] = [
-  { badge: "①", icon: "📋", parts: [{ text: "美術規格表", color: YELLOW }] },
-  {
-    badge: "②",
-    icon: "🤖",
-    parts: [
-      { text: "AI", color: YELLOW },
-      { text: " 生假素材", color: TEXT_DARK },
-    ],
-  },
-  {
-    badge: "③",
-    icon: "✅",
-    parts: [
-      { text: "Unity", color: BLUE },
-      { text: " 驗證規格", color: TEXT_DARK },
-    ],
-  },
+const FOCUS_CARDS: { icon: string; label: string }[] = [
+  { icon: "📋", label: "AI 協助產生美術規格表" },
+  { icon: "🤖", label: "用 AI 生假素材" },
+  { icon: "✅", label: "Unity 驗證規格" },
 ];
 
 export const Ch4Page1Opening: React.FC = () => {
@@ -620,10 +605,10 @@ export const Ch4Page1Opening: React.FC = () => {
               });
               return (
                 <div
-                  key={c.badge}
+                  key={c.label}
                   style={{
-                    width: 440,
-                    padding: "52px 36px",
+                    width: 480,
+                    padding: "52px 32px",
                     background: WHITE,
                     border: `2px solid ${CARD_BORDER}`,
                     borderRadius: 28,
@@ -633,26 +618,20 @@ export const Ch4Page1Opening: React.FC = () => {
                     display: "flex",
                     flexDirection: "column",
                     alignItems: "center",
-                    gap: 20,
+                    gap: 24,
                   }}
                 >
-                  <div style={{ fontSize: 44, fontWeight: 800, color: YELLOW }}>
-                    {c.badge}
-                  </div>
                   <div style={{ fontSize: 76 }}>{c.icon}</div>
                   <div
                     style={{
-                      fontSize: 40,
+                      fontSize: 34,
                       fontWeight: 800,
                       letterSpacing: 1,
+                      color: TEXT_DARK,
                       whiteSpace: "nowrap",
                     }}
                   >
-                    {c.parts.map((p, j) => (
-                      <span key={j} style={{ color: p.color }}>
-                        {p.text}
-                      </span>
-                    ))}
+                    {c.label}
                   </div>
                 </div>
               );
