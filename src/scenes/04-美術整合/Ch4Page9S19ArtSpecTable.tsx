@@ -35,17 +35,44 @@ const COLUMNS: Column[] = [
 ];
 
 const ROWS: string[][] = [
-  ["圓球", "玩家角色", "128×128", "128", "單張", "透明", "球狀玩家角色，置中、完整顯示", ""],
-  ["地板", "場景 tile", "512×512", "128", "Sprite Sheet 4×4", "不透明", "4×4 地板變化：正常、印記、破損、其他變化", "每格 128×128"],
-  ["尖刺", "場景物件", "1024×128", "128", "Sprite Sheet 4×1", "不透明", "4×1 場景物件，每格一個獨立物件", "每格 128×128"],
+  [
+    "圓球",
+    "玩家角色",
+    "128×128",
+    "128",
+    "單張",
+    "透明",
+    "球狀玩家角色，置中、完整顯示",
+    "",
+  ],
+  [
+    "地板",
+    "場景 tile",
+    "512×512",
+    "128",
+    "Sprite Sheet 4×4",
+    "不透明",
+    "4×4 地板變化：正常、印記、破損、其他變化",
+    "每格 128×128",
+  ],
+  [
+    "尖刺",
+    "場景物件",
+    "1024×128",
+    "128",
+    "Sprite Sheet 4×1",
+    "不透明",
+    "4×1 場景物件，每格一個獨立物件",
+    "每格 128×128",
+  ],
 ];
 
-const TABLE_W = COLUMNS.reduce((s, c) => s + c.width, 0); // 1720
-const GRID_COLS = COLUMNS.map((c) => `${c.width}px`).join(" ");
-const TABLE_TOP = 300;
-const HEADER_H = 76;
-const ROW_H = 120;
-const TABLE_H = HEADER_H + ROWS.length * ROW_H; // 436
+const TABLE_W = COLUMNS.reduce((s, c) => s + c.width, 0); // 表格總寬 1720, s 是累加值, c 是當前值, 預設是0
+const GRID_COLS = COLUMNS.map((c) => `${c.width}px`).join(" "); // "140px 180px 190px ..."
+const TABLE_TOP = 300; // 表格上間距
+const HEADER_H = 76; // 表頭高
+const ROW_H = 120; // 行高
+const TABLE_H = HEADER_H + ROWS.length * ROW_H; // 表格總高 436
 
 export const Ch4Page9S19ArtSpecTable: React.FC = () => {
   const frame = useCurrentFrame();
@@ -57,10 +84,10 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const frameIn = interpolate(frame, [20, 50], [0, 1], ease);
+  const frameIn = interpolate(frame, [20, 50], [0, 1], ease); // 表頭進場淡入
   const rowIn = (r: number) =>
-    interpolate(frame, [60 + r * 45, 84 + r * 45], [0, 1], ease);
-  const noteIn = interpolate(frame, [182, 206], [0, 1], ease);
+    interpolate(frame, [60 + r * 45, 84 + r * 45], [0, 1], ease); // 三列資料淡入
+  const noteIn = interpolate(frame, [182, 206], [0, 1], ease); // 底部備註淡入
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -110,6 +137,7 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
                   fontWeight: 800,
                   color: TEXT_DARK,
                   backgroundColor: HEADER_BG,
+                  // 除了最後一欄，其餘都在右欄加一條分隔線
                   borderRight:
                     i < COLUMNS.length - 1
                       ? `1px solid ${CARD_BORDER}`
