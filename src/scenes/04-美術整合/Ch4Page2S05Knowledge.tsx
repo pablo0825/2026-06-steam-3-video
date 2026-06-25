@@ -49,6 +49,7 @@ const KnowledgeTag: React.FC<KnowledgeTagProps> = ({
   });
   const isPrimary = index === 0;
   const hi = isPrimary ? highlight : 0;
+  const dim = isPrimary ? 0 : highlight; // 其餘標籤隨高亮變灰
 
   return (
     <div
@@ -61,7 +62,7 @@ const KnowledgeTag: React.FC<KnowledgeTagProps> = ({
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
-        opacity: entrance,
+        opacity: entrance * interpolate(dim, [0, 1], [1, 0.35], clamp),
         transform: `translateY(${interpolate(entrance, [0, 1], [42, 0])}px) scale(${1 + hi * 0.06})`,
         boxShadow:
           hi > 0 ? `0 14px 34px ${withAlpha(BLUE, 0.22 * hi)}` : "none",
