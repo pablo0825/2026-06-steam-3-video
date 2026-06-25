@@ -12,18 +12,13 @@ import {
   PANEL_BG,
   SUBTLE,
   TEXT_DARK,
-  WHITE,
+  NEUTRAL_50,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { FONT, clamp } from "../../theme/motion";
 
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-
-// 第 4 集・第 4 頁・S10：素材大小的基礎單位（240 幀，結尾淡出到 WHITE）
+// 第 4 集・第 4 頁・S10：素材大小的基礎單位（240 幀，結尾淡出到 NEUTRAL_50）
 const ENDING_FADE = [216, 240] as const;
 
 type UnitLabelProps = {
@@ -168,7 +163,7 @@ export const Ch4Page4S10BaseUnit: React.FC = () => {
   const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill style={{ opacity: out }}>
         <div
           style={{
@@ -203,8 +198,18 @@ export const Ch4Page4S10BaseUnit: React.FC = () => {
           enter={pxEnter}
         />
 
-        <DrawArrow direction="right" y={564} progress={arrowRight} color={BLUE} />
-        <DrawArrow direction="left" y={644} progress={arrowLeft} color={YELLOW} />
+        <DrawArrow
+          direction="right"
+          y={564}
+          progress={arrowRight}
+          color={BLUE}
+        />
+        <DrawArrow
+          direction="left"
+          y={644}
+          progress={arrowLeft}
+          color={YELLOW}
+        />
 
         <div
           style={{

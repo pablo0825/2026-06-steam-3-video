@@ -10,21 +10,17 @@ import {
   BLUE,
   CARD_BORDER,
   GREEN,
+  NEUTRAL_50,
   RED,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
 } from "../../theme/colors";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
+import { FONT, clamp } from "../../theme/motion";
 
 // 第 4 集・第 4 頁・S12：PPU=100 vs 128 對比（450 幀）
-//   原合併檔的 630–1080 區間已全部 −630 重新基準化為 0 起算。進場淡入 × 新增結尾淡出到 WHITE。
+//   原合併檔的 630–1080 區間已全部 −630 重新基準化為 0 起算。進場淡入 × 新增結尾淡出到 NEUTRAL_50。
 const S12_IN = [0, 30] as const;
 const ENDING_FADE = [422, 450] as const;
 
@@ -216,7 +212,7 @@ export const Ch4Page4S12Comparison: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
           opacity: sceneOpacity,
@@ -232,7 +228,7 @@ export const Ch4Page4S12Comparison: React.FC = () => {
             right: 0,
             textAlign: "center",
             color: TEXT_DARK,
-            fontSize: 66,
+            fontSize: 64,
             fontWeight: 900,
             letterSpacing: 2,
           }}

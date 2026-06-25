@@ -14,12 +14,10 @@ import {
   withAlpha,
   NEUTRAL_50,
 } from "../../theme/colors";
-import { clamp, easeOutExpo as ease } from "../../theme/motion";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
+import { FONT, clamp, easeOutExpo as ease } from "../../theme/motion";
 
 // 第 4 集・第 4 頁・S11：PPU 定義（390 幀）
-//   原合併檔的 240–630 區間已全部 −240 重新基準化為 0 起算。進場淡入 × 結尾淡出到 WHITE。
+//   原合併檔的 240–630 區間已全部 −240 重新基準化為 0 起算。進場淡入 × 結尾淡出到 NEUTRAL_50。
 const S11_IN = [0, 28] as const; // 進場淡入
 const ENDING_FADE = [294, 322] as const; // 底線畫完(234)後停留約 2 秒再淡出
 
