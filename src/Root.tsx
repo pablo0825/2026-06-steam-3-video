@@ -34,7 +34,9 @@ import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7Cel
 import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
 import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
-import { Ch4Page1Opening } from "./scenes/04-美術整合/Ch4Page1Opening";
+import { Ch4Page1S01Opening } from "./scenes/04-美術整合/Ch4Page1S01Opening";
+import { Ch4Page1S02S03Flow } from "./scenes/04-美術整合/Ch4Page1S02S03Flow";
+import { Ch4Page1S04Focus } from "./scenes/04-美術整合/Ch4Page1S04Focus";
 import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowledge";
 import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
 import { Ch4Page2S07Landscape } from "./scenes/04-美術整合/Ch4Page2S07Landscape";
@@ -351,9 +353,25 @@ export const RemotionRoot: React.FC = () => {
 
       {/* ── 第 4 集・美術整合 ── */}
       <Composition
-        id="Ch4-Page1-Opening"
-        component={Ch4Page1Opening}
-        durationInFrames={1260}
+        id="Ch4-Page1-S01-Opening"
+        component={Ch4Page1S01Opening}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page1-S02-S03-Flow"
+        component={Ch4Page1S02S03Flow}
+        durationInFrames={815}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page1-S04-Focus"
+        component={Ch4Page1S04Focus}
+        durationInFrames={245}
         fps={30}
         width={1920}
         height={1080}
