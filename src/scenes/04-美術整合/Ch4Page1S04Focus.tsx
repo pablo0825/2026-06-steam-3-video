@@ -6,7 +6,13 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { CARD_BORDER, TEXT_DARK, WHITE, withAlpha } from "../../theme/colors";
+import {
+  CARD_BORDER,
+  NEUTRAL_50,
+  TEXT_DARK,
+  WHITE,
+  withAlpha,
+} from "../../theme/colors";
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 
@@ -16,7 +22,7 @@ const clamp = {
 } as const;
 
 // 第 4 集・第 1 頁・S04：本次重點三卡（245 幀）
-//   原合併檔的 1015–1260 區間已全部 −1015 重新基準化為 0 起算。進場淡入 × 結尾淡出到 WHITE。
+//   原合併檔的 1015–1260 區間已全部 −1015 重新基準化為 0 起算。進場淡入 × 結尾淡出到 NEUTRAL_50。
 const S4_IN = [5, 29] as const;
 const ENDING_FADE = [217, 245] as const;
 const FOCUS_FIRST = 37;
@@ -36,7 +42,7 @@ export const Ch4Page1S04Focus: React.FC = () => {
     interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
           opacity: sceneOpacity,

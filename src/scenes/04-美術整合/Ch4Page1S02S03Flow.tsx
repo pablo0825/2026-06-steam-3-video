@@ -12,6 +12,7 @@ import {
   BLUE,
   CARD_BORDER,
   GREEN,
+  NEUTRAL_50,
   RED,
   SUBTLE,
   TEXT_DARK,
@@ -155,7 +156,7 @@ export const Ch4Page1S02S03Flow: React.FC = () => {
   const s3Out = interpolate(frame, S3_OUT, [1, 0], clamp);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       {/* ── S02 Beat A：AI 生圖的角色＋左右對比 ── */}
       {frame < 537 && (
         <AbsoluteFill>
