@@ -20,7 +20,7 @@ import { FONT, clamp, easeStandard as ease } from "../../theme/motion";
 // 第 4 集・第 9 頁・S19：美術規格表（360 幀）
 //   白底 8 欄表格，外框淡入 → 表頭依序出現 → 三列逐列填入 → 底部範本註，結尾淡出到 NEUTRAL_50。
 
-const ENDING_FADE = [332, 360] as const; // 結尾淡出到 NEUTRAL_50
+const ENDING_FADE = [281, 309] as const; // 內容 206 到齊 → 停留 2.5 秒 → 淡出到 NEUTRAL_50
 
 type Column = { label: string; width: number };
 const COLUMNS: Column[] = [
