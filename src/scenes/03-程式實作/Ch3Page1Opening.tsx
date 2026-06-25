@@ -4,15 +4,12 @@ import {
   Easing,
   Img,
   interpolate,
-  interpolateColors,
   spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
 import {
-  BLUE,
-  CHIP_BG,
   CARD_BORDER,
   SUBTLE,
   TEXT_DARK,
@@ -20,6 +17,7 @@ import {
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { KnowledgeNav } from "../../components/KnowledgeNav";
 
 // 第 3 集・第 1 頁開場（連續動畫，三段；30fps，總長 780 frames＝26 秒）
 //   S01：知點 logo 進場 → 縮到上方 → 主標「VIBE GAME 教案」＋黃線，副標「第 3 集・程式實作」
@@ -165,10 +163,6 @@ export const Ch3Page1Opening: React.FC = () => {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
-  const hilite = interpolate(frame, HILITE, [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -298,64 +292,17 @@ export const Ch3Page1Opening: React.FC = () => {
             alignItems: "center",
           }}
         >
-          <div
-            style={{
-              fontSize: 46,
-              fontWeight: 600,
-              letterSpacing: 4,
-              color: SUBTLE,
-              marginBottom: 56,
-            }}
-          >
-            先認識幾個重要觀念
-          </div>
-          <div style={{ display: "flex", gap: 40 }}>
-            {TAGS.map((tag, i) => {
-              const inSpring = spring({
-                frame: frame - (TAG_FIRST + i * TAG_STEP),
-                fps,
-                config: { damping: 15, stiffness: 130 },
-              });
-              const isFirst = i === 0;
-              const hi = isFirst ? hilite : 0; // 僅「User Story」高亮
-              const dim = isFirst ? 0 : hilite; // 其餘標籤被淡化
-              return (
-                <div
-                  key={tag}
-                  style={{
-                    fontSize: 48,
-                    fontWeight: 800,
-                    letterSpacing: 3,
-                    color: interpolateColors(hi, [0, 1], [TEXT_DARK, WHITE]),
-                    background: interpolateColors(hi, [0, 1], [CHIP_BG, BLUE]),
-                    padding: "26px 48px",
-                    borderRadius: 999,
-                    opacity: inSpring * interpolate(dim, [0, 1], [1, 0.35]),
-                    transform: `translateY(${interpolate(inSpring, [0, 1], [40, 0])}px) scale(${1 + hi * 0.06})`,
-                    boxShadow:
-                      hi > 0
-                        ? `0 14px 32px ${withAlpha(BLUE, 0.22 * hi)}`
-                        : "none",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {tag}
-                </div>
-              );
-            })}
-          </div>
-          <div
-            style={{
-              marginTop: 48,
-              fontSize: 32,
-              fontWeight: 600,
-              letterSpacing: 2,
-              color: BLUE,
-              opacity: hilite,
-            }}
-          >
-            先從「User Story」開始 →
-          </div>
+          <KnowledgeNav
+            prompt="先認識幾個重要觀念"
+            tags={TAGS}
+            hintText="先從「User Story」開始 →"
+            frame={frame}
+            fps={fps}
+            tagFirst={TAG_FIRST}
+            tagStep={TAG_STEP}
+            highlight={HILITE}
+            hint={HILITE}
+          />
         </AbsoluteFill>
       )}
     </AbsoluteFill>
