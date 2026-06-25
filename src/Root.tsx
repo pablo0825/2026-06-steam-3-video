@@ -40,6 +40,7 @@ import { Ch4Page4PPU } from "./scenes/04-美術整合/Ch4Page4PPU";
 import { Ch4Page6S14Definition } from "./scenes/04-美術整合/Ch4Page6S14Definition";
 import { Ch4Page6S15Contrast } from "./scenes/04-美術整合/Ch4Page6S15Contrast";
 import { Ch4Page8S18ArtWorkflow } from "./scenes/04-美術整合/Ch4Page8S18ArtWorkflow";
+import { Ch4Page9S19ArtSpecTable } from "./scenes/04-美術整合/Ch4Page9S19ArtSpecTable";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -390,6 +391,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch4-Page8-S18-ArtWorkflow"
         component={Ch4Page8S18ArtWorkflow}
         durationInFrames={270}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page9-S19-ArtSpecTable"
+        component={Ch4Page9S19ArtSpecTable}
+        durationInFrames={360}
         fps={30}
         width={1920}
         height={1080}
