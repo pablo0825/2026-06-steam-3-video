@@ -12,6 +12,7 @@ import {
   NEUTRAL_50,
   TEXT_DARK,
   WHITE,
+  YELLOW,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard as ease } from "../../theme/motion";
@@ -39,6 +40,13 @@ const nodeStart = (i: number) => 10 + i * NODE_STRIDE;
 // 箭頭長度：連線只畫到箭頭底部，由三角形當尖端，避免線戳出箭頭
 const ARROW_LEN = 30;
 
+// 回饋迴圈：末節點(索引3) → 美術規格表(索引1)
+const FB_FROM = 3;
+const FB_TO = 1;
+const FB_Y = NODE_CY + NODE_H / 2 + 36; // 起點離節點底部留間距
+const FB_DEPTH = 850; // 曲線最低點
+const FB_LABEL_Y = 786; // 膠囊標籤 y
+
 export const Ch4Page8S18ArtWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
@@ -55,6 +63,12 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
     interpolate(frame, [nodeStart(i) + 18, nodeStart(i) + 40], [0, 1], ease);
   const segArrow = (i: number) =>
     interpolate(frame, [nodeStart(i) + 30, nodeStart(i) + 42], [0, 1], clamp);
+
+  // 回饋曲線 + 標籤 + 美術規格表高亮
+  const fbDraw = interpolate(frame, [150, 200], [0, 1], ease);
+  const fbArrow = interpolate(frame, [196, 208], [0, 1], clamp);
+  const fbLabel = interpolate(frame, [180, 200], [0, 1], ease);
+  const specHi = interpolate(frame, [196, 216], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -105,7 +119,44 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
               </g>
             );
           })}
+
+          <path
+            d={`M${NODE_CX[FB_FROM]} ${FB_Y} C${NODE_CX[FB_FROM]} ${FB_DEPTH} ${NODE_CX[FB_TO]} ${FB_DEPTH} ${NODE_CX[FB_TO]} ${FB_Y + ARROW_LEN}`}
+            fill="none"
+            stroke={YELLOW}
+            strokeWidth="6"
+            strokeLinecap="round"
+            pathLength="1"
+            strokeDasharray="1"
+            strokeDashoffset={1 - fbDraw}
+          />
+          <g
+            opacity={fbArrow}
+            transform={`translate(${NODE_CX[FB_TO]} ${FB_Y}) rotate(-90)`}
+          >
+            <path d="M0 0 L-30 -16 L-30 16 Z" fill={YELLOW} />
+          </g>
         </svg>
+
+        <div
+          style={{
+            position: "absolute",
+            left: (NODE_CX[FB_TO] + NODE_CX[FB_FROM]) / 2,
+            top: FB_LABEL_Y,
+            transform: "translate(-50%, -50%)",
+            opacity: fbLabel,
+            padding: "8px 22px",
+            borderRadius: 999,
+            fontSize: 28,
+            fontWeight: 800,
+            color: TEXT_DARK,
+            backgroundColor: WHITE,
+            border: `2px solid ${withAlpha(YELLOW, 0.7)}`,
+            boxShadow: `0 6px 16px ${withAlpha(TEXT_DARK, 0.08)}`,
+          }}
+        >
+          修正規格
+        </div>
 
         {NODES.map(([line1, line2], i) => {
           const p = spring({
@@ -113,6 +164,7 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
             fps,
             config: { damping: 17, stiffness: 115, overshootClamping: true },
           });
+          const hi = i === FB_TO ? specHi : 0; // 美術規格表落點高亮
           return (
             <div
               key={line2}
@@ -134,10 +186,10 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
                 fontSize: 30,
                 fontWeight: 900,
                 lineHeight: 1.25,
-                color: TEXT_DARK,
+                color: hi > 0.15 ? YELLOW : TEXT_DARK,
                 backgroundColor: WHITE,
-                border: `3px solid ${CARD_BORDER}`,
-                boxShadow: `0 16px 38px ${withAlpha(TEXT_DARK, 0.08)}`,
+                border: `3px solid ${hi > 0.15 ? YELLOW : CARD_BORDER}`,
+                boxShadow: `0 16px 38px ${withAlpha(hi > 0.15 ? YELLOW : TEXT_DARK, hi > 0.15 ? 0.16 : 0.08)}`,
               }}
             >
               <span>{line1}</span>
