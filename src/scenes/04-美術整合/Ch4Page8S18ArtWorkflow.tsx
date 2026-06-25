@@ -57,92 +57,95 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
     interpolate(frame, [nodeStart(i) + 30, nodeStart(i) + 42], [0, 1], clamp);
 
   return (
-    <AbsoluteFill
-      style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT, opacity: out }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          left: 960,
-          top: 120,
-          transform: `translateX(-50%) scale(${interpolate(titleIn, [0, 1], [0.94, 1])})`,
-          opacity: titleIn,
-          fontSize: 60,
-          fontWeight: 900,
-          color: TEXT_DARK,
-          letterSpacing: 2,
-        }}
-      >
-        美術整合實作流程
-      </div>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
+        <div
+          style={{
+            position: "absolute",
+            left: 960,
+            top: 120,
+            transform: `translateX(-50%) scale(${interpolate(titleIn, [0, 1], [0.94, 1])})`,
+            opacity: titleIn,
+            fontSize: 60,
+            fontWeight: 900,
+            color: TEXT_DARK,
+            letterSpacing: 2,
+          }}
+        >
+          美術整合實作流程
+        </div>
 
-      <svg
-        width="1920"
-        height="1080"
-        viewBox="0 0 1920 1080"
-        style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
-      >
-        {[0, 1, 2].map((i) => {
-          const x1 = NODE_CX[i] + NODE_W / 2;
-          const x2 = NODE_CX[i + 1] - NODE_W / 2;
-          return (
-            <g key={`seg-${i}`}>
-              <path
-                d={`M${x1} ${NODE_CY} L${x2 - ARROW_LEN} ${NODE_CY}`}
-                fill="none"
-                stroke={BLUE}
-                strokeWidth="6"
-                strokeLinecap="round"
-                pathLength="1"
-                strokeDasharray="1"
-                strokeDashoffset={1 - segDraw(i)}
-              />
-              <g opacity={segArrow(i)} transform={`translate(${x2} ${NODE_CY})`}>
-                <path d="M0 0 L-30 -16 L-30 16 Z" fill={BLUE} />
+        <svg
+          width="1920"
+          height="1080"
+          viewBox="0 0 1920 1080"
+          style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
+        >
+          {[0, 1, 2].map((i) => {
+            const x1 = NODE_CX[i] + NODE_W / 2;
+            const x2 = NODE_CX[i + 1] - NODE_W / 2;
+            return (
+              <g key={`seg-${i}`}>
+                <path
+                  d={`M${x1} ${NODE_CY} L${x2 - ARROW_LEN} ${NODE_CY}`}
+                  fill="none"
+                  stroke={BLUE}
+                  strokeWidth="6"
+                  strokeLinecap="round"
+                  pathLength="1"
+                  strokeDasharray="1"
+                  strokeDashoffset={1 - segDraw(i)}
+                />
+                <g
+                  opacity={segArrow(i)}
+                  transform={`translate(${x2} ${NODE_CY})`}
+                >
+                  <path d="M0 0 L-30 -16 L-30 16 Z" fill={BLUE} />
+                </g>
               </g>
-            </g>
+            );
+          })}
+        </svg>
+
+        {NODES.map(([line1, line2], i) => {
+          const p = spring({
+            frame: frame - nodeStart(i),
+            fps,
+            config: { damping: 17, stiffness: 115, overshootClamping: true },
+          });
+          return (
+            <div
+              key={line2}
+              style={{
+                position: "absolute",
+                left: NODE_CX[i],
+                top: NODE_CY,
+                width: NODE_W,
+                height: NODE_H,
+                transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.86, 1])})`,
+                opacity: p,
+                borderRadius: 22,
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                textAlign: "center",
+                padding: "0 14px",
+                fontSize: 30,
+                fontWeight: 900,
+                lineHeight: 1.25,
+                color: TEXT_DARK,
+                backgroundColor: WHITE,
+                border: `3px solid ${CARD_BORDER}`,
+                boxShadow: `0 16px 38px ${withAlpha(TEXT_DARK, 0.08)}`,
+              }}
+            >
+              <span>{line1}</span>
+              <span>{line2}</span>
+            </div>
           );
         })}
-      </svg>
-
-      {NODES.map(([line1, line2], i) => {
-        const p = spring({
-          frame: frame - nodeStart(i),
-          fps,
-          config: { damping: 17, stiffness: 115, overshootClamping: true },
-        });
-        return (
-          <div
-            key={line2}
-            style={{
-              position: "absolute",
-              left: NODE_CX[i],
-              top: NODE_CY,
-              width: NODE_W,
-              height: NODE_H,
-              transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.86, 1])})`,
-              opacity: p,
-              borderRadius: 22,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              textAlign: "center",
-              padding: "0 14px",
-              fontSize: 30,
-              fontWeight: 900,
-              lineHeight: 1.25,
-              color: TEXT_DARK,
-              backgroundColor: WHITE,
-              border: `3px solid ${CARD_BORDER}`,
-              boxShadow: `0 16px 38px ${withAlpha(TEXT_DARK, 0.08)}`,
-            }}
-          >
-            <span>{line1}</span>
-            <span>{line2}</span>
-          </div>
-        );
-      })}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };
