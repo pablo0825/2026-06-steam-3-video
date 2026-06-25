@@ -285,7 +285,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
           </div>
         </AbsoluteFill>
       )}
-
       {/* S06：橫式 / 直式尺寸卡 */}
       {frame >= 326 && frame < 542 && (
         <AbsoluteFill
@@ -327,7 +326,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
           </div>
         </AbsoluteFill>
       )}
-
       {/* S07：橫式遊戲畫面滿版 */}
       {frame >= 536 && frame < 692 && (
         <AbsoluteFill
@@ -349,7 +347,6 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
           <DimensionLabel text="1920×1080" opacity={s07LabelOpacity} />
         </AbsoluteFill>
       )}
-
       {/* S08：直式遊戲畫面置中，黑底補兩側 */}
       {frame >= 686 && (
         <AbsoluteFill
@@ -370,6 +367,7 @@ export const Ch4Page2RelatedKnowledge: React.FC = () => {
               objectFit: "contain",
               display: "block",
             }}
+            from={-43}
           />
           <DimensionLabel text="1080×1920" opacity={s08LabelOpacity} />
         </AbsoluteFill>
