@@ -7,9 +7,17 @@ export const VerdictBadge: React.FC<{
   kind: "pass" | "fail"; // pass→綠✓、fail→紅✗
   label?: string; // 省略則只有圓徽章
   size?: number; // 圓徑，預設 58
+  labelSize?: number; // 文字字級，預設 50
   labelColor?: string; // 文字色，預設 = 徽章色
   shadow?: boolean; // 是否加陰影
-}> = ({ kind, label, size = 58, labelColor, shadow = false }) => {
+}> = ({
+  kind,
+  label,
+  size = 58,
+  labelSize = 50,
+  labelColor,
+  shadow = false,
+}) => {
   const color = kind === "pass" ? GREEN : RED;
   const mark = kind === "pass" ? "✓" : "✗";
   return (
@@ -43,7 +51,11 @@ export const VerdictBadge: React.FC<{
       </div>
       {label !== undefined && (
         <div
-          style={{ fontSize: 50, fontWeight: 800, color: labelColor ?? color }}
+          style={{
+            fontSize: labelSize,
+            fontWeight: 800,
+            color: labelColor ?? color,
+          }}
         >
           {label}
         </div>

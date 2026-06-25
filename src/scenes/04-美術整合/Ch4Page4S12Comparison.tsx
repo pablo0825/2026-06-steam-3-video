@@ -11,13 +11,13 @@ import {
   CARD_BORDER,
   GREEN,
   NEUTRAL_50,
-  RED,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
+import { VerdictBadge } from "../../components/VerdictBadge";
 
 // 第 4 集・第 4 頁・S12：PPU=100 vs 128 對比（450 幀）
 //   原合併檔的 630–1080 區間已全部 −630 重新基準化為 0 起算。進場淡入 × 新增結尾淡出到 NEUTRAL_50。
@@ -61,7 +61,6 @@ const PPUComparisonCard: React.FC<PPUComparisonCardProps> = ({
     fps,
     config: { damping: 14, stiffness: 135 },
   });
-  const color = isGood ? GREEN : RED;
   const spriteSize = isGood ? 178 : 218;
 
   return (
@@ -165,34 +164,17 @@ const PPUComparisonCard: React.FC<PPUComparisonCardProps> = ({
       <div
         style={{
           display: "flex",
-          alignItems: "center",
-          gap: 18,
-          color,
-          fontSize: 36,
-          fontWeight: 850,
-          whiteSpace: "nowrap",
+          justifyContent: "center",
           opacity: resultEnter,
           transform: `translateY(${interpolate(resultEnter, [0, 1], [20, 0])}px)`,
         }}
       >
-        <div
-          style={{
-            width: 48,
-            height: 48,
-            borderRadius: "50%",
-            border: `4px solid ${color}`,
-            color,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 34,
-            fontWeight: 900,
-            lineHeight: 1,
-          }}
-        >
-          {isGood ? "✓" : "×"}
-        </div>
-        <span>{result}</span>
+        <VerdictBadge
+          kind={isGood ? "pass" : "fail"}
+          label={result}
+          size={48}
+          labelSize={36}
+        />
       </div>
     </div>
   );
