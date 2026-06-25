@@ -13,13 +13,7 @@ import {
   WHITE,
   withAlpha,
 } from "../../theme/colors";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
+import { FONT, clamp } from "../../theme/motion";
 
 // 第 4 集・第 1 頁・S04：本次重點三卡（245 幀）
 //   原合併檔的 1015–1260 區間已全部 −1015 重新基準化為 0 起算。進場淡入 × 結尾淡出到 NEUTRAL_50。

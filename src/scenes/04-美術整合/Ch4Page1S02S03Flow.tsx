@@ -20,14 +20,8 @@ import {
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { FONT, clamp, easeStandard as ease } from "../../theme/motion";
 
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) } as const;
 const ARROW_LEN = 30; // 連線只畫到箭頭底部，由三角形當尖端
 
 // 第 4 集・第 1 頁・S02+S03：AI 生圖的角色 → 連續四節點流程 → 主句「提早讓問題出現」

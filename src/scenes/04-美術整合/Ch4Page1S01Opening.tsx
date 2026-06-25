@@ -10,14 +10,9 @@ import {
   useVideoConfig,
 } from "remotion";
 import { NEUTRAL_50, SUBTLE, TEXT_DARK, YELLOW } from "../../theme/colors";
+import { FONT, clamp } from "../../theme/motion";
 
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 const LOGO = staticFile("知點LOGO_FIN-03.png"); // 共用品牌素材，置於 public 根目錄
-
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
 
 // 第 4 集・第 1 頁・S01：開場標題（210 幀，結尾淡出到 NEUTRAL_50）
 //   知點 logo 進場 → 縮到上方 → 主標「VIBE GAME 教案」＋黃線，副標「第 4 集・美術整合」
