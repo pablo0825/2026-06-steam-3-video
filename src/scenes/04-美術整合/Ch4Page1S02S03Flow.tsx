@@ -96,8 +96,7 @@ export const Ch4Page1S02S03Flow: React.FC = () => {
     interpolate(frame, HI_LAST, [0, 1], {
       ...clamp,
       easing: Easing.bezier(0.16, 1, 0.3, 1),
-    }) *
-    interpolate(frame, HI_LAST_OFF, [1, 0], clamp);
+    }) * interpolate(frame, HI_LAST_OFF, [1, 0], clamp);
   const nodeSpring = (i: number) =>
     spring({
       frame: frame - (NODE_FIRST + i * NODE_STEP),
@@ -161,7 +160,7 @@ export const Ch4Page1S02S03Flow: React.FC = () => {
               top: 175,
               transform: "translateX(-50%)",
               opacity: s2TitleOpacity,
-              fontSize: 60,
+              fontSize: 64,
               fontWeight: 900,
               letterSpacing: 4,
               color: TEXT_DARK,
