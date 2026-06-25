@@ -80,7 +80,7 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
             top: 120,
             transform: `translateX(-50%) scale(${interpolate(titleIn, [0, 1], [0.94, 1])})`,
             opacity: titleIn,
-            fontSize: 60,
+            fontSize: 64,
             fontWeight: 900,
             color: TEXT_DARK,
             letterSpacing: 2,
