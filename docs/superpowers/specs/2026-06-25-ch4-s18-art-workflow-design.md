@@ -1,7 +1,7 @@
-# Ch4 S18・美術整合實作流程（Ch4-Page8-ArtWorkflow）— 設計
+# Ch4 S18・美術整合實作流程（Ch4-Page8-S18-ArtWorkflow）— 設計
 
 - **日期**：2026-06-25
-- **對應分鏡**：第 4 集「美術整合」S18 / 第 8 頁 `Ch4-Page8-ArtWorkflow`（簡報 17）
+- **對應分鏡**：第 4 集「美術整合」S18 / 第 8 頁 `Ch4-Page8-S18-ArtWorkflow`（簡報 17）
 - **狀態**：分鏡標示 ⏳ 待製作；本 spec 為實作前設計
 - **方案**：方案 A —— 改寫第 3 集 `Ch3Page7SpecWorkflow` 的流程圖技巧成獨立 Ch4 檔，不抽共用元件、不動 Ch3。
 
@@ -18,12 +18,12 @@
 
 ## 檔案與註冊
 
-- 新檔：`src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`，匯出 `Ch4Page8ArtWorkflow`。
+- 新檔：`src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`，匯出 `Ch4Page8S18ArtWorkflow`。
 - `Root.tsx` 新增：
   ```tsx
   <Composition
-    id="Ch4-Page8-ArtWorkflow"
-    component={Ch4Page8ArtWorkflow}
+    id="Ch4-Page8-S18-ArtWorkflow"
+    component={Ch4Page8S18ArtWorkflow}
     durationInFrames={270}
     fps={30}
     width={1920}
@@ -75,7 +75,7 @@
 
 - `npx tsc --noEmit` 通過。
 - `npx eslint` 對新檔通過。
-- 於 `remotion studio` 預覽 `Ch4-Page8-ArtWorkflow`，確認：四節點依序建立、三段藍線與箭頭、回饋黃線繞回「美術規格表」、結尾淡出到米白。
+- 於 `remotion studio` 預覽 `Ch4-Page8-S18-ArtWorkflow`，確認：四節點依序建立、三段藍線與箭頭、回饋黃線繞回「美術規格表」、結尾淡出到米白。
 
 ## 風險與後續
 

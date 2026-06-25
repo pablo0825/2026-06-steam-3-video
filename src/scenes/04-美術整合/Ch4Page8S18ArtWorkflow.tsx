@@ -14,7 +14,7 @@ import { FONT, clamp } from "../../theme/motion";
 
 const ENDING_FADE = [242, 270] as const; // 結尾淡出到 NEUTRAL_50
 
-export const Ch4Page8ArtWorkflow: React.FC = () => {
+export const Ch4Page8S18ArtWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 

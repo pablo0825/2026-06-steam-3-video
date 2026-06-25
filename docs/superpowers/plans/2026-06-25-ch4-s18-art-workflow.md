@@ -2,16 +2,16 @@
 
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
-**Goal:** Build the `Ch4-Page8-ArtWorkflow` (S18) scene — a 270-frame horizontal SVG flow diagram with 4 nodes and a yellow feedback loop back to the spec-sheet node.
+**Goal:** Build the `Ch4-Page8-S18-ArtWorkflow` (S18) scene — a 270-frame horizontal SVG flow diagram with 4 nodes and a yellow feedback loop back to the spec-sheet node.
 
-**Architecture:** A single self-contained Remotion scene component (`Ch4Page8ArtWorkflow.tsx`) registered as a Composition in `Root.tsx`. It adapts the proven flow-diagram technique from `Ch3Page7SpecWorkflow` (spring node entrance, `strokeDashoffset` line draw, cubic-bezier feedback curve) into the Ch4 米白 palette. No shared component is extracted; Ch3 is not touched.
+**Architecture:** A single self-contained Remotion scene component (`Ch4Page8S18ArtWorkflow.tsx`) registered as a Composition in `Root.tsx`. It adapts the proven flow-diagram technique from `Ch3Page7SpecWorkflow` (spring node entrance, `strokeDashoffset` line draw, cubic-bezier feedback curve) into the Ch4 米白 palette. No shared component is extracted; Ch3 is not touched.
 
 **Tech Stack:** React, Remotion (`AbsoluteFill`, `interpolate`, `spring`, `useCurrentFrame`, `useVideoConfig`), inline SVG, project theme tokens (`theme/colors`, `theme/motion`).
 
 ## Global Constraints
 
 - Verification per task is `npx tsc --noEmit` + `npx eslint <file>` + visual check in `remotion studio`. There is NO unit-test framework for scenes — do not invent one.
-- Composition: id `Ch4-Page8-ArtWorkflow`, `durationInFrames={270}`, `fps={30}`, `width={1920}`, `height={1080}`.
+- Composition: id `Ch4-Page8-S18-ArtWorkflow`, `durationInFrames={270}`, `fps={30}`, `width={1920}`, `height={1080}`.
 - Background `NEUTRAL_50`; shared `FONT`, `clamp`, `easeStandard` imported from `src/theme/motion.ts`.
 - Reply/commit copy in Traditional Chinese where Chinese is used; never Simplified.
 - Do NOT modify `Ch3Page7SpecWorkflow.tsx` or any other existing scene.
@@ -22,15 +22,15 @@
 ### Task 1: Scaffold scene (background, title, ending fade) + register Composition
 
 **Files:**
-- Create: `src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`
+- Create: `src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`
 - Modify: `src/Root.tsx` (add import near the other Ch4 imports; add `<Composition>` after the `Ch4-Page6-S15-Contrast` block)
 
 **Interfaces:**
-- Produces: `export const Ch4Page8ArtWorkflow: React.FC` — a Remotion scene component taking no props.
+- Produces: `export const Ch4Page8S18ArtWorkflow: React.FC` — a Remotion scene component taking no props.
 
 - [ ] **Step 1: Create the scene file with background, title, and ending fade**
 
-Create `src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`:
+Create `src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`:
 
 ```tsx
 import React from "react";
@@ -49,7 +49,7 @@ import { FONT, clamp } from "../../theme/motion";
 
 const ENDING_FADE = [242, 270] as const; // 結尾淡出到 NEUTRAL_50
 
-export const Ch4Page8ArtWorkflow: React.FC = () => {
+export const Ch4Page8S18ArtWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -89,7 +89,7 @@ export const Ch4Page8ArtWorkflow: React.FC = () => {
 Find the Ch4 import group (near `import { Ch4Page6S15Contrast } ...`) and add:
 
 ```tsx
-import { Ch4Page8ArtWorkflow } from "./scenes/04-美術整合/Ch4Page8ArtWorkflow";
+import { Ch4Page8S18ArtWorkflow } from "./scenes/04-美術整合/Ch4Page8S18ArtWorkflow";
 ```
 
 - [ ] **Step 3: Register the Composition in `Root.tsx`**
@@ -98,8 +98,8 @@ Immediately after the closing `/>` of the `id="Ch4-Page6-S15-Contrast"` Composit
 
 ```tsx
       <Composition
-        id="Ch4-Page8-ArtWorkflow"
-        component={Ch4Page8ArtWorkflow}
+        id="Ch4-Page8-S18-ArtWorkflow"
+        component={Ch4Page8S18ArtWorkflow}
         durationInFrames={270}
         fps={30}
         width={1920}
@@ -112,17 +112,17 @@ Immediately after the closing `/>` of the `id="Ch4-Page6-S15-Contrast"` Composit
 Run: `npx tsc --noEmit`
 Expected: exit 0, no output.
 
-Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx" "src/Root.tsx"`
+Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx" "src/Root.tsx"`
 Expected: exit 0, no output.
 
 - [ ] **Step 5: Visual checkpoint**
 
-Open `remotion studio`, select `Ch4-Page8-ArtWorkflow`. Confirm: 米白背景、標題「美術整合實作流程」置中於上方並 spring 彈入；尾段（242–270 幀）整體淡出到米白。
+Open `remotion studio`, select `Ch4-Page8-S18-ArtWorkflow`. Confirm: 米白背景、標題「美術整合實作流程」置中於上方並 spring 彈入；尾段（242–270 幀）整體淡出到米白。
 
 - [ ] **Step 6: Commit**
 
 ```bash
-git add "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx" src/Root.tsx
+git add "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx" src/Root.tsx
 git commit -m "feat(ch4-s18): scaffold ArtWorkflow scene with title and ending fade"
 ```
 
@@ -131,7 +131,7 @@ git commit -m "feat(ch4-s18): scaffold ArtWorkflow scene with title and ending f
 ### Task 2: Add the 4 flow nodes with staggered spring entrance
 
 **Files:**
-- Modify: `src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`
+- Modify: `src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`
 
 **Interfaces:**
 - Consumes: `frame`, `fps`, `out` from Task 1.
@@ -216,7 +216,7 @@ import { CARD_BORDER, NEUTRAL_50, TEXT_DARK, WHITE, withAlpha } from "../../them
 Run: `npx tsc --noEmit`
 Expected: exit 0.
 
-Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"`
+Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"`
 Expected: exit 0.
 
 - [ ] **Step 5: Visual checkpoint**
@@ -226,7 +226,7 @@ In `remotion studio`, scrub 0–140 幀。確認：四個白底卡片節點由�
 - [ ] **Step 6: Commit**
 
 ```bash
-git add "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"
+git add "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"
 git commit -m "feat(ch4-s18): add 4 flow nodes with staggered spring entrance"
 ```
 
@@ -235,7 +235,7 @@ git commit -m "feat(ch4-s18): add 4 flow nodes with staggered spring entrance"
 ### Task 3: Add the 3 connecting blue arrows (sequential draw)
 
 **Files:**
-- Modify: `src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`
+- Modify: `src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`
 
 **Interfaces:**
 - Consumes: `frame`, `NODE_CX`, `NODE_W`, `NODE_CY`, `nodeStart(i)`.
@@ -318,7 +318,7 @@ import { BLUE, CARD_BORDER, NEUTRAL_50, TEXT_DARK, WHITE, withAlpha } from "../.
 Run: `npx tsc --noEmit`
 Expected: exit 0.
 
-Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"`
+Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"`
 Expected: exit 0.
 
 - [ ] **Step 7: Visual checkpoint**
@@ -328,7 +328,7 @@ In `remotion studio`, scrub 0–140 幀。確認：每個節點出現後，藍�
 - [ ] **Step 8: Commit**
 
 ```bash
-git add "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"
+git add "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"
 git commit -m "feat(ch4-s18): add sequential blue connecting arrows"
 ```
 
@@ -337,7 +337,7 @@ git commit -m "feat(ch4-s18): add sequential blue connecting arrows"
 ### Task 4: Add the yellow feedback loop, label pill, and spec-node highlight
 
 **Files:**
-- Modify: `src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx`
+- Modify: `src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx`
 
 **Interfaces:**
 - Consumes: `frame`, `NODE_CX`, `NODE_CY`, `NODE_H`, `ARROW_LEN`, the node render block.
@@ -446,12 +446,12 @@ import { BLUE, CARD_BORDER, NEUTRAL_50, TEXT_DARK, WHITE, YELLOW, withAlpha } fr
 Run: `npx tsc --noEmit`
 Expected: exit 0.
 
-Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"`
+Run: `npx eslint "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"`
 Expected: exit 0.
 
 - [ ] **Step 8: Full visual checkpoint (whole 270 frames)**
 
-In `remotion studio`, play `Ch4-Page8-ArtWorkflow` start to finish. Confirm:
+In `remotion studio`, play `Ch4-Page8-S18-ArtWorkflow` start to finish. Confirm:
 1. 標題彈入 → 四節點由左至右建立 → 三段藍線與箭頭依序畫出。
 2. 約 150–208 幀：黃色回饋曲線由末節點（匯入 Unity 測試）繞回「美術規格表」，向上箭頭落點，膠囊「修正規格」淡入。
 3. 「美術規格表」節點在箭頭落點時轉黃高亮。
@@ -461,7 +461,7 @@ In `remotion studio`, play `Ch4-Page8-ArtWorkflow` start to finish. Confirm:
 - [ ] **Step 9: Commit**
 
 ```bash
-git add "src/scenes/04-美術整合/Ch4Page8ArtWorkflow.tsx"
+git add "src/scenes/04-美術整合/Ch4Page8S18ArtWorkflow.tsx"
 git commit -m "feat(ch4-s18): add feedback loop, 修正規格 label and spec-node highlight"
 ```
 
