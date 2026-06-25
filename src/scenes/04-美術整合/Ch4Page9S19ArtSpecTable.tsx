@@ -59,8 +59,8 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
   });
   const frameIn = interpolate(frame, [20, 50], [0, 1], ease);
   const rowIn = (r: number) =>
-    interpolate(frame, [130 + r * 45, 154 + r * 45], [0, 1], ease);
-  const noteIn = interpolate(frame, [252, 276], [0, 1], ease);
+    interpolate(frame, [60 + r * 45, 84 + r * 45], [0, 1], ease);
+  const noteIn = interpolate(frame, [182, 206], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
