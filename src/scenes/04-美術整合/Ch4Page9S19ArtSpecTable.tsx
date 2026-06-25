@@ -59,6 +59,8 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
   const frameIn = interpolate(frame, [20, 50], [0, 1], ease);
   const headCell = (i: number) =>
     interpolate(frame, [40 + i * 8, 60 + i * 8], [0, 1], ease);
+  const rowIn = (r: number) =>
+    interpolate(frame, [130 + r * 45, 154 + r * 45], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -120,6 +122,44 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
               </div>
             ))}
           </div>
+
+          {ROWS.map((row, r) => (
+            <div
+              key={row[0]}
+              style={{
+                display: "grid",
+                gridTemplateColumns: GRID_COLS,
+                opacity: rowIn(r),
+              }}
+            >
+              {row.map((cell, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                    height: ROW_H,
+                    padding: "0 12px",
+                    fontSize: i === 6 ? 24 : 26,
+                    lineHeight: 1.35,
+                    color: TEXT_DARK,
+                    borderRight:
+                      i < COLUMNS.length - 1
+                        ? `1px solid ${CARD_BORDER}`
+                        : undefined,
+                    borderBottom:
+                      r < ROWS.length - 1
+                        ? `1px solid ${CARD_BORDER}`
+                        : undefined,
+                  }}
+                >
+                  {cell || "—"}
+                </div>
+              ))}
+            </div>
+          ))}
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
