@@ -9,11 +9,12 @@ import {
 } from "remotion";
 import {
   BLUE,
-  CHIP_BG,
+  HEADER_BG,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
+  NEUTRAL_50,
 } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo as ease } from "../../theme/motion";
 
@@ -23,6 +24,7 @@ const TAGS = ["遊戲畫面大小", "素材大小的基礎單位", "Sprite Sheet
 const TAG_FIRST = 72;
 const TAG_STEP = 24;
 const HIGHLIGHT = [210, 250] as const;
+const HINT = [240, 270] as const; // 底部提示句，比高亮稍晚
 const ENDING_FADE = [306, 330] as const;
 
 type KnowledgeTagProps = {
@@ -54,14 +56,15 @@ const KnowledgeTag: React.FC<KnowledgeTagProps> = ({
         width: index === 1 ? 520 : 390,
         height: 106,
         borderRadius: 999,
-        background: interpolateColors(hi, [0, 1], [CHIP_BG, BLUE]),
+        background: interpolateColors(hi, [0, 1], [HEADER_BG, BLUE]),
         color: interpolateColors(hi, [0, 1], [TEXT_DARK, WHITE]),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         opacity: entrance,
         transform: `translateY(${interpolate(entrance, [0, 1], [42, 0])}px) scale(${1 + hi * 0.06})`,
-        boxShadow: hi > 0 ? `0 14px 34px ${withAlpha(BLUE, 0.22 * hi)}` : "none",
+        boxShadow:
+          hi > 0 ? `0 14px 34px ${withAlpha(BLUE, 0.22 * hi)}` : "none",
         fontSize: index === 1 ? 42 : 46,
         fontWeight: 850,
         letterSpacing: 1,
@@ -80,9 +83,10 @@ export const Ch4Page2S05Knowledge: React.FC = () => {
   const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
   const promptOpacity = interpolate(frame, [36, 62], [0, 1], clamp);
   const highlight = interpolate(frame, HIGHLIGHT, [0, 1], ease);
+  const hint = interpolate(frame, HINT, [0, 1], ease);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
           opacity: out,
@@ -118,7 +122,7 @@ export const Ch4Page2S05Knowledge: React.FC = () => {
         <div
           style={{
             marginTop: 42,
-            opacity: highlight,
+            opacity: hint,
             fontSize: 34,
             fontWeight: 750,
             letterSpacing: 1,
