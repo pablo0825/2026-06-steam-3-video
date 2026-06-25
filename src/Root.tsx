@@ -37,7 +37,8 @@ import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
 import { Ch4Page1Opening } from "./scenes/04-美術整合/Ch4Page1Opening";
 import { Ch4Page2RelatedKnowledge } from "./scenes/04-美術整合/Ch4Page2RelatedKnowledge";
 import { Ch4Page4PPU } from "./scenes/04-美術整合/Ch4Page4PPU";
-import { Ch4Page6SpriteSheet } from "./scenes/04-美術整合/Ch4Page6SpriteSheet";
+import { Ch4Page6S14Definition } from "./scenes/04-美術整合/Ch4Page6S14Definition";
+import { Ch4Page6S15Contrast } from "./scenes/04-美術整合/Ch4Page6S15Contrast";
 import { FullVideo } from "./FullVideo";
 
 const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
@@ -369,9 +370,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch4-Page6-SpriteSheet"
-        component={Ch4Page6SpriteSheet}
-        durationInFrames={600}
+        id="Ch4-Page6-S14-Definition"
+        component={Ch4Page6S14Definition}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page6-S15-Contrast"
+        component={Ch4Page6S15Contrast}
+        durationInFrames={426}
         fps={30}
         width={1920}
         height={1080}

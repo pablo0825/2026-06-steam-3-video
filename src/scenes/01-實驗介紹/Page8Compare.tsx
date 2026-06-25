@@ -12,6 +12,7 @@ import {
   WHITE,
   withAlpha,
 } from "../../theme/colors";
+import { VerdictBadge } from "../../components/VerdictBadge";
 
 // 第 8 頁：ChatGPT vs Codex（左右對比）
 //   S19：左欄 ChatGPT 三步驟，最後「你自己貼到文件」紅色強調費工
@@ -73,13 +74,13 @@ const Chip: React.FC<{ item: Item; cx: number; y: number; s: number }> = ({ item
   </div>
 );
 
-const Verdict: React.FC<{ cx: number; mark: string; text: string; color: string; s: number }> = ({
-  cx,
-  mark,
-  text,
-  color,
-  s,
-}) => (
+// 定位 + 進場（scale）的外層；視覺交給 VerdictBadge
+const Verdict: React.FC<{
+  cx: number;
+  kind: "pass" | "fail";
+  text: string;
+  s: number;
+}> = ({ cx, kind, text, s }) => (
   <div
     style={{
       position: "absolute",
@@ -87,29 +88,9 @@ const Verdict: React.FC<{ cx: number; mark: string; text: string; color: string;
       top: 800,
       transform: `translate(-50%, -50%) scale(${s})`,
       opacity: s <= 0 ? 0 : 1,
-      display: "flex",
-      alignItems: "center",
-      gap: 20,
-      whiteSpace: "nowrap",
     }}
   >
-    <div
-      style={{
-        width: 58,
-        height: 58,
-        borderRadius: "50%",
-        background: color,
-        color: WHITE,
-        fontSize: 36,
-        fontWeight: 900,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {mark}
-    </div>
-    <div style={{ fontSize: 50, fontWeight: 800, color }}>{text}</div>
+    <VerdictBadge kind={kind} label={text} />
   </div>
 );
 
@@ -209,8 +190,8 @@ export const Page8Compare: React.FC = () => {
       />
 
       {/* 結論對比 */}
-      <Verdict cx={LX} mark="✗" text="還要自己動手" color={RED} s={leftV} />
-      <Verdict cx={RX} mark="✓" text="完全不用動手" color={GREEN} s={rightV} />
+      <Verdict cx={LX} kind="fail" text="還要自己動手" s={leftV} />
+      <Verdict cx={RX} kind="pass" text="完全不用動手" s={rightV} />
     </AbsoluteFill>
   );
 };

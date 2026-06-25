@@ -10,13 +10,12 @@ import {
 import {
   BLUE,
   CARD_BORDER,
-  GREEN,
-  RED,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
 } from "../../theme/colors";
+import { VerdictBadge } from "../../components/VerdictBadge";
 
 // 第 3 集・第 7 頁 S18 前半：左右對比「一個功能，一份 Spec」
 //   左＝正例：三個功能各自連到一份獨立文件 → ✓（先完整出現）
@@ -120,35 +119,6 @@ const Pill: React.FC<{ label: string }> = ({ label }) => (
     {label}
   </div>
 );
-
-// 判定徽章：✓（綠）正例／✗（紅）反例
-const Verdict: React.FC<{ kind: "pass" | "fail"; scale: number }> = ({
-  kind,
-  scale,
-}) => {
-  const color = kind === "pass" ? GREEN : RED;
-  return (
-    <div
-      style={{
-        width: 92,
-        height: 92,
-        borderRadius: "50%",
-        backgroundColor: color,
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        transform: `scale(${scale})`,
-        boxShadow: `0 14px 30px ${withAlpha(color, 0.32)}`,
-      }}
-    >
-      <span
-        style={{ color: WHITE, fontSize: 54, fontWeight: 900, lineHeight: 1 }}
-      >
-        {kind === "pass" ? "✓" : "✗"}
-      </span>
-    </div>
-  );
-};
 
 export const Ch3Page7SpecPerFeature: React.FC = () => {
   const frame = useCurrentFrame();
@@ -339,22 +309,22 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
           position: "absolute",
           left: GOOD_DOC_X,
           top: VERDICT_TOP,
-          transform: "translateX(-50%)",
+          transform: `translateX(-50%) scale(${passIn})`,
           opacity: passIn,
         }}
       >
-        <Verdict kind="pass" scale={passIn} />
+        <VerdictBadge kind="pass" size={92} shadow />
       </div>
       <div
         style={{
           position: "absolute",
           left: BAD_DOC_X,
           top: VERDICT_TOP,
-          transform: "translateX(-50%)",
+          transform: `translateX(-50%) scale(${failIn})`,
           opacity: failIn,
         }}
       >
-        <Verdict kind="fail" scale={failIn} />
+        <VerdictBadge kind="fail" size={92} shadow />
       </div>
     </AbsoluteFill>
   );
