@@ -8,7 +8,7 @@ import {
   WHITE,
   withAlpha,
 } from "../theme/colors";
-import { clamp } from "../theme/motion";
+import { clamp, easeOutExpo as ease } from "../theme/motion";
 
 // 知識導覽版型：提示句 → 一排膠囊標籤依序彈入 → 指定標籤高亮、其餘變灰 → 底部「先從…開始 →」。
 //   只負責內容呈現；背景、整段淡入淡出與置中交給呼叫端的容器。
@@ -37,7 +37,7 @@ export const KnowledgeNav: React.FC<KnowledgeNavProps> = ({
   hint,
   highlightIndex = 0,
 }) => {
-  const hilite = interpolate(frame, highlight, [0, 1], clamp);
+  const hilite = interpolate(frame, highlight, [0, 1], ease);
   const hintOpacity = interpolate(frame, hint, [0, 1], clamp);
 
   return (
