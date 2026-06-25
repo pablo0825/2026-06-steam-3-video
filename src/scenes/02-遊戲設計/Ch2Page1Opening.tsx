@@ -4,13 +4,13 @@ import {
   Easing,
   Img,
   interpolate,
-  interpolateColors,
   spring,
   staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLUE, CHIP_BG, CARD_BORDER, SUBTLE, TEXT_DARK, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import { BLUE, CARD_BORDER, SUBTLE, TEXT_DARK, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import { KnowledgeNav } from "../../components/KnowledgeNav";
 
 // 第 2 集・第 1 頁開場（連續動畫，三段）
 //   S1：知點 logo 進場 → 縮到上方 → 主標「VIBE GAME 教案」＋黃線，副標「遊戲設計」
@@ -78,7 +78,6 @@ export const Ch2Page1Opening: React.FC = () => {
 
   // ── S3：知識導覽 ──────────────────────────────
   const cOpacity = interpolate(frame, C_IN, [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
-  const hilite = interpolate(frame, HILITE, [0, 1], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   return (
     <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
@@ -207,54 +206,17 @@ export const Ch2Page1Opening: React.FC = () => {
       {/* ── S3：知識導覽 ── */}
       {frame >= 448 && (
         <AbsoluteFill style={{ opacity: cOpacity, justifyContent: "center", alignItems: "center" }}>
-          <div
-            style={{ fontSize: 46, fontWeight: 600, letterSpacing: 4, color: SUBTLE, marginBottom: 56 }}
-          >
-            先認識幾個重要觀念
-          </div>
-          <div style={{ display: "flex", gap: 40 }}>
-            {TAGS.map((tag, i) => {
-              const inSpring = spring({
-                frame: frame - (TAG_FIRST + i * TAG_STEP),
-                fps,
-                config: { damping: 15, stiffness: 130 },
-              });
-              const isFirst = i === 0;
-              const hi = isFirst ? hilite : 0; // 僅「限制設計」高亮
-              return (
-                <div
-                  key={tag}
-                  style={{
-                    fontSize: 48,
-                    fontWeight: 800,
-                    letterSpacing: 3,
-                    color: interpolateColors(hi, [0, 1], [TEXT_DARK, WHITE]),
-                    background: interpolateColors(hi, [0, 1], [CHIP_BG, BLUE]),
-                    padding: "26px 48px",
-                    borderRadius: 999,
-                    opacity: inSpring,
-                    transform: `translateY(${interpolate(inSpring, [0, 1], [40, 0])}px) scale(${1 + hi * 0.06})`,
-                    boxShadow: hi > 0 ? `0 14px 32px ${withAlpha(BLUE, 0.22 * hi)}` : "none",
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  {tag}
-                </div>
-              );
-            })}
-          </div>
-          <div
-            style={{
-              marginTop: 48,
-              fontSize: 32,
-              fontWeight: 600,
-              letterSpacing: 2,
-              color: BLUE,
-              opacity: hilite,
-            }}
-          >
-            先從「限制設計」開始 →
-          </div>
+          <KnowledgeNav
+            prompt="先認識幾個重要觀念"
+            tags={TAGS}
+            hintText="先從「限制設計」開始 →"
+            frame={frame}
+            fps={fps}
+            tagFirst={TAG_FIRST}
+            tagStep={TAG_STEP}
+            highlight={HILITE}
+            hint={HILITE}
+          />
         </AbsoluteFill>
       )}
     </AbsoluteFill>
