@@ -10,6 +10,7 @@ import {
   CARD_BORDER,
   HEADER_BG,
   NEUTRAL_50,
+  SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
@@ -61,6 +62,7 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
     interpolate(frame, [40 + i * 8, 60 + i * 8], [0, 1], ease);
   const rowIn = (r: number) =>
     interpolate(frame, [130 + r * 45, 154 + r * 45], [0, 1], ease);
+  const noteIn = interpolate(frame, [252, 276], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -160,6 +162,19 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
               ))}
             </div>
           ))}
+        </div>
+
+        <div
+          style={{
+            position: "absolute",
+            left: (1920 - TABLE_W) / 2,
+            top: TABLE_TOP + TABLE_H + 18,
+            fontSize: 24,
+            color: SUBTLE,
+            opacity: noteIn,
+          }}
+        >
+          以上表格只是範本，可依需求自行調整內容
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
