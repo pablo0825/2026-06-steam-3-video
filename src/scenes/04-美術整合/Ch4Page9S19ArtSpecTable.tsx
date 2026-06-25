@@ -58,7 +58,6 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
     config: { damping: 16, stiffness: 110 },
   });
   const frameIn = interpolate(frame, [20, 50], [0, 1], ease);
-  const headIn = interpolate(frame, [44, 74], [0, 1], ease);
   const rowIn = (r: number) =>
     interpolate(frame, [130 + r * 45, 154 + r * 45], [0, 1], ease);
   const noteIn = interpolate(frame, [252, 276], [0, 1], ease);
@@ -97,13 +96,7 @@ export const Ch4Page9S19ArtSpecTable: React.FC = () => {
             boxShadow: `0 16px 40px ${withAlpha(TEXT_DARK, 0.06)}`,
           }}
         >
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: GRID_COLS,
-              opacity: headIn,
-            }}
-          >
+          <div style={{ display: "grid", gridTemplateColumns: GRID_COLS }}>
             {COLUMNS.map((c, i) => (
               <div
                 key={c.label}
