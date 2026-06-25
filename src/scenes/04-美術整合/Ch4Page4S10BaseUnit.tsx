@@ -168,12 +168,12 @@ export const Ch4Page4S10BaseUnit: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 166,
+            top: 120,
             left: 0,
             right: 0,
             textAlign: "center",
             color: TEXT_DARK,
-            fontSize: 76,
+            fontSize: 64,
             fontWeight: 900,
             letterSpacing: 2,
             opacity: titleEnter,

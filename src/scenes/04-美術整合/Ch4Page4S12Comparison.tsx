@@ -106,7 +106,7 @@ const PPUComparisonCard: React.FC<PPUComparisonCardProps> = ({
           style={{
             position: "relative",
             width: 270,
-            height: 292,
+            height: 268,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
