@@ -35,7 +35,10 @@ import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPract
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
 import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
 import { Ch4Page1Opening } from "./scenes/04-美術整合/Ch4Page1Opening";
-import { Ch4Page2RelatedKnowledge } from "./scenes/04-美術整合/Ch4Page2RelatedKnowledge";
+import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowledge";
+import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
+import { Ch4Page2S07Landscape } from "./scenes/04-美術整合/Ch4Page2S07Landscape";
+import { Ch4Page2S08Portrait } from "./scenes/04-美術整合/Ch4Page2S08Portrait";
 import { Ch4Page4S10BaseUnit } from "./scenes/04-美術整合/Ch4Page4S10BaseUnit";
 import { Ch4Page4S11PPU } from "./scenes/04-美術整合/Ch4Page4S11PPU";
 import { Ch4Page4S12Comparison } from "./scenes/04-美術整合/Ch4Page4S12Comparison";
@@ -358,9 +361,33 @@ export const RemotionRoot: React.FC = () => {
 
       {/* ── 第 4 集・美術整合 ── */}
       <Composition
-        id="Ch4-Page2-RelatedKnowledge"
-        component={Ch4Page2RelatedKnowledge}
-        durationInFrames={840}
+        id="Ch4-Page2-S05-Knowledge"
+        component={Ch4Page2S05Knowledge}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S06-SizeCards"
+        component={Ch4Page2S06SizeCards}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S07-Landscape"
+        component={Ch4Page2S07Landscape}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S08-Portrait"
+        component={Ch4Page2S08Portrait}
+        durationInFrames={150}
         fps={30}
         width={1920}
         height={1080}
