@@ -1,24 +1,27 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLUE, SUBTLE, TEXT_DARK, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import {
+  BLUE,
+  SUBTLE,
+  TEXT_DARK,
+  YELLOW,
+  withAlpha,
+  NEUTRAL_50,
+} from "../../theme/colors";
+import { clamp, easeOutExpo as ease } from "../../theme/motion";
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
 
 // 第 4 集・第 4 頁・S11：PPU 定義（390 幀）
 //   原合併檔的 240–630 區間已全部 −240 重新基準化為 0 起算。進場淡入 × 結尾淡出到 WHITE。
-const S11_IN = [0, 28] as const;
-const ENDING_FADE = [360, 390] as const;
+const S11_IN = [0, 28] as const; // 進場淡入
+const ENDING_FADE = [294, 322] as const; // 底線畫完(234)後停留約 2 秒再淡出
 
 export const Ch4Page4S11PPU: React.FC = () => {
   const frame = useCurrentFrame();
@@ -42,13 +45,10 @@ export const Ch4Page4S11PPU: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const ppuUnderline = interpolate(frame, [202, 234], [0, 1], {
-    ...clamp,
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
+  const ppuUnderline = interpolate(frame, [202, 234], [0, 1], ease);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
           opacity: sceneOpacity,
