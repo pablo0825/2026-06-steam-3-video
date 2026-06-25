@@ -86,7 +86,7 @@ export const Ch4Page8S18ArtWorkflow: React.FC = () => {
             letterSpacing: 2,
           }}
         >
-          美術整合實作流程
+          美術實作流程
         </div>
 
         <svg
