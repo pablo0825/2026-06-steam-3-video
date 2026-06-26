@@ -1,16 +1,14 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
-  Img,
   interpolate,
   spring,
-  staticFile,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLUE, CARD_BORDER, SUBTLE, TEXT_DARK, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import { BLUE, CARD_BORDER, TEXT_DARK, WHITE, withAlpha } from "../../theme/colors";
 import { KnowledgeNav } from "../../components/KnowledgeNav";
+import { OpeningTitle } from "../../components/OpeningTitle";
 
 // 第 2 集・第 1 頁開場（連續動畫，三段）
 //   S1：知點 logo 進場 → 縮到上方 → 主標「VIBE GAME 教案」＋黃線，副標「遊戲設計」
@@ -19,19 +17,12 @@ import { KnowledgeNav } from "../../components/KnowledgeNav";
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 
-const LOGO = staticFile("知點LOGO_FIN-03.png"); // 共用品牌素材，置於 public 根目錄
-
 // ── 三段節奏（30fps；總長 720 frames＝24 秒）──
 // S1：0–230｜S2：230–450｜S3：450–720
 const A_OUT = [210, 235] as const; // S1 淡出
 const B_IN = [232, 252] as const; // S2 淡入
 const B_OUT = [430, 450] as const; // S2 淡出
 const C_IN = [452, 472] as const; // S3 淡入
-
-// S1 內部節奏
-const LOGO_MOVE = [40, 70] as const; // logo 上移縮小
-const TITLE_START = 72;
-const SUB_START = 96;
 
 // S3 三標籤逐一彈入、限制設計高亮
 const TAGS = ["限制設計", "核心玩法", "核心循環"] as const;
@@ -43,30 +34,7 @@ export const Ch2Page1Opening: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  // ── S1：開場標題 ──────────────────────────────
-  const logoIn = spring({ frame, fps, config: { damping: 13, stiffness: 110 } });
-  const t2 = interpolate(frame, LOGO_MOVE, [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.bezier(0.4, 0, 0.2, 1),
-  });
-  const logoW = interpolate(t2, [0, 1], [560, 220]);
-  const logoY = interpolate(t2, [0, 1], [460, 150]);
-
-  const titleScale = spring({ frame: frame - TITLE_START, fps, config: { damping: 14, stiffness: 110 } });
-  const titleOpacity = interpolate(frame, [TITLE_START, TITLE_START + 18], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
-  const ruleW = interpolate(frame, [TITLE_START + 10, TITLE_START + 34], [0, 380], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-    easing: Easing.bezier(0.16, 1, 0.3, 1),
-  });
-  const subOpacity = interpolate(frame, [SUB_START, SUB_START + 18], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  // ── S1：開場標題（共用 OpeningTitle，僅保留段落淡出）──
   const aOpacity = interpolate(frame, A_OUT, [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
 
   // ── S2：本次重點 ──────────────────────────────
@@ -84,66 +52,7 @@ export const Ch2Page1Opening: React.FC = () => {
       {/* ── S1：開場標題 ── */}
       {frame < 240 && (
         <AbsoluteFill style={{ opacity: aOpacity }}>
-          <div
-            style={{
-              position: "absolute",
-              left: 960,
-              top: logoY,
-              transform: `translate(-50%, -50%) scale(${logoIn})`,
-              opacity: interpolate(frame, [0, 12], [0, 1], { extrapolateRight: "clamp" }),
-            }}
-          >
-            <Img src={LOGO} style={{ width: logoW, height: "auto" }} />
-          </div>
-
-          {frame >= TITLE_START && (
-            <>
-              <div
-                style={{
-                  position: "absolute",
-                  left: 960,
-                  top: 500,
-                  transform: `translate(-50%, -50%) scale(${interpolate(titleScale, [0, 1], [0.9, 1])})`,
-                  opacity: titleOpacity,
-                  fontSize: 132,
-                  fontWeight: 800,
-                  letterSpacing: 6,
-                  color: TEXT_DARK,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                VIBE GAME 教案
-              </div>
-              <div
-                style={{
-                  position: "absolute",
-                  left: 960,
-                  top: 588,
-                  transform: "translateX(-50%)",
-                  width: ruleW,
-                  height: 8,
-                  borderRadius: 999,
-                  background: YELLOW,
-                }}
-              />
-              <div
-                style={{
-                  position: "absolute",
-                  left: 960,
-                  top: 660,
-                  transform: "translateX(-50%)",
-                  opacity: subOpacity,
-                  fontSize: 56,
-                  fontWeight: 500,
-                  letterSpacing: 10,
-                  color: SUBTLE,
-                  whiteSpace: "nowrap",
-                }}
-              >
-                第 2 集・遊戲設計
-              </div>
-            </>
-          )}
+          <OpeningTitle subtitle="第 2 集・遊戲設計" />
         </AbsoluteFill>
       )}
 
