@@ -24,7 +24,6 @@ export const Ch4Page2S07Landscape: React.FC = () => {
     interpolate(frame, ENDING_FADE, [1, 0], clamp);
   const landscapeScale = interpolate(frame, [0, 150], [1.01, 1], clamp);
   const dimLabelOpacity = interpolate(frame, [30, 50], [0, 1], clamp);
-  const sourceLabelOpacity = interpolate(frame, [60, 84], [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: BLACK, fontFamily: FONT }}>
@@ -41,7 +40,7 @@ export const Ch4Page2S07Landscape: React.FC = () => {
         <CornerLabel text="1920×1080" opacity={dimLabelOpacity} />
         <CornerLabel
           text="Celeste 蔚藍｜僅供教學實驗使用"
-          opacity={sourceLabelOpacity}
+          opacity={1}
           placement="bottom"
         />
       </AbsoluteFill>

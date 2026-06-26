@@ -6,7 +6,7 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLUE, CARD_BORDER, TEXT_DARK, WHITE, withAlpha } from "../../theme/colors";
+import { BLUE, CARD_BORDER, TEXT_DARK, WHITE, withAlpha, NEUTRAL_50 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
 // 第 4 集・第 2 頁・S06：橫式 / 直式尺寸卡（210 幀）
@@ -98,7 +98,7 @@ export const Ch4Page2S06SizeCards: React.FC = () => {
   });
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
           opacity: sceneOpacity,

@@ -23,7 +23,6 @@ export const Ch4Page2S08Portrait: React.FC = () => {
     interpolate(frame, S08_IN, [0, 1], clamp) *
     interpolate(frame, ENDING_FADE, [1, 0], clamp);
   const dimLabelOpacity = interpolate(frame, [30, 50], [0, 1], clamp);
-  const sourceLabelOpacity = interpolate(frame, [60, 84], [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: BLACK, fontFamily: FONT }}>
@@ -48,7 +47,7 @@ export const Ch4Page2S08Portrait: React.FC = () => {
         <CornerLabel text="1080×1920" opacity={dimLabelOpacity} />
         <CornerLabel
           text="Dodgeball Dojo｜僅供教學實驗使用"
-          opacity={sourceLabelOpacity}
+          opacity={1}
           placement="bottom"
         />
       </AbsoluteFill>
