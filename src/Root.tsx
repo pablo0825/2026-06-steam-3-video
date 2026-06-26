@@ -35,7 +35,8 @@ import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPract
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
 import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
 import { Ch4Page1S01Opening } from "./scenes/04-美術整合/Ch4Page1S01Opening";
-import { Ch4Page1S02S03Flow } from "./scenes/04-美術整合/Ch4Page1S02S03Flow";
+import { Ch4Page1S02Role } from "./scenes/04-美術整合/Ch4Page1S02Role";
+import { Ch4Page1S03Flow } from "./scenes/04-美術整合/Ch4Page1S03Flow";
 import { Ch4Page1S04Focus } from "./scenes/04-美術整合/Ch4Page1S04Focus";
 import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowledge";
 import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
@@ -361,9 +362,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch4-Page1-S02-S03-Flow"
-        component={Ch4Page1S02S03Flow}
-        durationInFrames={815}
+        id="Ch4-Page1-S02-Role"
+        component={Ch4Page1S02Role}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page1-S03-Flow"
+        component={Ch4Page1S03Flow}
+        durationInFrames={605}
         fps={30}
         width={1920}
         height={1080}
