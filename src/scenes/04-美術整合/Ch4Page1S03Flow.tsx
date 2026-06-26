@@ -30,7 +30,7 @@ const ARROW_LEN = 30; // 連線只畫到箭頭底部，由三角形當尖端
 const TITLE_OUT = [285, 325] as const;
 
 // 四節點水平流程
-const NODES = ["AI 生假素材", "匯入 Unity", "驗證規格", "降低重工"] as const;
+const NODES = ["AI 生假素材", "匯入 Unity", "驗證規格", "降低返工"] as const;
 const NODE_X = [360, 760, 1160, 1560] as const; // 節點中心 x（節點寬 280）
 const NODE_Y = 600; // 節點中心 y（group transform 之前）
 const NODE_FIRST = 15; // 第一個節點 spring 起點
