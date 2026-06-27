@@ -9,45 +9,30 @@ import {
 } from "remotion";
 import {
   BLUE,
-  PANEL_BG,
   SUBTLE,
   TEXT_DARK,
   NEUTRAL_50,
   YELLOW,
-  withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
 // 第 4 集・第 4 頁・S10：素材大小的基礎單位（240 幀，結尾淡出到 NEUTRAL_50）
 const ENDING_FADE = [216, 240] as const;
 
+// unit / px：以 flex 整組置中，故各自只需「主字 + 置中於其下的副標」，
+//   寬度 = 主字寬（caption 為 absolute 不撐寬），整組由外層 flex 置中、自動左右平衡。
 type UnitLabelProps = {
   main: string;
   caption: string;
   color: string;
-  x: number;
   enter: number;
 };
 
-const UnitLabel: React.FC<UnitLabelProps> = ({
-  main,
-  caption,
-  color,
-  x,
-  enter,
-}) => (
+const UnitLabel: React.FC<UnitLabelProps> = ({ main, caption, color, enter }) => (
   <div
     style={{
-      position: "absolute",
-      left: x,
-      top: 524,
-      width: 420,
-      height: 210,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-      justifyContent: "center",
-      gap: 24,
+      position: "relative",
+      flexShrink: 0,
       opacity: enter,
       transform: `translateY(${interpolate(enter, [0, 1], [34, 0])}px)`,
     }}
@@ -55,16 +40,22 @@ const UnitLabel: React.FC<UnitLabelProps> = ({
     <div
       style={{
         color,
-        fontSize: 138,
+        fontSize: 168,
         fontWeight: 950,
         letterSpacing: 1,
         lineHeight: 1,
+        whiteSpace: "nowrap",
       }}
     >
       {main}
     </div>
     <div
       style={{
+        position: "absolute",
+        left: 0,
+        right: 0,
+        top: 196,
+        textAlign: "center",
         color: SUBTLE,
         fontSize: 38,
         fontWeight: 760,
@@ -77,88 +68,83 @@ const UnitLabel: React.FC<UnitLabelProps> = ({
   </div>
 );
 
-type DrawArrowProps = {
-  direction: "right" | "left";
-  y: number;
-  progress: number;
-  color: string;
-};
+// 雙向箭頭：固定寬度的中間區塊，於 flex 中介於 unit / px 之間（本地座標、可動畫畫出）
+const ARROW_W = 420;
+const ARROW_TOP_Y = 94; // 上方藍箭頭（unit → px）本地 y
+const ARROW_BOT_Y = 174; // 下方黃箭頭（px → unit）本地 y
 
-const DrawArrow: React.FC<DrawArrowProps> = ({
-  direction,
-  y,
-  progress,
-  color,
-}) => {
-  const isRight = direction === "right";
-  const tailX = isRight ? 760 : 1160;
-  const headX = isRight ? 1160 : 760;
-  const lineEndX = isRight ? headX - 30 : headX + 30;
-
-  return (
-    <svg
-      style={{
-        position: "absolute",
-        left: 0,
-        top: 0,
-        width: 1920,
-        height: 1080,
-        overflow: "visible",
-      }}
+const Arrows: React.FC<{ right: number; left: number }> = ({ right, left }) => (
+  <svg
+    width={ARROW_W}
+    height={210}
+    style={{ flexShrink: 0, overflow: "visible" }}
+  >
+    <line
+      x1={0}
+      y1={ARROW_TOP_Y}
+      x2={ARROW_W - 30}
+      y2={ARROW_TOP_Y}
+      stroke={BLUE}
+      strokeWidth={7}
+      strokeLinecap="round"
+      pathLength={1}
+      strokeDasharray={1}
+      strokeDashoffset={1 - right}
+    />
+    <g
+      transform={`translate(${ARROW_W} ${ARROW_TOP_Y})`}
+      opacity={interpolate(right, [0.78, 1], [0, 1], clamp)}
     >
-      <line
-        x1={tailX}
-        y1={y}
-        x2={lineEndX}
-        y2={y}
-        stroke={color}
-        strokeWidth={7}
-        strokeLinecap="round"
-        pathLength={1}
-        strokeDasharray={1}
-        strokeDashoffset={1 - progress}
-      />
-      <g
-        transform={`translate(${headX} ${y}) rotate(${isRight ? 0 : 180})`}
-        opacity={interpolate(progress, [0.78, 1], [0, 1], clamp)}
-      >
-        <path d="M0 0 L-28 -16 L-28 16 Z" fill={color} />
-      </g>
-    </svg>
-  );
-};
+      <path d="M0 0 L-28 -16 L-28 16 Z" fill={BLUE} />
+    </g>
+    <line
+      x1={ARROW_W}
+      y1={ARROW_BOT_Y}
+      x2={30}
+      y2={ARROW_BOT_Y}
+      stroke={YELLOW}
+      strokeWidth={7}
+      strokeLinecap="round"
+      pathLength={1}
+      strokeDasharray={1}
+      strokeDashoffset={1 - left}
+    />
+    <g
+      transform={`translate(0 ${ARROW_BOT_Y}) rotate(180)`}
+      opacity={interpolate(left, [0.78, 1], [0, 1], clamp)}
+    >
+      <path d="M0 0 L-28 -16 L-28 16 Z" fill={YELLOW} />
+    </g>
+  </svg>
+);
 
 export const Ch4Page4S10BaseUnit: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const titleEnter = spring({
-    frame: frame - 18,
-    fps,
-    config: { damping: 16, stiffness: 115 },
-  });
   const unitEnter = spring({
-    frame: frame - 54,
+    frame: frame - 18,
     fps,
     config: { damping: 15, stiffness: 120 },
   });
   const pxEnter = spring({
-    frame: frame - 72,
+    frame: frame - 36,
     fps,
     config: { damping: 15, stiffness: 120 },
   });
-  const arrowRight = interpolate(frame, [92, 124], [0, 1], {
+  const arrowRight = interpolate(frame, [56, 88], [0, 1], {
     ...clamp,
     easing: Easing.bezier(0.2, 0.9, 0.25, 1),
   });
-  const arrowLeft = interpolate(frame, [112, 144], [0, 1], {
+  const arrowLeft = interpolate(frame, [76, 108], [0, 1], {
     ...clamp,
     easing: Easing.bezier(0.2, 0.9, 0.25, 1),
   });
-  const question = spring({
-    frame: frame - 146,
+  // 箭頭跑完後出現的提問「怎麼轉換？」
+  const ask = spring({
+    frame: frame - 116,
     fps,
-    config: { damping: 12, stiffness: 150 },
+    config: { damping: 15, stiffness: 130 },
   });
   const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
@@ -168,70 +154,54 @@ export const Ch4Page4S10BaseUnit: React.FC = () => {
         <div
           style={{
             position: "absolute",
-            top: 120,
+            top: 346,
             left: 0,
             right: 0,
-            textAlign: "center",
-            color: TEXT_DARK,
-            fontSize: 64,
-            fontWeight: 900,
-            letterSpacing: 2,
-            opacity: titleEnter,
-            transform: `translateY(${interpolate(titleEnter, [0, 1], [32, 0])}px)`,
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "flex-start",
+            gap: 104,
           }}
         >
-          素材大小的基礎單位
+          <UnitLabel
+            main="unit"
+            caption="Unity 單位"
+            color={BLUE}
+            enter={unitEnter}
+          />
+          <Arrows right={arrowRight} left={arrowLeft} />
+          <UnitLabel
+            main="px"
+            caption="美術圖單位"
+            color={YELLOW}
+            enter={pxEnter}
+          />
         </div>
-
-        <UnitLabel
-          main="unit"
-          caption="Unity 單位"
-          color={BLUE}
-          x={320}
-          enter={unitEnter}
-        />
-        <UnitLabel
-          main="px"
-          caption="美術圖單位"
-          color={YELLOW}
-          x={1180}
-          enter={pxEnter}
-        />
-
-        <DrawArrow
-          direction="right"
-          y={564}
-          progress={arrowRight}
-          color={BLUE}
-        />
-        <DrawArrow
-          direction="left"
-          y={644}
-          progress={arrowLeft}
-          color={YELLOW}
-        />
 
         <div
           style={{
             position: "absolute",
-            left: 908,
-            top: 566,
-            width: 104,
-            height: 104,
-            borderRadius: "50%",
-            background: PANEL_BG,
-            border: `3px solid ${withAlpha(BLUE, 0.18)}`,
-            color: TEXT_DARK,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            fontSize: 78,
-            fontWeight: 900,
-            opacity: question,
-            transform: `scale(${interpolate(question, [0, 1], [0.55, 1])})`,
+            left: 0,
+            right: 0,
+            top: 840,
+            textAlign: "center",
+            opacity: ask,
+            transform: `translateY(${interpolate(ask, [0, 1], [28, 0])}px)`,
           }}
         >
-          ?
+          <span
+            style={{
+              position: "relative",
+              display: "inline-block",
+              color: TEXT_DARK,
+              fontSize: 64,
+              fontWeight: 800,
+              letterSpacing: 0,
+            }}
+          >
+            怎麼轉換？
+            
+          </span>
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
