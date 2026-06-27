@@ -42,6 +42,7 @@ import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowle
 import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
 import { Ch4Page2S07Landscape } from "./scenes/04-美術整合/Ch4Page2S07Landscape";
 import { Ch4Page2S08Portrait } from "./scenes/04-美術整合/Ch4Page2S08Portrait";
+import { Ch4Page4S09ToUnity } from "./scenes/04-美術整合/Ch4Page4S09ToUnity";
 import { Ch4Page4S10BaseUnit } from "./scenes/04-美術整合/Ch4Page4S10BaseUnit";
 import { Ch4Page4S11PPU } from "./scenes/04-美術整合/Ch4Page4S11PPU";
 import { Ch4Page4S12Comparison } from "./scenes/04-美術整合/Ch4Page4S12Comparison";
@@ -440,6 +441,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch4-Page2-S08-Portrait"
         component={Ch4Page2S08Portrait}
         durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page4-S09-ToUnity"
+        component={Ch4Page4S09ToUnity}
+        durationInFrames={240}
         fps={30}
         width={1920}
         height={1080}
