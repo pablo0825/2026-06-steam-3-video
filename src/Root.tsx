@@ -48,6 +48,7 @@ import { Ch4Page4S11PPU } from "./scenes/04-美術整合/Ch4Page4S11PPU";
 import { Ch4Page4S12Comparison } from "./scenes/04-美術整合/Ch4Page4S12Comparison";
 import { Ch4Page6S14Definition } from "./scenes/04-美術整合/Ch4Page6S14Definition";
 import { Ch4Page6S15Contrast } from "./scenes/04-美術整合/Ch4Page6S15Contrast";
+import { Ch4Page6S16SpriteSheetExample } from "./scenes/04-美術整合/Ch4Page6S16SpriteSheetExample";
 import { Ch4Page8S18ArtWorkflow } from "./scenes/04-美術整合/Ch4Page8S18ArtWorkflow";
 import { Ch4Page9S19ArtSpecTable } from "./scenes/04-美術整合/Ch4Page9S19ArtSpecTable";
 import { FullVideo } from "./FullVideo";
@@ -489,6 +490,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch4-Page6-S15-Contrast"
         component={Ch4Page6S15Contrast}
         durationInFrames={426}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page6-S16-SpriteSheetExample"
+        component={Ch4Page6S16SpriteSheetExample}
+        durationInFrames={350}
         fps={30}
         width={1920}
         height={1080}
