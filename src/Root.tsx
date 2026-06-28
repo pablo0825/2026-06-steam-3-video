@@ -41,6 +41,7 @@ import { Ch4Page1S04Focus } from "./scenes/04-美術整合/Ch4Page1S04Focus";
 import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowledge";
 import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
 import { Ch4Page2S07ScreenSizes } from "./scenes/04-美術整合/Ch4Page2S07ScreenSizes";
+import { Ch4Page2S08WhySize } from "./scenes/04-美術整合/Ch4Page2S08WhySize";
 import { Ch4Page4S09ToUnity } from "./scenes/04-美術整合/Ch4Page4S09ToUnity";
 import { Ch4Page4S10BaseUnit } from "./scenes/04-美術整合/Ch4Page4S10BaseUnit";
 import { Ch4Page4S11PPU } from "./scenes/04-美術整合/Ch4Page4S11PPU";
@@ -433,6 +434,14 @@ export const RemotionRoot: React.FC = () => {
         id="Ch4-Page2-S07-ScreenSizes"
         component={Ch4Page2S07ScreenSizes}
         durationInFrames={260}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S08-WhySize"
+        component={Ch4Page2S08WhySize}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}
