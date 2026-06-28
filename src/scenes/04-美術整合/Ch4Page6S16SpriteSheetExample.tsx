@@ -121,6 +121,7 @@ export const Ch4Page6S16SpriteSheetExample: React.FC = () => {
                     objectFit: "contain",
                     imageRendering: ex.pixelated ? "pixelated" : "auto",
                   }}
+                  from={-66}
                 />
               </div>
             </div>
