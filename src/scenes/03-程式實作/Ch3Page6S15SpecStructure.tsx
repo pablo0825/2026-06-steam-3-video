@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -10,30 +9,14 @@ import {
 import {
   BLUE,
   CARD_BORDER,
+  NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = {
-  ...clamp,
-  easing: Easing.bezier(0.4, 0, 0.2, 1),
-};
-const emphasizeEase = {
-  ...clamp,
-  easing: Easing.bezier(0.16, 1, 0.3, 1),
-};
-const settleEase = {
-  ...clamp,
-  easing: Easing.bezier(0.4, 0, 0.2, 1),
-};
+import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
 type IconType =
   | "person"
@@ -139,7 +122,7 @@ const FieldIcon: React.FC<{ type: IconType }> = ({ type }) => {
   );
 };
 
-export const Ch3Page6SpecStructure: React.FC = () => {
+export const Ch3Page6S15SpecStructure: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -148,19 +131,14 @@ export const Ch3Page6SpecStructure: React.FC = () => {
     fps,
     config: { damping: 15, stiffness: 110 },
   });
-  const groupIn = interpolate(frame, [70, 120], [0, 1], ease);
-  const tipIn = interpolate(frame, [850, 900], [0, 1], ease);
-  const tipRise = interpolate(frame, [850, 900], [18, 0], ease);
+  const groupIn = interpolate(frame, [70, 120], [0, 1], easeStandard);
+  const tipIn = interpolate(frame, [850, 900], [0, 1], easeStandard);
+  const tipRise = interpolate(frame, [850, 900], [18, 0], easeStandard);
   const out = interpolate(frame, [980, 1018], [1, 0], clamp);
 
   return (
-    <AbsoluteFill
-      style={{
-        backgroundColor: WHITE,
-        fontFamily: FONT,
-        opacity: out,
-      }}
-    >
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
       <div
         style={{
           position: "absolute",
@@ -190,20 +168,20 @@ export const Ch3Page6SpecStructure: React.FC = () => {
           frame,
           [70 + index * 7, 112 + index * 7],
           [0, 1],
-          ease,
+          easeStandard,
         );
         const highlightStart = 180 + index * 108;
         const highlightIn = interpolate(
           frame,
           [highlightStart, highlightStart + 18],
           [0, 1],
-          emphasizeEase,
+          easeOutExpo,
         );
         const highlightOut = interpolate(
           frame,
           [highlightStart + 92, highlightStart + 112],
           [1, 0],
-          settleEase,
+          easeStandard,
         );
         const highlight = Math.min(highlightIn, highlightOut);
         const accent = highlight > 0.15 ? YELLOW : SUBTLE;
@@ -284,6 +262,7 @@ export const Ch3Page6SpecStructure: React.FC = () => {
       >
         先看案例，再一起寫 →
       </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

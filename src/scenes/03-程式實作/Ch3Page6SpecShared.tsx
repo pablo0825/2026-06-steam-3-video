@@ -7,8 +7,7 @@ import {
   WHITE,
   withAlpha,
 } from "../../theme/colors";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
+import { FONT } from "../../theme/motion";
 
 export type SpecDocumentCardProps = {
   opacity: number;

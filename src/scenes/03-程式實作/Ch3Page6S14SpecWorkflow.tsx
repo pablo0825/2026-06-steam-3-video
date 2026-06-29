@@ -1,13 +1,9 @@
 import React from "react";
-import {
-  AbsoluteFill,
-  Easing,
-  interpolate,
-  useCurrentFrame,
-} from "remotion";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import {
   BLUE,
   CARD_BORDER,
+  NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
@@ -15,16 +11,7 @@ import {
   withAlpha,
 } from "../../theme/colors";
 import { SpecDocumentCard } from "./Ch3Page6SpecShared";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = {
-  ...clamp,
-  easing: Easing.bezier(0.16, 1, 0.3, 1),
-};
+import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 const CARD_ENTER_STAGGER = 18;
 const CARD_ENTER_DURATION = 30;
 
@@ -102,49 +89,44 @@ const BenefitIcon: React.FC<{ type: "maintain" | "token" }> = ({ type }) => {
   );
 };
 
-export const Ch3Page6SpecWorkflow: React.FC = () => {
+export const Ch3Page6S14SpecWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
 
-  const collect = interpolate(frame, [112, 212], [0, 1], ease);
-  const documentIn = interpolate(frame, [180, 250], [0, 1], ease);
-  const split = interpolate(frame, [275, 365], [0, 1], ease);
-  const headingIn = interpolate(frame, [345, 390], [0, 1], ease);
-  const benefitOne = interpolate(frame, [375, 425], [0, 1], ease);
-  const benefitTwo = interpolate(frame, [430, 480], [0, 1], ease);
+  const collect = interpolate(frame, [112, 212], [0, 1], easeOutExpo);
+  const documentIn = interpolate(frame, [180, 250], [0, 1], easeOutExpo);
+  const split = interpolate(frame, [275, 365], [0, 1], easeOutExpo);
+  const headingIn = interpolate(frame, [345, 390], [0, 1], easeOutExpo);
+  const benefitOne = interpolate(frame, [375, 425], [0, 1], easeOutExpo);
+  const benefitTwo = interpolate(frame, [430, 480], [0, 1], easeOutExpo);
   const out = interpolate(frame, [620, 658], [1, 0], clamp);
 
-  const documentX = interpolate(split, [0, 1], [960, 550], ease);
+  const documentX = interpolate(split, [0, 1], [960, 550], easeOutExpo);
   const documentScale =
-    interpolate(documentIn, [0, 1], [0.72, 1], ease) *
-    interpolate(split, [0, 1], [1, 0.82], ease);
+    interpolate(documentIn, [0, 1], [0.72, 1], easeOutExpo) *
+    interpolate(split, [0, 1], [1, 0.82], easeOutExpo);
 
   return (
-    <AbsoluteFill
-      style={{
-        backgroundColor: WHITE,
-        fontFamily: FONT,
-        opacity: out,
-      }}
-    >
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
       {DISCUSSION_CARDS.map((card, index) => {
         const enterStart = 12 + index * CARD_ENTER_STAGGER;
         const individualIn = interpolate(
           frame,
           [enterStart, enterStart + CARD_ENTER_DURATION],
           [0, 1],
-          ease,
+          easeOutExpo,
         );
-        const rise = interpolate(individualIn, [0, 1], [42, 0], ease);
+        const rise = interpolate(individualIn, [0, 1], [42, 0], easeOutExpo);
         const targetX = 960 + (index - 1.5) * 20;
         const targetY = 545 + (index - 1.5) * 13;
-        const x = interpolate(collect, [0, 1], [card.x, targetX], ease);
-        const y = interpolate(collect, [0, 1], [card.y, targetY], ease);
-        const scale = interpolate(collect, [0, 1], [1, 0.44], ease);
+        const x = interpolate(collect, [0, 1], [card.x, targetX], easeOutExpo);
+        const y = interpolate(collect, [0, 1], [card.y, targetY], easeOutExpo);
+        const scale = interpolate(collect, [0, 1], [1, 0.44], easeOutExpo);
         const rotate = interpolate(
           collect,
           [0, 1],
           [card.rotate, 0],
-          ease,
+          easeOutExpo,
         );
         const opacity =
           individualIn *
@@ -299,6 +281,7 @@ export const Ch3Page6SpecWorkflow: React.FC = () => {
           </div>
         </div>
       ))}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

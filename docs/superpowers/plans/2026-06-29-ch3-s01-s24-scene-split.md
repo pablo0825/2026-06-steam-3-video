@@ -88,7 +88,26 @@
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page5-Agents`, `Ch3-Page5-AgentsDemo`, or `Ch3Page5Agents` references remain in `src`.
   - Commit: pending
-- [ ] `Ch3-Page6-Spec`: S14-S15
+- [x] `Ch3-Page6-Spec`: S14-S15 implemented as three files
+  - Storyboard follow-up: update `docs/03-程式實作/steam - 3 - Vibe Game 教案 - 程式實作 - 分鏡腳本.md` because the storyboard lists S14-S15, but the implementation now has three single-file segments: S14 definition, S14 workflow, and S15 structure.
+  - Sources:
+    - `src/scenes/03-程式實作/Ch3Page6Spec.tsx`
+    - `src/scenes/03-程式實作/Ch3Page6SpecDefinition.tsx`
+    - `src/scenes/03-程式實作/Ch3Page6SpecWorkflow.tsx`
+    - `src/scenes/03-程式實作/Ch3Page6SpecStructure.tsx`
+  - Source timing:
+    - S14 definition: 150 frames
+    - S14 workflow: 660 frames
+    - S15 structure: 1020 frames
+  - Outputs:
+    - `Ch3Page6S14SpecDefinition.tsx`
+    - `Ch3Page6S14SpecWorkflow.tsx`
+    - `Ch3Page6S15SpecStructure.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page6S14SpecDefinition.tsx src/scenes/03-程式實作/Ch3Page6S14SpecWorkflow.tsx src/scenes/03-程式實作/Ch3Page6S15SpecStructure.tsx` passed.
+    - `npm run lint` passed.
+    - Search confirmed no active `Ch3-Page6-Spec`, `Ch3Page6Spec`, local `FONT`, local `clamp`, or direct `Easing` references remain in Page6 scene files. `Ch3Page6SpecShared` remains only as a shared helper dependency.
+  - Commit: pending
 - [ ] `Ch3-Page7-CelesteSpec`: S16-S18
 - [ ] `Ch3-Page8-SpecSetup`: S19
 - [ ] `Ch3-Page9-SpecBuild`: S20

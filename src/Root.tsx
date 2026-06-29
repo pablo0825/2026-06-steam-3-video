@@ -35,7 +35,9 @@ import { Ch3Page4S09ContextLimit } from "./scenes/03-程式實作/Ch3Page4S09Con
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
 import { Ch3Page5S12AgentsFlow } from "./scenes/03-程式實作/Ch3Page5S12AgentsFlow";
 import { Ch3Page5S13AgentsDemo } from "./scenes/03-程式實作/Ch3Page5S13AgentsDemo";
-import { Ch3Page6Spec } from "./scenes/03-程式實作/Ch3Page6Spec";
+import { Ch3Page6S14SpecDefinition } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition";
+import { Ch3Page6S14SpecWorkflow } from "./scenes/03-程式實作/Ch3Page6S14SpecWorkflow";
+import { Ch3Page6S15SpecStructure } from "./scenes/03-程式實作/Ch3Page6S15SpecStructure";
 import { Ch3Page7CelesteSpec } from "./scenes/03-程式實作/Ch3Page7CelesteSpec";
 import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7CelesteSpecOverlay";
 import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
@@ -388,9 +390,25 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page6-Spec"
-        component={Ch3Page6Spec}
-        durationInFrames={1830}
+        id="Ch3-Page6-S14-SpecDefinition"
+        component={Ch3Page6S14SpecDefinition}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page6-S14-SpecWorkflow"
+        component={Ch3Page6S14SpecWorkflow}
+        durationInFrames={660}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page6-S15-SpecStructure"
+        component={Ch3Page6S15SpecStructure}
+        durationInFrames={1020}
         fps={30}
         width={1920}
         height={1080}
