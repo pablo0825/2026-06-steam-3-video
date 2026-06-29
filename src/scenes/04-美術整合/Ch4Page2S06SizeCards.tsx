@@ -141,7 +141,7 @@ export const Ch4Page2S06SizeCards: React.FC = () => {
     config: { damping: 15, stiffness: 120 },
   });
   const helperOpL = interpolate(frame, [70, 96], [0, 1], ease);
-  const helperOpR = interpolate(frame, [84, 110], [0, 1], ease);
+  const helperOpR = interpolate(frame, [104, 130], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
