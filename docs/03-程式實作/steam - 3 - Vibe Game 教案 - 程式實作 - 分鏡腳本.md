@@ -40,7 +40,7 @@
 |---|---|---:|---|---|---|
 | S01 | 嗨，大家好，我是知點的育嘉。這一集我們要跟大家分享，怎麼用 AI 來寫程式。 | 7 | 知點 logo 縮至上方；主標「VIBE GAME 教案」、副標「程式實作」；右下角可保留講師姓名。 | SVG動畫 | 沿用前兩集開場：logo 上移縮小 → 主標彈入 → 黃色底線 wipe → 副標淡入。 |
 | S02 | 這集的重點是，我們會請 AI 來協助我們寫 User Story，以及用 Spec 來請 AI 寫程式。 | 8 | 標題「本次重點」；兩張橫向卡片：① 根據 Storyboard 寫 User Story ② 基於 Spec 和 AI 協作開發遊戲。 | SVG動畫 | 標題先進場；卡片依旁白由左至右滑入，關鍵詞 `User Story`、`Spec`、`AI` 以黃色標示。 |
-| S03 | 同樣，在開始寫 User Story 和 Spec 之前，我們要先跟大家介紹幾個相關知識，例如 User Story、Context、AGENTS.md、Spec 等等。那我們就先從 User Story 開始。 | 11 | 四個知識標籤：User Story／Context／AGENTS.md／Spec；左側可搭配文件、記憶、規則與規格的小圖示。 | SVG動畫 | 四個標籤逐項彈入；旁白說到「User Story」時，其餘項目降低透明度，User Story 放大並帶入下一頁。 |
+| S03 | 同樣，在開始寫 User Story 和 Spec 之前，我們要先跟大家介紹幾個相關知識，例如 User Story、Context、AGENTS.md、Spec 等等。那我們就先從 User Story 開始。 | 11 | 四個知識項目：User Story／Context／AGENTS.md／Spec（編號在上、文字在下，無膠囊底框，排成一橫排）；左側可搭配文件、記憶、規則與規格的小圖示。 | SVG動畫 | 四個項目逐項彈入；旁白說到「User Story」時，其餘項目轉灰淡化，User Story 維持深色並以黃色底線高亮帶入下一頁。 |
 
 ## 第 2 頁・User Story：定義與格式（簡報 4–5）
 

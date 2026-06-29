@@ -118,13 +118,11 @@ export const Ch2Page1Opening: React.FC = () => {
           <KnowledgeNav
             prompt="先認識幾個重要觀念"
             tags={TAGS}
-            hintText="先從「限制設計」開始 →"
             frame={frame}
             fps={fps}
             tagFirst={TAG_FIRST}
             tagStep={TAG_STEP}
             highlight={HILITE}
-            hint={HILITE}
           />
         </AbsoluteFill>
       )}

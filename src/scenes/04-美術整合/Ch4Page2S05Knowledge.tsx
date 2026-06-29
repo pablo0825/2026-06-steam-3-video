@@ -15,34 +15,33 @@ const TAGS = ["遊戲畫面大小", "素材大小的基礎單位", "Sprite Sheet
 const TAG_FIRST = 72;
 const TAG_STEP = 24;
 const HIGHLIGHT = [210, 250] as const;
-const HINT = [240, 270] as const; // 底部提示句，比高亮稍晚
+const OPENING_FADE = [0, 20] as const; // 開場淡入（與 Ch2/Ch3 一致）
 const ENDING_FADE = [306, 330] as const;
 
 export const Ch4Page2S05Knowledge: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  const inOp = interpolate(frame, OPENING_FADE, [0, 1], clamp);
   const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
-          opacity: out,
+          opacity: inOp * out,
           justifyContent: "center",
           alignItems: "center",
         }}
       >
         <KnowledgeNav
-          prompt="先認識幾個重要觀念"
+          prompt="相關知識"
           tags={TAGS}
-          hintText="先從「遊戲畫面大小」開始 →"
           frame={frame}
           fps={fps}
           tagFirst={TAG_FIRST}
           tagStep={TAG_STEP}
           highlight={HIGHLIGHT}
-          hint={HINT}
         />
       </AbsoluteFill>
     </AbsoluteFill>
