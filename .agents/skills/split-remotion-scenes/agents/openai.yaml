@@ -1,0 +1,4 @@
+interface:
+  display_name: "Split Remotion Scenes"
+  short_description: "Split multi-shot Remotion scene files"
+  default_prompt: "Use $split-remotion-scenes to split ch3 S01-S24 into one Remotion scene file per shot."
