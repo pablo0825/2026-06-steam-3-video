@@ -26,8 +26,10 @@ import { Ch3Page1S02Focus } from "./scenes/03-程式實作/Ch3Page1S02Focus";
 import { Ch3Page1S03KnowledgeNav } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav";
 import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
 import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
-import { Ch3Page3RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3RhythmDoctor";
-import { Ch3Page3RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay";
+import { Ch3Page3S06RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctor";
+import { Ch3Page3S06RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctorOverlay";
+import { Ch3Page3S07UserStory } from "./scenes/03-程式實作/Ch3Page3S07UserStory";
+import { Ch3Page3S07UserStoryOverlay } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay";
 import { Ch3Page4Context } from "./scenes/03-程式實作/Ch3Page4Context";
 import { Ch3Page5Agents } from "./scenes/03-程式實作/Ch3Page5Agents";
 import { Ch3Page5AgentsDemo } from "./scenes/03-程式實作/Ch3Page5AgentsDemo";
@@ -310,17 +312,34 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page3-RhythmDoctor"
-        component={Ch3Page3RhythmDoctor}
-        durationInFrames={840}
+        id="Ch3-Page3-S06-RhythmDoctor"
+        component={Ch3Page3S06RhythmDoctor}
+        durationInFrames={240}
         fps={30}
         width={1920}
         height={1080}
       />
       <Composition
-        id="Ch3-Page3-RhythmDoctor-Overlay"
-        component={Ch3Page3RhythmDoctorOverlay}
-        durationInFrames={840}
+        id="Ch3-Page3-S06-RhythmDoctor-Overlay"
+        component={Ch3Page3S06RhythmDoctorOverlay}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page3-S07-UserStory"
+        component={Ch3Page3S07UserStory}
+        durationInFrames={600}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page3-S07-UserStory-Overlay"
+        component={Ch3Page3S07UserStoryOverlay}
+        durationInFrames={600}
         fps={30}
         width={1920}
         height={1080}

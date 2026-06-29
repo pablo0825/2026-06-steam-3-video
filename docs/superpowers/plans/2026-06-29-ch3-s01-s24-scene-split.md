@@ -38,7 +38,24 @@
     - Search confirmed no active `Ch3-Page2-UserStory` or `Ch3Page2UserStory` references remain in `src`.
   - Commit: included in target commit `split ch3 page2 scenes into S04-S05`
 
-- [ ] `Ch3-Page3-RhythmDoctor`: S06-S07
+- [x] `Ch3-Page3-RhythmDoctor`: S06-S07
+  - Sources:
+    - `src/scenes/03-程式實作/Ch3Page3RhythmDoctor.tsx`
+    - `src/scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay.tsx`
+  - Source timing:
+    - S06: frames 0-240, Rhythm Doctor title overlay
+    - S07: frames 240-840, User Story overlay, local duration 600
+  - Outputs:
+    - `Ch3Page3S06RhythmDoctor.tsx`
+    - `Ch3Page3S06RhythmDoctorOverlay.tsx`
+    - `Ch3Page3S07UserStory.tsx`
+    - `Ch3Page3S07UserStoryOverlay.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page3S06RhythmDoctor.tsx src/scenes/03-程式實作/Ch3Page3S07UserStory.tsx` passed for preview compositions.
+    - Overlay compositions intentionally preserve transparent output because the storyboard marks S06-S07 as `影片素材＋透明 Overlay`.
+    - `npm run lint` passed.
+    - Search confirmed no active `Ch3-Page3-RhythmDoctor` or `Ch3Page3RhythmDoctor` references remain in `src`.
+  - Commit: pending
 - [ ] `Ch3-Page4-Context`: S08-S09
 - [ ] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
 - [ ] `Ch3-Page6-Spec`: S14-S15
