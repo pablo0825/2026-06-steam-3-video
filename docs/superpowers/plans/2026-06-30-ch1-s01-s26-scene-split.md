@@ -52,13 +52,13 @@
   - Outputs: `Ch1Page6S15ExperimentFlow.tsx`, `Ch1Page6S16CurrentPart.tsx`
   - Plan: split four-step experiment flow and Codex/current-video highlight.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `289ebbf` (`split ch1 page6 scenes into S15-S16`)
 
-- [ ] Page7-Codex: S17-S18
+- [x] Page7-Codex: S17-S18
   - Source: `src/scenes/01-實驗介紹/Page7Codex.tsx`
   - Outputs: `Ch1Page7S17CodexAgent.tsx`, `Ch1Page7S18ComputerAccess.tsx`
   - Plan: split Codex AI Agent intro and computer/file operation explanation.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page8-Compare: S19-S21

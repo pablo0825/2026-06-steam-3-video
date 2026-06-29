@@ -16,7 +16,8 @@ import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13Qu
 import { Ch1Page5S14Validated } from "./scenes/01-實驗介紹/Ch1Page5S14Validated";
 import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15ExperimentFlow";
 import { Ch1Page6S16CurrentPart } from "./scenes/01-實驗介紹/Ch1Page6S16CurrentPart";
-import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
+import { Ch1Page7S17CodexAgent } from "./scenes/01-實驗介紹/Ch1Page7S17CodexAgent";
+import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18ComputerAccess";
 import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
 import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
@@ -75,8 +76,11 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={180}>
         <Ch1Page6S16CurrentPart />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={360}>
-        <Page7Codex />
+      <Series.Sequence durationInFrames={150}>
+        <Ch1Page7S17CodexAgent />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={210}>
+        <Ch1Page7S18ComputerAccess />
       </Series.Sequence>
       <Series.Sequence durationInFrames={630}>
         <Page8Compare />
