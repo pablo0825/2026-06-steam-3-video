@@ -9,26 +9,28 @@ import { NEUTRAL_50 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 import { KnowledgeNav } from "../../components/KnowledgeNav";
 
-// 第 3 集・第 1 頁・S03：知識導覽（330 幀）
-const CONTENT_IN = [0, 20] as const;
-const ENDING_FADE = [306, 330] as const;
+// 第 3 集・第 1 頁・S03-2：知識導覽（330 幀，結尾淡出到 NEUTRAL_50）
+//   四個相關知識標籤，聚焦「Context」。
+//   複製自 Ch3Page1S03KnowledgeNav，僅 highlightIndex 不同；暫以多檔處理，避免大改編號。
 const TAGS = ["User Story", "Context", "AGENTS.md", "Spec"] as const;
+const TAG_FIRST = 72;
 const TAG_STEP = 24;
-const TAG_FIRST = 38;
-const HILITE = [210, 242] as const;
+const HIGHLIGHT = [50, 90] as const; // 四項直接到位後提早跑高亮（複用版不重跑進場）
+const OPENING_FADE = [0, 20] as const; // 開場淡入（與 Ch2/Ch3 一致）
+const ENDING_FADE = [306, 330] as const;
 
-export const Ch3Page1S03KnowledgeNav: React.FC = () => {
+export const Ch3Page1S03KnowledgeNav2: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const opacity =
-    interpolate(frame, CONTENT_IN, [0, 1], clamp) *
-    interpolate(frame, ENDING_FADE, [1, 0], clamp);
+
+  const inOp = interpolate(frame, OPENING_FADE, [0, 1], clamp);
+  const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill
         style={{
-          opacity,
+          opacity: inOp * out,
           justifyContent: "center",
           alignItems: "center",
         }}
@@ -40,7 +42,9 @@ export const Ch3Page1S03KnowledgeNav: React.FC = () => {
           fps={fps}
           tagFirst={TAG_FIRST}
           tagStep={TAG_STEP}
-          highlight={HILITE}
+          highlight={HIGHLIGHT}
+          highlightIndex={1}
+          animateIn={false}
         />
       </AbsoluteFill>
     </AbsoluteFill>
