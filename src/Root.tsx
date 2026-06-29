@@ -15,7 +15,8 @@ import { Ch1Page4S11GameplayQuestion } from "./scenes/01-實驗介紹/Ch1Page4S1
 import { Ch1Page5S12PrototypeGoal } from "./scenes/01-實驗介紹/Ch1Page5S12PrototypeGoal";
 import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13QuestionCards";
 import { Ch1Page5S14Validated } from "./scenes/01-實驗介紹/Ch1Page5S14Validated";
-import { Page6Flow } from "./scenes/01-實驗介紹/Page6Flow";
+import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15ExperimentFlow";
+import { Ch1Page6S16CurrentPart } from "./scenes/01-實驗介紹/Ch1Page6S16CurrentPart";
 import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
 import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
 import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
@@ -254,9 +255,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page6-Flow"
-        component={Page6Flow}
-        durationInFrames={390}
+        id="Ch1-Page6-S15-ExperimentFlow"
+        component={Ch1Page6S15ExperimentFlow}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page6-S16-CurrentPart"
+        component={Ch1Page6S16CurrentPart}
+        durationInFrames={180}
         fps={30}
         width={1920}
         height={1080}

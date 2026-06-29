@@ -45,13 +45,13 @@
   - Outputs: `Ch1Page5S12PrototypeGoal.tsx`, `Ch1Page5S13QuestionCards.tsx`, `Ch1Page5S14Validated.tsx`
   - Plan: split prototype goal, three validation cards, and verified stamps.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `abdba21` (`split ch1 page5 scenes into S12-S14`)
 
-- [ ] Page6-Flow: S15-S16
+- [x] Page6-Flow: S15-S16
   - Source: `src/scenes/01-實驗介紹/Page6Flow.tsx`
   - Outputs: `Ch1Page6S15ExperimentFlow.tsx`, `Ch1Page6S16CurrentPart.tsx`
   - Plan: split four-step experiment flow and Codex/current-video highlight.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page7-Codex: S17-S18
