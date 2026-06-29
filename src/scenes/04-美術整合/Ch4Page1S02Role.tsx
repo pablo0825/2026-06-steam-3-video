@@ -1,6 +1,13 @@
 import React from "react";
 import { AbsoluteFill, Easing, interpolate, useCurrentFrame } from "remotion";
-import { GREEN, NEUTRAL_50, RED, TEXT_DARK } from "../../theme/colors";
+import {
+  GREEN,
+  NEUTRAL_50,
+  RED,
+  TEXT_DARK,
+  WHITE,
+  withAlpha,
+} from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
 // 第 4 集・第 1 頁・S02：AI 生圖的角色？＋中央對比（× 取代 → ✓ 優化）
@@ -85,19 +92,33 @@ export const Ch4Page1S02Role: React.FC = () => {
               gap: 64,
             }}
           >
+            {/* 符號圓底：紅／綠實色底 + 白色符號 */}
             <div
               style={{
-                fontSize: 170,
-                fontWeight: 900,
-                lineHeight: 1,
-                color: m.markColor,
+                width: 260,
+                height: 260,
+                borderRadius: 999,
+                background: m.markColor,
+                boxShadow: `0 8px 24px ${withAlpha(m.markColor, 0.28)}`,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
               }}
             >
-              {m.mark}
+              <div
+                style={{
+                  fontSize: 150,
+                  fontWeight: 900,
+                  lineHeight: 1,
+                  color: WHITE,
+                }}
+              >
+                {m.mark}
+              </div>
             </div>
             <div
               style={{
-                fontSize: 64,
+                fontSize: 76,
                 fontWeight: 800,
                 letterSpacing: 2,
                 color: TEXT_DARK,
