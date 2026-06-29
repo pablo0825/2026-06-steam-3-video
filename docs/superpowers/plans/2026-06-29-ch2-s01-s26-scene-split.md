@@ -24,13 +24,13 @@
   - Outputs: `Ch2Page2S04Constraint.tsx`, `Ch2Page2S05GameJam.tsx`, `Ch2Page2S06Question.tsx`
   - Plan: split definition, Game Jam explanation, and transition question into local timelines. Source has 930f while storyboard seconds total 810f; use source timing and note storyboard timing needs review after split.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
-  - Commit: pending
+  - Commit: `ec7826e` (`split ch2 page2 scenes into S04-S06`)
 
-- [ ] Ch2-Page3-RhythmDoctor: S07-S09
+- [x] Ch2-Page3-RhythmDoctor: S07-S09
   - Source: `src/scenes/02-遊戲設計/Ch2Page3RhythmDoctor.tsx`, `src/scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay.tsx`
-  - Outputs: S07/S08 preview and overlay files, plus S09 opaque text-card file.
-  - Plan: preserve transparent overlay behavior for S07/S08 because the storyboard specifies external gameplay footage plus alpha overlay; S09 must be opaque `NEUTRAL_50`.
-  - Validation: pending
+  - Outputs: `Ch2Page3S07RhythmDoctor.tsx`, `Ch2Page3S07RhythmDoctorOverlay.tsx`, `Ch2Page3S08Limit.tsx`, `Ch2Page3S08LimitOverlay.tsx`, `Ch2Page3S09ConstraintMethod.tsx`
+  - Plan: preserve transparent overlay behavior for S07/S08 because the storyboard specifies external gameplay footage plus alpha overlay; S09 must be opaque `NEUTRAL_50`. Source has 740f while storyboard seconds total 810f; use source timing and note storyboard timing needs review after split.
+  - Validation: `validate_scene_split.py` OK for preview/opaque files; overlay files manually checked as intentional alpha outputs with `calculateAlphaOverlayMetadata`; `npm run lint` OK; old active Root ids/exports removed.
   - Commit: pending
 
 - [ ] Ch2-Page4-CorePlay: S10-S12

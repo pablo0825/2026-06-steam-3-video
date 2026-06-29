@@ -17,8 +17,11 @@ import { Ch2Page1S03KnowledgeNav } from "./scenes/02-遊戲設計/Ch2Page1S03Kno
 import { Ch2Page2S04Constraint } from "./scenes/02-遊戲設計/Ch2Page2S04Constraint";
 import { Ch2Page2S05GameJam } from "./scenes/02-遊戲設計/Ch2Page2S05GameJam";
 import { Ch2Page2S06Question } from "./scenes/02-遊戲設計/Ch2Page2S06Question";
-import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
-import { Ch2Page3RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
+import { Ch2Page3S07RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3S07RhythmDoctor";
+import { Ch2Page3S07RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3S07RhythmDoctorOverlay";
+import { Ch2Page3S08Limit } from "./scenes/02-遊戲設計/Ch2Page3S08Limit";
+import { Ch2Page3S08LimitOverlay } from "./scenes/02-遊戲設計/Ch2Page3S08LimitOverlay";
+import { Ch2Page3S09ConstraintMethod } from "./scenes/02-遊戲設計/Ch2Page3S09ConstraintMethod";
 import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
 import { Ch2Page4CorePlayOverlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlayOverlay";
 import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
@@ -247,21 +250,46 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page3-RhythmDoctor"
-        component={Ch2Page3RhythmDoctor}
-        durationInFrames={740}
+        id="Ch2-Page3-S07-RhythmDoctor"
+        component={Ch2Page3S07RhythmDoctor}
+        durationInFrames={150}
         fps={30}
         width={1920}
         height={1080}
       />
       <Composition
-        id="Ch2-Page3-RhythmDoctor-Overlay"
-        component={Ch2Page3RhythmDoctorOverlay}
-        durationInFrames={740}
+        id="Ch2-Page3-S07-RhythmDoctor-Overlay"
+        component={Ch2Page3S07RhythmDoctorOverlay}
+        durationInFrames={150}
         fps={30}
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch2-Page3-S08-Limit"
+        component={Ch2Page3S08Limit}
+        durationInFrames={339}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page3-S08-Limit-Overlay"
+        component={Ch2Page3S08LimitOverlay}
+        durationInFrames={339}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch2-Page3-S09-ConstraintMethod"
+        component={Ch2Page3S09ConstraintMethod}
+        durationInFrames={251}
+        fps={30}
+        width={1920}
+        height={1080}
       />
       <Composition
         id="Ch2-Page4-CorePlay"
