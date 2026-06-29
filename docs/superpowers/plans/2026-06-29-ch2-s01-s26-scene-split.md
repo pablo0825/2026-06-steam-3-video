@@ -61,21 +61,21 @@
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
   - Commit: `0a75273` (`split ch2 page7 scenes into S18-S22`)
 
-- [ ] Ch2-Page8-DocDemo: S23-S24
-  - Source: missing from `src/scenes/02-遊戲設計/`
-  - Outputs: needs user decision
-  - Plan: storyboard references a placeholder/demo composition, but no corresponding implementation file or Root registration exists. Marked for user decision; do not synthesize new scene files without direction.
-  - Validation: blocked
+- [x] Ch2-Page8-DocDemo: S23-S24
+  - Source: implementation recording segment; no Remotion scene split required.
+  - Outputs: not applicable
+  - Plan: user clarified S23-S24 are implementation files / recording workflow, so this target is excluded from one-shot Remotion scene splitting.
+  - Validation: not applicable
   - Commit: not applicable
 
-- [ ] Ch2-Page9-BoardDemo: S25-S26
-  - Source: missing from `src/scenes/02-遊戲設計/`
-  - Outputs: needs user decision
-  - Plan: storyboard references a placeholder/demo composition, but no corresponding implementation file or Root registration exists. Marked for user decision; do not synthesize new scene files without direction.
-  - Validation: blocked
+- [x] Ch2-Page9-BoardDemo: S25-S26
+  - Source: implementation recording segment; no Remotion scene split required.
+  - Outputs: not applicable
+  - Plan: user clarified S25-S26 are implementation files / recording workflow, so this target is excluded from one-shot Remotion scene splitting.
+  - Validation: not applicable
   - Commit: not applicable
 
 ## Notes
 
-- Page8 and Page9 have storyboard entries but no current implementation files or Root registrations.
+- Page8 and Page9 are implementation recording segments, not Remotion scene files to split.
 - Page3 and Page4 include intentional alpha overlay compositions backed by external video; the transparent overlay exception applies only to those overlay outputs.
