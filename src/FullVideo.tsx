@@ -1,6 +1,7 @@
 import React from "react";
 import { Series } from "remotion";
-import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
+import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
+import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
 import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
 import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
 import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
@@ -17,8 +18,11 @@ import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 export const FullVideo: React.FC = () => {
   return (
     <Series>
-      <Series.Sequence durationInFrames={270}>
-        <Page1Opening />
+      <Series.Sequence durationInFrames={120}>
+        <Ch1Page1S01Opening />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={150}>
+        <Ch1Page1S02Title />
       </Series.Sequence>
       <Series.Sequence durationInFrames={330}>
         <Page2AIToPrototype />

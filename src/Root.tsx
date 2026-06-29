@@ -1,7 +1,8 @@
 import "./index.css";
 import { CalculateMetadataFunction, Composition, Series } from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
-import { Page1Opening } from "./scenes/01-實驗介紹/Page1Opening";
+import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
+import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
 import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
 import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
 import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
@@ -133,9 +134,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page1-Opening"
-        component={Page1Opening}
-        durationInFrames={270}
+        id="Ch1-Page1-S01-Opening"
+        component={Ch1Page1S01Opening}
+        durationInFrames={120}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page1-S02-Title"
+        component={Ch1Page1S02Title}
+        durationInFrames={150}
         fps={30}
         width={1920}
         height={1080}
