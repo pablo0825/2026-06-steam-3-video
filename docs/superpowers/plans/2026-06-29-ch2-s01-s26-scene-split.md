@@ -52,7 +52,7 @@
   - Outputs: `Ch2Page6S16CelesteVideo.tsx`, `Ch2Page6S17CelesteLoop.tsx`
   - Plan: split placeholder video card and Celeste loop comparison.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
-  - Commit: pending
+  - Commit: `0442d12` (`split ch2 page6 scenes into S16-S17`)
 
 - [ ] Ch2-Page7-Storyboard: S18-S22
   - Source: `src/scenes/02-遊戲設計/Ch2Page7Storyboard.tsx`
