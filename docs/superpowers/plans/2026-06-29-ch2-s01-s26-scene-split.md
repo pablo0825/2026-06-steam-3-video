@@ -59,7 +59,7 @@
   - Outputs: `Ch2Page7S18StoryboardIntro.tsx`, `Ch2Page7S19Examples.tsx`, `Ch2Page7S20Readable.tsx`, `Ch2Page7S21Consensus.tsx`, `Ch2Page7S22Checklist.tsx`
   - Plan: split the existing storyboard sequence into five shot files. Extract repeated storyboard rendering pieces to `Ch2Page7StoryboardShared.tsx`. Source has small crossfades around S19/S20 and S21/S22; preserve the full source transition timing inside individual shots, so total standalone shot durations differ slightly from the old aggregate duration.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
-  - Commit: pending
+  - Commit: `0a75273` (`split ch2 page7 scenes into S18-S22`)
 
 - [ ] Ch2-Page8-DocDemo: S23-S24
   - Source: missing from `src/scenes/02-遊戲設計/`
