@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -10,37 +9,29 @@ import {
 import {
   BLUE,
   BORDER_LIGHT,
-  DASH_BORDER,
-  PANEL_BG,
+  NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { FONT, clamp, easeStandard } from "../../theme/motion";
 import {
   CORE_LOOP_ARROW_PATHS,
   CoreLoopDiagram,
   type CoreLoopNodeData,
 } from "./CoreLoopDiagram";
 
-// 第 2 集・第 6 頁：Celeste 核心循環
-//   S16：剪輯軟體置換用的影片佔位卡
-//   S17：沿用 Page 5 循環圖，套用 Celeste → 對比角色成長／技術突破 → 結論
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const EASE = Easing.bezier(0.4, 0, 0.2, 1);
-
-// 節奏（30 fps；總長 840 frames）
-const PLACEHOLDER_OUT = [210, 238] as const;
-const LOOP_START = 252;
-const NODE_START = [282, 312, 342, 372] as const;
-const ARROW_START = [300, 330, 360, 390] as const;
-const EXAMPLE_START = [450, 510, 570, 630] as const;
-const SHIFT = [668, 706] as const;
-const COMPARE_IN = [702, 734] as const;
-const COMPARE_OUT = [758, 788] as const;
-const CONCLUSION_IN = [786, 818] as const;
+// 第 2 集・第 6 頁・S17：Celeste 核心循環對比（588 幀）
+const NODE_START = [30, 60, 90, 120] as const;
+const ARROW_START = [48, 78, 108, 138] as const;
+const EXAMPLE_START = [198, 258, 318, 378] as const;
+const SHIFT = [416, 454] as const;
+const COMPARE_IN = [450, 482] as const;
+const COMPARE_OUT = [506, 536] as const;
+const CONCLUSION_IN = [534, 566] as const;
+const CONTENT_OUT = [566, 588] as const;
 
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 800 };
 
@@ -51,29 +42,15 @@ const NODES: CoreLoopNodeData[] = [
   { label: "成長", example: "技術上的突破", icon: "growth" },
 ];
 
-export const Ch2Page6LoopCeleste: React.FC = () => {
+export const Ch2Page6S17CelesteLoop: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const clamp = {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  } as const;
-  const ease = { ...clamp, easing: EASE };
+  const contentOut = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
-  // S16：影片佔位卡
-  const placeholderOut = interpolate(frame, PLACEHOLDER_OUT, [1, 0], clamp);
-  const placeholderTitle = spring({
-    frame,
-    fps,
-    config: { damping: 14, stiffness: 110 },
-  });
-  const placeholderIn = interpolate(frame, [28, 60], [0, 1], ease);
-
-  // S17：Celeste 循環
-  const loopOp =
-    interpolate(frame, [LOOP_START, LOOP_START + 28], [0, 1], clamp) *
-    interpolate(frame, [COMPARE_OUT[0], COMPARE_OUT[1]], [1, 0], clamp);
-  const titleY = interpolate(frame, [LOOP_START, LOOP_START + 28], [20, 0], ease);
+  const loopOpacity =
+    interpolate(frame, [0, 28], [0, 1], clamp) *
+    interpolate(frame, COMPARE_OUT, [1, 0], clamp);
+  const titleY = interpolate(frame, [0, 28], [20, 0], easeStandard);
   const activeIndex =
     frame >= SHIFT[0]
       ? -1
@@ -87,109 +64,19 @@ export const Ch2Page6LoopCeleste: React.FC = () => {
               ? 0
               : -1;
 
-  const diagramScale = interpolate(frame, SHIFT, [1, 0.72], ease);
-  const diagramX = interpolate(frame, SHIFT, [0, -350], ease);
-
-  // 對比與結論
-  const compareOp =
+  const diagramScale = interpolate(frame, SHIFT, [1, 0.72], easeStandard);
+  const diagramX = interpolate(frame, SHIFT, [0, -350], easeStandard);
+  const compareOpacity =
     interpolate(frame, COMPARE_IN, [0, 1], clamp) *
     interpolate(frame, COMPARE_OUT, [1, 0], clamp);
-  const compareX = interpolate(frame, COMPARE_IN, [50, 0], ease);
-  const conclusionOp = interpolate(frame, CONCLUSION_IN, [0, 1], clamp);
-  const conclusionY = interpolate(frame, CONCLUSION_IN, [32, 0], ease);
+  const compareX = interpolate(frame, COMPARE_IN, [50, 0], easeStandard);
+  const conclusionOpacity = interpolate(frame, CONCLUSION_IN, [0, 1], clamp) * contentOut;
+  const conclusionY = interpolate(frame, CONCLUSION_IN, [32, 0], easeStandard);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
-      {/* S16：後製剪輯用影片佔位卡 */}
-      {frame < LOOP_START && (
-        <AbsoluteFill
-          style={{
-            opacity: placeholderOut,
-            alignItems: "center",
-          }}
-        >
-          <div
-            style={{
-              position: "absolute",
-              top: 145,
-              fontSize: 70,
-              fontWeight: 800,
-              letterSpacing: 5,
-              color: TEXT_DARK,
-              opacity: placeholderTitle,
-              transform: `scale(${interpolate(
-                placeholderTitle,
-                [0, 1],
-                [0.94, 1],
-              )})`,
-            }}
-          >
-            Celeste 遊戲影片
-          </div>
-
-          <div
-            style={{
-              position: "absolute",
-              left: 960,
-              top: 610,
-              width: 1040,
-              height: 585,
-              transform: `translate(-50%, -50%) translateY(${interpolate(
-                placeholderIn,
-                [0, 1],
-                [55, 0],
-              )}px)`,
-              opacity: placeholderIn,
-              borderRadius: 24,
-              border: `4px dashed ${DASH_BORDER}`,
-              backgroundColor: PANEL_BG,
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 24,
-            }}
-          >
-            <svg width="92" height="92" viewBox="0 0 92 92" aria-hidden="true">
-              <rect
-                x="8"
-                y="18"
-                width="76"
-                height="56"
-                rx="10"
-                fill="none"
-                stroke={SUBTLE}
-                strokeWidth="4"
-              />
-              <path d="M40 34 62 46 40 58Z" fill={SUBTLE} />
-            </svg>
-            <div
-              style={{
-                fontSize: 42,
-                fontWeight: 800,
-                letterSpacing: 3,
-                color: TEXT_DARK,
-              }}
-            >
-              剪輯時置換影片素材
-            </div>
-            <div
-              style={{
-                fontSize: 28,
-                fontWeight: 600,
-                letterSpacing: 2,
-                color: SUBTLE,
-              }}
-            >
-              建議保留約 8 秒
-            </div>
-          </div>
-        </AbsoluteFill>
-      )}
-
-      {/* S17：Celeste 核心循環 */}
-      {frame >= LOOP_START && (
-        <AbsoluteFill style={{ opacity: loopOp }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: contentOut }}>
+        <AbsoluteFill style={{ opacity: loopOpacity }}>
           <div
             style={{
               position: "absolute",
@@ -225,18 +112,18 @@ export const Ch2Page6LoopCeleste: React.FC = () => {
                 }),
               )}
               exampleProgress={EXAMPLE_START.map((start) =>
-                interpolate(frame, [start, start + 26], [0, 1], ease),
+                interpolate(frame, [start, start + 26], [0, 1], easeStandard),
               )}
               arrowProgress={CORE_LOOP_ARROW_PATHS.map((_, index) =>
                 interpolate(
                   frame,
                   [ARROW_START[index], ARROW_START[index] + 24],
                   [0, 1],
-                  ease,
+                  easeStandard,
                 ),
               )}
               activeIndex={activeIndex}
-              markerPrefix="page6-loop-arrow"
+              markerPrefix="page6-s17-loop-arrow"
               exampleFontSize={22}
             />
           </div>
@@ -248,7 +135,7 @@ export const Ch2Page6LoopCeleste: React.FC = () => {
               top: 560,
               width: 600,
               transform: `translate(-50%, -50%) translateX(${compareX}px)`,
-              opacity: compareOp,
+              opacity: compareOpacity,
             }}
           >
             <div
@@ -338,13 +225,10 @@ export const Ch2Page6LoopCeleste: React.FC = () => {
             </div>
           </div>
         </AbsoluteFill>
-      )}
 
-      {/* S17 收尾結論 */}
-      {frame >= CONCLUSION_IN[0] && (
         <AbsoluteFill
           style={{
-            opacity: conclusionOp,
+            opacity: conclusionOpacity,
             justifyContent: "center",
             alignItems: "center",
           }}
@@ -381,7 +265,7 @@ export const Ch2Page6LoopCeleste: React.FC = () => {
             </span>
           </div>
         </AbsoluteFill>
-      )}
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

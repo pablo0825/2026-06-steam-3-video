@@ -30,7 +30,8 @@ import { Ch2Page4S12ActionsOverlay } from "./scenes/02-遊戲設計/Ch2Page4S12A
 import { Ch2Page5S13CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5S13CoreLoop";
 import { Ch2Page5S14LoopFramework } from "./scenes/02-遊戲設計/Ch2Page5S14LoopFramework";
 import { Ch2Page5S15MonsterLoop } from "./scenes/02-遊戲設計/Ch2Page5S15MonsterLoop";
-import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
+import { Ch2Page6S16CelesteVideo } from "./scenes/02-遊戲設計/Ch2Page6S16CelesteVideo";
+import { Ch2Page6S17CelesteLoop } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
@@ -363,9 +364,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page6-LoopCeleste"
-        component={Ch2Page6LoopCeleste}
-        durationInFrames={840}
+        id="Ch2-Page6-S16-CelesteVideo"
+        component={Ch2Page6S16CelesteVideo}
+        durationInFrames={252}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page6-S17-CelesteLoop"
+        component={Ch2Page6S17CelesteLoop}
+        durationInFrames={588}
         fps={30}
         width={1920}
         height={1080}

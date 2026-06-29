@@ -45,13 +45,13 @@
   - Outputs: `Ch2Page5S13CoreLoop.tsx`, `Ch2Page5S14LoopFramework.tsx`, `Ch2Page5S15MonsterLoop.tsx`
   - Plan: split the framework introduction, loop diagram build, and monster-game walkthrough while keeping `CoreLoopDiagram.tsx` as a shared helper if useful.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
-  - Commit: pending
+  - Commit: `5ff2370` (`split ch2 page5 scenes into S13-S15`)
 
-- [ ] Ch2-Page6-LoopCeleste: S16-S17
+- [x] Ch2-Page6-LoopCeleste: S16-S17
   - Source: `src/scenes/02-遊戲設計/Ch2Page6LoopCeleste.tsx`
   - Outputs: `Ch2Page6S16CelesteVideo.tsx`, `Ch2Page6S17CelesteLoop.tsx`
   - Plan: split placeholder video card and Celeste loop comparison.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
   - Commit: pending
 
 - [ ] Ch2-Page7-Storyboard: S18-S22
