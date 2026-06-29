@@ -87,7 +87,7 @@
   - Outputs: `Ch1Page10S25Thanks.tsx`, `Ch1Page10S26Credits.tsx`
   - Plan: split host/thanks opening and rolling credits. Source timing is 90f + 480f while storyboard lists 120f + 330f; keep existing source timing and note storyboard timing should be updated.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `b938c16` (`split ch1 page10 scenes into S25-S26`)
 
 ## Notes
 
