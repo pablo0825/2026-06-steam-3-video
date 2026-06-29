@@ -60,9 +60,7 @@ import { Ch3Page1S03KnowledgeNav3 } from "./scenes/03-程式實作/Ch3Page1S03Kn
 import { Ch3Page1S03KnowledgeNav4 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-4";
 import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
 import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
-import { Ch3Page3S06RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctor";
 import { Ch3Page3S06RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctorOverlay";
-import { Ch3Page3S07UserStory } from "./scenes/03-程式實作/Ch3Page3S07UserStory";
 import { Ch3Page3S07UserStoryOverlay } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay";
 import { Ch3Page4S08Context } from "./scenes/03-程式實作/Ch3Page4S08Context";
 import { Ch3Page4S09ContextLimit } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit";
@@ -72,9 +70,7 @@ import { Ch3Page5S13AgentsDemo } from "./scenes/03-程式實作/Ch3Page5S13Agent
 import { Ch3Page6S14SpecDefinition } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition";
 import { Ch3Page6S14SpecWorkflow } from "./scenes/03-程式實作/Ch3Page6S14SpecWorkflow";
 import { Ch3Page6S15SpecStructure } from "./scenes/03-程式實作/Ch3Page6S15SpecStructure";
-import { Ch3Page7S16CelesteSpec } from "./scenes/03-程式實作/Ch3Page7S16CelesteSpec";
 import { Ch3Page7S16CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S16CelesteSpecOverlay";
-import { Ch3Page7S17CelesteSpec } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpec";
 import { Ch3Page7S17CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpecOverlay";
 import { Ch3Page7S18SpecPerFeature } from "./scenes/03-程式實作/Ch3Page7S18SpecPerFeature";
 import { Ch3Page7S18SpecWorkflow } from "./scenes/03-程式實作/Ch3Page7S18SpecWorkflow";
@@ -627,14 +623,6 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page3-S06-RhythmDoctor"
-        component={Ch3Page3S06RhythmDoctor}
-        durationInFrames={240}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
         id="Ch3-Page3-S06-RhythmDoctor-Overlay"
         component={Ch3Page3S06RhythmDoctorOverlay}
         durationInFrames={240}
@@ -642,14 +630,6 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
-      />
-      <Composition
-        id="Ch3-Page3-S07-UserStory"
-        component={Ch3Page3S07UserStory}
-        durationInFrames={600}
-        fps={30}
-        width={1920}
-        height={1080}
       />
       <Composition
         id="Ch3-Page3-S07-UserStory-Overlay"
@@ -725,14 +705,6 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page7-S16-CelesteSpec"
-        component={Ch3Page7S16CelesteSpec}
-        durationInFrames={240}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
         id="Ch3-Page7-S16-CelesteSpec-Overlay"
         component={Ch3Page7S16CelesteSpecOverlay}
         durationInFrames={240}
@@ -740,14 +712,6 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
-      />
-      <Composition
-        id="Ch3-Page7-S17-CelesteSpec"
-        component={Ch3Page7S17CelesteSpec}
-        durationInFrames={540}
-        fps={30}
-        width={1920}
-        height={1080}
       />
       <Composition
         id="Ch3-Page7-S17-CelesteSpec-Overlay"
