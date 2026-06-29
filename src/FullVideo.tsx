@@ -11,7 +11,9 @@ import { Ch1Page3S08FastPlayable } from "./scenes/01-實驗介紹/Ch1Page3S08Fas
 import { Ch1Page3S09ValidateQuestion } from "./scenes/01-實驗介紹/Ch1Page3S09ValidateQuestion";
 import { Ch1Page4S10PrototypeVideo } from "./scenes/01-實驗介紹/Ch1Page4S10PrototypeVideo";
 import { Ch1Page4S11GameplayQuestion } from "./scenes/01-實驗介紹/Ch1Page4S11GameplayQuestion";
-import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
+import { Ch1Page5S12PrototypeGoal } from "./scenes/01-實驗介紹/Ch1Page5S12PrototypeGoal";
+import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13QuestionCards";
+import { Ch1Page5S14Validated } from "./scenes/01-實驗介紹/Ch1Page5S14Validated";
 import { Page6Flow } from "./scenes/01-實驗介紹/Page6Flow";
 import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
 import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
@@ -57,8 +59,14 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={430}>
         <Ch1Page4S11GameplayQuestion />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={600}>
-        <Page5PrototypeGoal />
+      <Series.Sequence durationInFrames={210}>
+        <Ch1Page5S12PrototypeGoal />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={240}>
+        <Ch1Page5S13QuestionCards />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={150}>
+        <Ch1Page5S14Validated />
       </Series.Sequence>
       <Series.Sequence durationInFrames={390}>
         <Page6Flow />

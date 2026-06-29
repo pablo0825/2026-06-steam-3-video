@@ -38,13 +38,13 @@
   - Outputs: `Ch1Page4S10PrototypeVideo.tsx`, `Ch1Page4S11GameplayQuestion.tsx`
   - Plan: split centered prototype video intro and left-video/right-annotation explanation. Source includes an implemented S10.5 "完整度不高" bridge not listed in the storyboard; keep it inside S11 and note storyboard timing/content should be updated.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `e5cf3d7` (`split ch1 page4 scenes into S10-S11`)
 
-- [ ] Page5-Goal: S12-S14
+- [x] Page5-Goal: S12-S14
   - Source: `src/scenes/01-實驗介紹/Page5PrototypeGoal.tsx`
   - Outputs: `Ch1Page5S12PrototypeGoal.tsx`, `Ch1Page5S13QuestionCards.tsx`, `Ch1Page5S14Validated.tsx`
   - Plan: split prototype goal, three validation cards, and verified stamps.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page6-Flow: S15-S16
