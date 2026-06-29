@@ -17,13 +17,13 @@
   - Outputs: `Ch2Page1S01Opening.tsx`, `Ch2Page1S02Focus.tsx`, `Ch2Page1S03KnowledgeNav.tsx`
   - Plan: split the existing three internal ranges into independent local timelines: S01 210f, S02 240f, S03 270f. Replace the old `Ch2-Page1-Opening` registration with shot-numbered registrations.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
-  - Commit: `ac6cb7b` (`split ch2 page1 scenes into S01-S03`)
+  - Commit: `62e5bba` (`split ch2 page1 scenes into S01-S03`)
 
-- [ ] Ch2-Page2-Constraint: S04-S06
+- [x] Ch2-Page2-Constraint: S04-S06
   - Source: `src/scenes/02-遊戲設計/Ch2Page2Constraint.tsx`
   - Outputs: `Ch2Page2S04Constraint.tsx`, `Ch2Page2S05GameJam.tsx`, `Ch2Page2S06Question.tsx`
   - Plan: split definition, Game Jam explanation, and transition question into local timelines. Source has 930f while storyboard seconds total 810f; use source timing and note storyboard timing needs review after split.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
   - Commit: pending
 
 - [ ] Ch2-Page3-RhythmDoctor: S07-S09

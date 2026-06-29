@@ -14,7 +14,9 @@ import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
 import { Ch2Page1S02Focus } from "./scenes/02-遊戲設計/Ch2Page1S02Focus";
 import { Ch2Page1S03KnowledgeNav } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav";
-import { Ch2Page2Constraint } from "./scenes/02-遊戲設計/Ch2Page2Constraint";
+import { Ch2Page2S04Constraint } from "./scenes/02-遊戲設計/Ch2Page2S04Constraint";
+import { Ch2Page2S05GameJam } from "./scenes/02-遊戲設計/Ch2Page2S05GameJam";
+import { Ch2Page2S06Question } from "./scenes/02-遊戲設計/Ch2Page2S06Question";
 import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
 import { Ch2Page3RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
 import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
@@ -221,9 +223,25 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page2-Constraint"
-        component={Ch2Page2Constraint}
-        durationInFrames={930}
+        id="Ch2-Page2-S04-Constraint"
+        component={Ch2Page2S04Constraint}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page2-S05-GameJam"
+        component={Ch2Page2S05GameJam}
+        durationInFrames={480}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page2-S06-Question"
+        component={Ch2Page2S06Question}
+        durationInFrames={210}
         fps={30}
         width={1920}
         height={1080}
