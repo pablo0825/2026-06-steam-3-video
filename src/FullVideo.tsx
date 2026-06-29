@@ -2,7 +2,9 @@ import React from "react";
 import { Series } from "remotion";
 import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
 import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
-import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
+import { Ch1Page2S03AINode } from "./scenes/01-實驗介紹/Ch1Page2S03AINode";
+import { Ch1Page2S04Domains } from "./scenes/01-實驗介紹/Ch1Page2S04Domains";
+import { Ch1Page2S05PlayablePrototype } from "./scenes/01-實驗介紹/Ch1Page2S05PlayablePrototype";
 import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
 import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
 import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
@@ -24,8 +26,14 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={150}>
         <Ch1Page1S02Title />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={330}>
-        <Page2AIToPrototype />
+      <Series.Sequence durationInFrames={90}>
+        <Ch1Page2S03AINode />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={150}>
+        <Ch1Page2S04Domains />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={90}>
+        <Ch1Page2S05PlayablePrototype />
       </Series.Sequence>
       <Series.Sequence durationInFrames={540}>
         <Page3Prototype />

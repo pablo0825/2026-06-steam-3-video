@@ -3,7 +3,9 @@ import { CalculateMetadataFunction, Composition, Series } from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
 import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
 import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
-import { Page2AIToPrototype } from "./scenes/01-實驗介紹/Page2AIToPrototype";
+import { Ch1Page2S03AINode } from "./scenes/01-實驗介紹/Ch1Page2S03AINode";
+import { Ch1Page2S04Domains } from "./scenes/01-實驗介紹/Ch1Page2S04Domains";
+import { Ch1Page2S05PlayablePrototype } from "./scenes/01-實驗介紹/Ch1Page2S05PlayablePrototype";
 import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
 import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
 import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
@@ -150,9 +152,25 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page2-AI"
-        component={Page2AIToPrototype}
-        durationInFrames={330}
+        id="Ch1-Page2-S03-AINode"
+        component={Ch1Page2S03AINode}
+        durationInFrames={90}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page2-S04-Domains"
+        component={Ch1Page2S04Domains}
+        durationInFrames={150}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page2-S05-PlayablePrototype"
+        component={Ch1Page2S05PlayablePrototype}
+        durationInFrames={90}
         fps={30}
         width={1920}
         height={1080}

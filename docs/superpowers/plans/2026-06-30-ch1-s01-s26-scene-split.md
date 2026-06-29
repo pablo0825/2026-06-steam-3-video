@@ -17,13 +17,13 @@
   - Outputs: `Ch1Page1S01Opening.tsx`, `Ch1Page1S02Title.tsx`
   - Plan: split logo/host opening and title/subtitle into independent local timelines. Replace old `Page1-Opening` registration with shot-numbered registrations and update `FullVideo`.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `fb6bcd8` (`split ch1 page1 scenes into S01-S02`)
 
-- [ ] Page2-AI: S03-S05
+- [x] Page2-AI: S03-S05
   - Source: `src/scenes/01-實驗介紹/Page2AIToPrototype.tsx`
   - Outputs: `Ch1Page2S03AINode.tsx`, `Ch1Page2S04Domains.tsx`, `Ch1Page2S05PlayablePrototype.tsx`
   - Plan: split AI node, AI-to-domains expansion, and convergence to playable prototype. Source duration 330f while storyboard seconds total 540f; use source timing and note storyboard timing needs review after split.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; old active Root/FullVideo id/export removed. `npm run lint` currently blocked by unrelated dirty Ch3 Root/file changes outside this target.
   - Commit: pending
 
 - [ ] Page3-Prototype: S06-S09
