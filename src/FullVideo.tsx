@@ -18,7 +18,9 @@ import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15E
 import { Ch1Page6S16CurrentPart } from "./scenes/01-實驗介紹/Ch1Page6S16CurrentPart";
 import { Ch1Page7S17CodexAgent } from "./scenes/01-實驗介紹/Ch1Page7S17CodexAgent";
 import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18ComputerAccess";
-import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
+import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT";
+import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
+import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
 import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 
@@ -82,8 +84,14 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={210}>
         <Ch1Page7S18ComputerAccess />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={630}>
-        <Page8Compare />
+      <Series.Sequence durationInFrames={300}>
+        <Ch1Page8S19ChatGPT />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={240}>
+        <Ch1Page8S20Codex />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={90}>
+        <Ch1Page8S21NoManualWork />
       </Series.Sequence>
       <Series.Sequence durationInFrames={360}>
         <Page9Placeholder />

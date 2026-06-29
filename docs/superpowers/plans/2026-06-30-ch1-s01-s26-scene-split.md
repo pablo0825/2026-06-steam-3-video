@@ -59,13 +59,13 @@
   - Outputs: `Ch1Page7S17CodexAgent.tsx`, `Ch1Page7S18ComputerAccess.tsx`
   - Plan: split Codex AI Agent intro and computer/file operation explanation.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `52e873d` (`split ch1 page7 scenes into S17-S18`)
 
-- [ ] Page8-Compare: S19-S21
+- [x] Page8-Compare: S19-S21
   - Source: `src/scenes/01-實驗介紹/Page8Compare.tsx`
   - Outputs: `Ch1Page8S19ChatGPT.tsx`, `Ch1Page8S20Codex.tsx`, `Ch1Page8S21NoManualWork.tsx`
   - Plan: split ChatGPT side, Codex side, and conclusion comparison.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page9-Placeholder: S22

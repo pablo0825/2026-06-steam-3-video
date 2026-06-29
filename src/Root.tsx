@@ -19,7 +19,9 @@ import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15E
 import { Ch1Page6S16CurrentPart } from "./scenes/01-實驗介紹/Ch1Page6S16CurrentPart";
 import { Ch1Page7S17CodexAgent } from "./scenes/01-實驗介紹/Ch1Page7S17CodexAgent";
 import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18ComputerAccess";
-import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
+import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT";
+import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
+import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
 import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
@@ -288,9 +290,25 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page8-Compare"
-        component={Page8Compare}
-        durationInFrames={630}
+        id="Ch1-Page8-S19-ChatGPT"
+        component={Ch1Page8S19ChatGPT}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page8-S20-Codex"
+        component={Ch1Page8S20Codex}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page8-S21-NoManualWork"
+        component={Ch1Page8S21NoManualWork}
+        durationInFrames={90}
         fps={30}
         width={1920}
         height={1080}
