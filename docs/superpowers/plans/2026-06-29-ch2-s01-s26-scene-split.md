@@ -38,13 +38,13 @@
   - Outputs: `Ch2Page4S10CorePlay.tsx`, `Ch2Page4S11Celeste.tsx`, `Ch2Page4S11CelesteOverlay.tsx`, `Ch2Page4S12Actions.tsx`, `Ch2Page4S12ActionsOverlay.tsx`
   - Plan: preserve transparent overlay behavior for S11/S12 because the storyboard specifies external gameplay footage plus alpha overlay; S10 must be opaque `NEUTRAL_50`. Source has 700f while storyboard timing is approximate; use source timing and note storyboard timing needs review after split.
   - Validation: `validate_scene_split.py` OK for preview/opaque files; overlay files manually checked as intentional alpha outputs with `calculateAlphaOverlayMetadata`; `npm run lint` OK; old active Root ids/exports removed.
-  - Commit: pending
+  - Commit: `7ec1d00` (`split ch2 page4 scenes into S10-S12`)
 
-- [ ] Ch2-Page5-CoreLoop: S13-S15
+- [x] Ch2-Page5-CoreLoop: S13-S15
   - Source: `src/scenes/02-遊戲設計/Ch2Page5CoreLoop.tsx`
   - Outputs: `Ch2Page5S13CoreLoop.tsx`, `Ch2Page5S14LoopFramework.tsx`, `Ch2Page5S15MonsterLoop.tsx`
   - Plan: split the framework introduction, loop diagram build, and monster-game walkthrough while keeping `CoreLoopDiagram.tsx` as a shared helper if useful.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root id/export removed.
   - Commit: pending
 
 - [ ] Ch2-Page6-LoopCeleste: S16-S17
