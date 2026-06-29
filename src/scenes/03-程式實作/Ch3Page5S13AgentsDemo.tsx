@@ -9,26 +9,23 @@ import {
 import {
   BLUE,
   DASH_BORDER,
+  NEUTRAL_50,
   PANEL_BG,
   SUBTLE,
   TEXT_DARK,
-  WHITE,
   withAlpha,
 } from "../../theme/colors";
+import { FONT, clamp } from "../../theme/motion";
 
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
+// 第 3 集・第 5 頁・S13：AGENTS.md 實機示範佔位（180 幀）
 const STEPS = [
   "建立 AGENTS.md",
   "寫入「請使用日文回覆」",
   "開啟新對話並提問",
   "確認規則生效",
 ] as const;
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
 
-export const Ch3Page5AgentsDemo: React.FC = () => {
+export const Ch3Page5S13AgentsDemo: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
   const titleIn = spring({
@@ -39,7 +36,7 @@ export const Ch3Page5AgentsDemo: React.FC = () => {
   const contentIn = interpolate(frame, [18, 42], [0, 1], clamp);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <div
         style={{
           position: "absolute",

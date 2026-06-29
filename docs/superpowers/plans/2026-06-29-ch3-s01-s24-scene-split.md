@@ -69,7 +69,25 @@
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page4-Context` or `Ch3Page4Context` references remain in `src`.
   - Commit: pending
-- [ ] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
+- [x] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
+  - Sources:
+    - `src/scenes/03-程式實作/Ch3Page5Agents.tsx`
+    - `src/scenes/03-程式實作/Ch3Page5AgentsDefinition.tsx`
+    - `src/scenes/03-程式實作/Ch3Page5AgentsFlow.tsx`
+    - `src/scenes/03-程式實作/Ch3Page5AgentsDemo.tsx`
+  - Source timing:
+    - S11: 150 frames, AGENTS.md definition
+    - S12: 360 frames, AGENTS.md information flow
+    - S13: 180 frames, AGENTS.md demo placeholder
+  - Outputs:
+    - `Ch3Page5S11AgentsDefinition.tsx`
+    - `Ch3Page5S12AgentsFlow.tsx`
+    - `Ch3Page5S13AgentsDemo.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page5S11AgentsDefinition.tsx src/scenes/03-程式實作/Ch3Page5S12AgentsFlow.tsx src/scenes/03-程式實作/Ch3Page5S13AgentsDemo.tsx` passed.
+    - `npm run lint` passed.
+    - Search confirmed no active `Ch3-Page5-Agents`, `Ch3-Page5-AgentsDemo`, or `Ch3Page5Agents` references remain in `src`.
+  - Commit: pending
 - [ ] `Ch3-Page6-Spec`: S14-S15
 - [ ] `Ch3-Page7-CelesteSpec`: S16-S18
 - [ ] `Ch3-Page8-SpecSetup`: S19
