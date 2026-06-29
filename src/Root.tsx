@@ -21,7 +21,9 @@ import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
 import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
-import { Ch3Page1Opening } from "./scenes/03-程式實作/Ch3Page1Opening";
+import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
+import { Ch3Page1S02Focus } from "./scenes/03-程式實作/Ch3Page1S02Focus";
+import { Ch3Page1S03KnowledgeNav } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav";
 import { Ch3Page2UserStory } from "./scenes/03-程式實作/Ch3Page2UserStory";
 import { Ch3Page3RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3RhythmDoctor";
 import { Ch3Page3RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay";
@@ -267,9 +269,25 @@ export const RemotionRoot: React.FC = () => {
 
       {/* ── 第 3 集・程式實作 ── */}
       <Composition
-        id="Ch3-Page1-Opening"
-        component={Ch3Page1Opening}
-        durationInFrames={780}
+        id="Ch3-Page1-S01-Opening"
+        component={Ch3Page1S01Opening}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page1-S02-Focus"
+        component={Ch3Page1S02Focus}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page1-S03-KnowledgeNav"
+        component={Ch3Page1S03KnowledgeNav}
+        durationInFrames={330}
         fps={30}
         width={1920}
         height={1080}
