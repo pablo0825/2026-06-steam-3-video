@@ -15,6 +15,7 @@ type KnowledgeNavProps = {
   tagStep: number; // 項目間隔
   highlight: readonly [number, number]; // 高亮（與其餘變灰）區間
   highlightIndex?: number; // 高亮哪一個，預設 0
+  animateIn?: boolean; // 是否逐一彈入進場，預設 true；false 則三項直接到位（複用時改跑高亮用）
 };
 
 export const KnowledgeNav: React.FC<KnowledgeNavProps> = ({
@@ -26,15 +27,18 @@ export const KnowledgeNav: React.FC<KnowledgeNavProps> = ({
   tagStep,
   highlight,
   highlightIndex = 0,
+  animateIn = true,
 }) => {
   const hilite = interpolate(frame, highlight, [0, 1], ease);
 
   const items = tags.map((tag, i) => {
-    const inSpring = spring({
-      frame: frame - (tagFirst + i * tagStep),
-      fps,
-      config: { damping: 15, stiffness: 130 },
-    });
+    const inSpring = animateIn
+      ? spring({
+          frame: frame - (tagFirst + i * tagStep),
+          fps,
+          config: { damping: 15, stiffness: 130 },
+        })
+      : 1; // 直接到位（不逐一彈入）
     const isPrimary = i === highlightIndex;
     const hi = isPrimary ? hilite : 0; // 選中項：黃色底線展開
     const dim = isPrimary ? 0 : hilite; // 其餘項：轉灰

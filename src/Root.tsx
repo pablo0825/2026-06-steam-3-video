@@ -39,6 +39,8 @@ import { Ch4Page1S02Role } from "./scenes/04-美術整合/Ch4Page1S02Role";
 import { Ch4Page1S03Flow } from "./scenes/04-美術整合/Ch4Page1S03Flow";
 import { Ch4Page1S04Focus } from "./scenes/04-美術整合/Ch4Page1S04Focus";
 import { Ch4Page2S05Knowledge } from "./scenes/04-美術整合/Ch4Page2S05Knowledge";
+import { Ch4Page2S05Knowledge2 } from "./scenes/04-美術整合/Ch4Page2S05Knowledge-2";
+import { Ch4Page2S05Knowledge3 } from "./scenes/04-美術整合/Ch4Page2S05Knowledge-3";
 import { Ch4Page2S06SizeCards } from "./scenes/04-美術整合/Ch4Page2S06SizeCards";
 import { Ch4Page2S07ScreenSizes } from "./scenes/04-美術整合/Ch4Page2S07ScreenSizes";
 import { Ch4Page2S08WhySize } from "./scenes/04-美術整合/Ch4Page2S08WhySize";
@@ -417,6 +419,22 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page2-S05-Knowledge"
         component={Ch4Page2S05Knowledge}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S05-Knowledge-2"
+        component={Ch4Page2S05Knowledge2}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page2-S05-Knowledge-3"
+        component={Ch4Page2S05Knowledge3}
         durationInFrames={330}
         fps={30}
         width={1920}
