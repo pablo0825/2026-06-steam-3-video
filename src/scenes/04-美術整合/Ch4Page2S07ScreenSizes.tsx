@@ -10,13 +10,14 @@ import { BLACK, BLUE, NEUTRAL_50, WHITE, withAlpha } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 import { CornerLabel } from "../../components/CornerLabel";
 
-// 第 4 集・第 2 頁・S07：螢幕尺寸範例（橫式／直式）（260 幀）
+// 第 4 集・第 2 頁・S07：螢幕尺寸範例（橫式／直式）（470 幀）
 //   原 S07/S08 兩個獨立看圖卡合併為 S16 風格的滿版看圖輪播：
-//   黑底淡入 → 一次一張滿版大圖 crossfade（橫式 1920×1080／直式 1080×1920）→ 結尾淡出回米白。
-//   左上角隨圖切換尺寸標籤；底部進度點＋固定免責標示，避免蓋住素材。
-const ENDING_FADE = [230, 260] as const;
+//   黑底淡入 → 一次一張滿版大圖 crossfade（橫式 ×2／直式 ×2）→ 結尾淡出回米白。
+//   左上角尺寸標籤只在「橫→直」交界切換；底部進度點＋固定免責標示，避免蓋住素材。
+const ENDING_FADE = [440, 470] as const;
 
-// dim：左上角顯示的尺寸標籤文字。w/h：原圖尺寸，用來精算 contain 後的實際顯示大小。
+// dim：左上角顯示的尺寸標籤（教學標準值；同方向多張共用）。
+// w/h：原圖實際像素，用來精算 contain 後的顯示大小（直式為手機全螢幕 9:19.5，故非 1080×1920）。
 type Example = {
   src: string;
   dim: string;
@@ -25,23 +26,37 @@ type Example = {
 };
 const EXAMPLES: readonly Example[] = [
   {
-    src: "04-美術整合/screen-size-landscape.png",
+    src: "04-美術整合/screen-size-landscape-01.png",
     dim: "1920×1080",
-    w: 1920,
-    h: 1080,
+    w: 2560,
+    h: 1440,
   },
   {
-    src: "04-美術整合/screen-size-portrait.png",
+    src: "04-美術整合/screen-size-landscape-02.jpg",
+    dim: "1920×1080",
+    w: 1024,
+    h: 576,
+  },
+  {
+    src: "04-美術整合/screen-size-portrait-01.png",
     dim: "1080×1920",
-    w: 1080,
-    h: 1920,
+    w: 1260,
+    h: 2736,
+  },
+  {
+    src: "04-美術整合/screen-size-portrait-02.jpg",
+    dim: "1080×1920",
+    w: 868,
+    h: 1885,
   },
 ];
 
 const START = 8; // 第一張進場
 const SEG = 104; // 每張顯示長度（含 crossfade）
 const FADE = 18; // crossfade 幀數
-const SWAP = START + SEG; // 兩張交界（標籤切換點）
+// 方向切換點：標籤只在「橫 → 直」交界淡出淡入（同方向多張不閃動）
+const SWAP_IDX = EXAMPLES.findIndex((e) => e.dim !== EXAMPLES[0].dim);
+const SWAP = START + SWAP_IDX * SEG;
 
 // 圖片可用區（上下留黑帶給尺寸標籤／進度點／免責標示）
 const VIEW_TOP = 56;
@@ -69,7 +84,10 @@ export const Ch4Page2S07ScreenSizes: React.FC = () => {
     return fadeIn * fadeOut;
   };
 
-  const activeIdx = frame < SWAP ? 0 : 1;
+  const activeIdx = Math.min(
+    EXAMPLES.length - 1,
+    Math.max(0, Math.floor((frame - START) / SEG)),
+  );
 
   // 尺寸標籤：隨圖切換，在交界點短淡出/淡入避免硬跳。
   const labelOp =
@@ -89,7 +107,7 @@ export const Ch4Page2S07ScreenSizes: React.FC = () => {
           const scale = Math.min(VIEW_W / ex.w, VIEW_H / ex.h);
           return (
             <div
-              key={ex.dim}
+              key={ex.src}
               style={{
                 position: "absolute",
                 top: VIEW_TOP,
@@ -133,7 +151,7 @@ export const Ch4Page2S07ScreenSizes: React.FC = () => {
         >
           {EXAMPLES.map((ex, i) => (
             <div
-              key={ex.dim}
+              key={ex.src}
               style={{
                 width: i === activeIdx ? 34 : 14,
                 height: 14,

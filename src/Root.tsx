@@ -451,7 +451,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page2-S07-ScreenSizes"
         component={Ch4Page2S07ScreenSizes}
-        durationInFrames={260}
+        durationInFrames={470}
         fps={30}
         width={1920}
         height={1080}

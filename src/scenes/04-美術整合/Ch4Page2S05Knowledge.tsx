@@ -12,10 +12,10 @@ import { KnowledgeNav } from "../../components/KnowledgeNav";
 // 第 4 集・第 2 頁・S05：相關知識導覽（330 幀，結尾淡出到 NEUTRAL_50）
 //   三個相關知識標籤，聚焦「遊戲畫面大小」。
 const TAGS = ["遊戲畫面大小", "素材大小的基礎單位", "Sprite Sheet"] as const;
-const TAG_FIRST = 72;
+const TAG_FIRST = 87; // 整段開頭較原本晚 15 幀，開場多停一點白底
 const TAG_STEP = 24;
-const HIGHLIGHT = [210, 250] as const;
-const OPENING_FADE = [0, 20] as const; // 開場淡入（與 Ch2/Ch3 一致）
+const HIGHLIGHT = [225, 265] as const;
+const OPENING_FADE = [15, 35] as const; // 先停約 15 幀白底，再讓「相關知識」淡入
 const ENDING_FADE = [306, 330] as const;
 
 export const Ch4Page2S05Knowledge: React.FC = () => {
