@@ -31,13 +31,13 @@
   - Outputs: `Ch1Page3S06Question.tsx`, `Ch1Page3S07DefinitionRange.tsx`, `Ch1Page3S08FastPlayable.tsx`, `Ch1Page3S09ValidateQuestion.tsx`
   - Plan: split prototype question, broad definition, fastest playable version, and validation purpose.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `ba633f7` (`split ch1 page3 scenes into S06-S09`)
 
-- [ ] Page4-PrototypeVideo: S10-S11
+- [x] Page4-PrototypeVideo: S10-S11
   - Source: `src/scenes/01-實驗介紹/Page4PrototypeVideo.tsx`
   - Outputs: `Ch1Page4S10PrototypeVideo.tsx`, `Ch1Page4S11GameplayQuestion.tsx`
-  - Plan: split centered prototype video intro and left-video/right-annotation explanation.
-  - Validation: pending
+  - Plan: split centered prototype video intro and left-video/right-annotation explanation. Source includes an implemented S10.5 "完整度不高" bridge not listed in the storyboard; keep it inside S11 and note storyboard timing/content should be updated.
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page5-Goal: S12-S14
