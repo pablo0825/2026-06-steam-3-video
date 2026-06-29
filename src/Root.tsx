@@ -32,11 +32,18 @@ import { Ch2Page5S14LoopFramework } from "./scenes/02-遊戲設計/Ch2Page5S14Lo
 import { Ch2Page5S15MonsterLoop } from "./scenes/02-遊戲設計/Ch2Page5S15MonsterLoop";
 import { Ch2Page6S16CelesteVideo } from "./scenes/02-遊戲設計/Ch2Page6S16CelesteVideo";
 import { Ch2Page6S17CelesteLoop } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop";
-import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
+import { Ch2Page7S18StoryboardIntro } from "./scenes/02-遊戲設計/Ch2Page7S18StoryboardIntro";
+import { Ch2Page7S19Examples } from "./scenes/02-遊戲設計/Ch2Page7S19Examples";
+import { Ch2Page7S20Readable } from "./scenes/02-遊戲設計/Ch2Page7S20Readable";
+import { Ch2Page7S21Consensus } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus";
+import { Ch2Page7S22Checklist } from "./scenes/02-遊戲設計/Ch2Page7S22Checklist";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
 import { Ch3Page1S02Focus } from "./scenes/03-程式實作/Ch3Page1S02Focus";
 import { Ch3Page1S03KnowledgeNav } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav";
+import { Ch3Page1S03KnowledgeNav2 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-2";
+import { Ch3Page1S03KnowledgeNav3 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-3";
+import { Ch3Page1S03KnowledgeNav4 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-4";
 import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
 import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
 import { Ch3Page3S06RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctor";
@@ -380,9 +387,41 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page7-Storyboard"
-        component={Ch2Page7Storyboard}
-        durationInFrames={1470}
+        id="Ch2-Page7-S18-StoryboardIntro"
+        component={Ch2Page7S18StoryboardIntro}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page7-S19-Examples"
+        component={Ch2Page7S19Examples}
+        durationInFrames={276}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page7-S20-Readable"
+        component={Ch2Page7S20Readable}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page7-S21-Consensus"
+        component={Ch2Page7S21Consensus}
+        durationInFrames={490}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page7-S22-Checklist"
+        component={Ch2Page7S22Checklist}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}
@@ -416,6 +455,30 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S03-KnowledgeNav"
         component={Ch3Page1S03KnowledgeNav}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page1-S03-KnowledgeNav-2"
+        component={Ch3Page1S03KnowledgeNav2}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page1-S03-KnowledgeNav-3"
+        component={Ch3Page1S03KnowledgeNav3}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page1-S03-KnowledgeNav-4"
+        component={Ch3Page1S03KnowledgeNav4}
         durationInFrames={330}
         fps={30}
         width={1920}
