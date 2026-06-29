@@ -659,7 +659,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page5-S11-AgentsDefinition"
         component={Ch3Page5S11AgentsDefinition}
-        durationInFrames={150}
+        durationInFrames={180}
         fps={30}
         width={1920}
         height={1080}
@@ -683,7 +683,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page6-S14-SpecDefinition"
         component={Ch3Page6S14SpecDefinition}
-        durationInFrames={150}
+        durationInFrames={180}
         fps={30}
         width={1920}
         height={1080}

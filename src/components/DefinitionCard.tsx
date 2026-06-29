@@ -29,7 +29,20 @@ export const DefinitionCard: React.FC<{
   title: string;
   segments: DefinitionSegment[];
   titleSize?: number;
-}> = ({ title, segments, titleSize = 150 }) => {
+  /** 定義句最大寬度；給定時才換行置中（長句用），預設不限寬＝單行。 */
+  defMaxWidth?: number;
+  /** 第一個高亮詞亮起的幀，預設 90；短場景可提前。 */
+  hlStart?: number;
+  /** 高亮詞之間的錯開幀數，預設 30；短場景可壓縮。 */
+  hlStagger?: number;
+}> = ({
+  title,
+  segments,
+  titleSize = 150,
+  defMaxWidth,
+  hlStart = HL_START,
+  hlStagger = HL_STAGGER,
+}) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
 
@@ -54,7 +67,7 @@ export const DefinitionCard: React.FC<{
   const highlightShow = (k: number) =>
     interpolate(
       frame,
-      [HL_START + k * HL_STAGGER, HL_START + k * HL_STAGGER + HL_RAMP],
+      [hlStart + k * hlStagger, hlStart + k * hlStagger + HL_RAMP],
       [0, 1],
       ease,
     );
@@ -92,6 +105,9 @@ export const DefinitionCard: React.FC<{
             letterSpacing: 1,
             opacity: defLine,
             transform: `translateY(${interpolate(defLine, [0, 1], [28, 0])}px)`,
+            ...(defMaxWidth
+              ? { maxWidth: defMaxWidth, textAlign: "center", lineHeight: 1.6 }
+              : {}),
           }}
         >
           {segments.map((seg, i) =>
