@@ -22,8 +22,11 @@ import { Ch2Page3S07RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page
 import { Ch2Page3S08Limit } from "./scenes/02-遊戲設計/Ch2Page3S08Limit";
 import { Ch2Page3S08LimitOverlay } from "./scenes/02-遊戲設計/Ch2Page3S08LimitOverlay";
 import { Ch2Page3S09ConstraintMethod } from "./scenes/02-遊戲設計/Ch2Page3S09ConstraintMethod";
-import { Ch2Page4CorePlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlay";
-import { Ch2Page4CorePlayOverlay } from "./scenes/02-遊戲設計/Ch2Page4CorePlayOverlay";
+import { Ch2Page4S10CorePlay } from "./scenes/02-遊戲設計/Ch2Page4S10CorePlay";
+import { Ch2Page4S11Celeste } from "./scenes/02-遊戲設計/Ch2Page4S11Celeste";
+import { Ch2Page4S11CelesteOverlay } from "./scenes/02-遊戲設計/Ch2Page4S11CelesteOverlay";
+import { Ch2Page4S12Actions } from "./scenes/02-遊戲設計/Ch2Page4S12Actions";
+import { Ch2Page4S12ActionsOverlay } from "./scenes/02-遊戲設計/Ch2Page4S12ActionsOverlay";
 import { Ch2Page5CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5CoreLoop";
 import { Ch2Page6LoopCeleste } from "./scenes/02-遊戲設計/Ch2Page6LoopCeleste";
 import { Ch2Page7Storyboard } from "./scenes/02-遊戲設計/Ch2Page7Storyboard";
@@ -292,17 +295,42 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page4-CorePlay"
-        component={Ch2Page4CorePlay}
-        durationInFrames={700}
+        id="Ch2-Page4-S10-CorePlay"
+        component={Ch2Page4S10CorePlay}
+        durationInFrames={220}
         fps={30}
         width={1920}
         height={1080}
       />
       <Composition
-        id="Ch2-Page4-CorePlay-Overlay"
-        component={Ch2Page4CorePlayOverlay}
-        durationInFrames={700}
+        id="Ch2-Page4-S11-Celeste"
+        component={Ch2Page4S11Celeste}
+        durationInFrames={272}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page4-S11-Celeste-Overlay"
+        component={Ch2Page4S11CelesteOverlay}
+        durationInFrames={272}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch2-Page4-S12-Actions"
+        component={Ch2Page4S12Actions}
+        durationInFrames={208}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page4-S12-Actions-Overlay"
+        component={Ch2Page4S12ActionsOverlay}
+        durationInFrames={208}
         fps={30}
         width={1920}
         height={1080}

@@ -31,13 +31,13 @@
   - Outputs: `Ch2Page3S07RhythmDoctor.tsx`, `Ch2Page3S07RhythmDoctorOverlay.tsx`, `Ch2Page3S08Limit.tsx`, `Ch2Page3S08LimitOverlay.tsx`, `Ch2Page3S09ConstraintMethod.tsx`
   - Plan: preserve transparent overlay behavior for S07/S08 because the storyboard specifies external gameplay footage plus alpha overlay; S09 must be opaque `NEUTRAL_50`. Source has 740f while storyboard seconds total 810f; use source timing and note storyboard timing needs review after split.
   - Validation: `validate_scene_split.py` OK for preview/opaque files; overlay files manually checked as intentional alpha outputs with `calculateAlphaOverlayMetadata`; `npm run lint` OK; old active Root ids/exports removed.
-  - Commit: pending
+  - Commit: `a65a255` (`split ch2 page3 scenes into S07-S09`)
 
-- [ ] Ch2-Page4-CorePlay: S10-S12
+- [x] Ch2-Page4-CorePlay: S10-S12
   - Source: `src/scenes/02-遊戲設計/Ch2Page4CorePlay.tsx`, `src/scenes/02-遊戲設計/Ch2Page4CorePlayOverlay.tsx`
-  - Outputs: S10 opaque text-card file, S11/S12 preview and overlay files.
-  - Plan: preserve transparent overlay behavior for S11/S12 because the storyboard specifies external gameplay footage plus alpha overlay; S10 must be opaque `NEUTRAL_50`.
-  - Validation: pending
+  - Outputs: `Ch2Page4S10CorePlay.tsx`, `Ch2Page4S11Celeste.tsx`, `Ch2Page4S11CelesteOverlay.tsx`, `Ch2Page4S12Actions.tsx`, `Ch2Page4S12ActionsOverlay.tsx`
+  - Plan: preserve transparent overlay behavior for S11/S12 because the storyboard specifies external gameplay footage plus alpha overlay; S10 must be opaque `NEUTRAL_50`. Source has 700f while storyboard timing is approximate; use source timing and note storyboard timing needs review after split.
+  - Validation: `validate_scene_split.py` OK for preview/opaque files; overlay files manually checked as intentional alpha outputs with `calculateAlphaOverlayMetadata`; `npm run lint` OK; old active Root ids/exports removed.
   - Commit: pending
 
 - [ ] Ch2-Page5-CoreLoop: S13-S15
