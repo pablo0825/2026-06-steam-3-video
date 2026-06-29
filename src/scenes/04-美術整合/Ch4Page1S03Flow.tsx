@@ -24,10 +24,7 @@ const ARROW_LEN = 30; // 連線只畫到箭頭底部，由三角形當尖端
 
 // 第 4 集・第 1 頁・S03：四節點水平流程 → 回饋 → 主句「提早讓問題出現」
 //   原 S02+S03 合併檔的 210–815 區間，全部 −210 重新基準化為 0 起算（605 幀）。
-//   標題由 S02 接續顯示，在流程上移時（285–325）淡出。
-
-// 標題（自 S02 接續，於流程上移時淡出）
-const TITLE_OUT = [285, 325] as const;
+//   S02 標題已改為原地淡出、不交棒，故本段不再顯示頂部標題。
 
 // 四節點水平流程
 const NODES = ["AI 生假素材", "匯入 Unity", "驗證規格", "降低返工"] as const;
@@ -50,9 +47,6 @@ const PHRASE_RULE = [489, 525] as const; // 主句黃色底線 wipe
 export const Ch4Page1S03Flow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-
-  // ── 標題（接續 S02，於流程上移時淡出）─────────────
-  const titleOpacity = interpolate(frame, TITLE_OUT, [1, 0], clamp);
 
   // ── 流程圖（連續）─────────────────────────────────
   const flowOpacity =
@@ -122,26 +116,6 @@ export const Ch4Page1S03Flow: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      {/* ── 標題：AI 生圖的角色（接續 S02，上移時淡出）── */}
-      {frame < 327 && (
-        <div
-          style={{
-            position: "absolute",
-            left: 960,
-            top: 175,
-            transform: "translateX(-50%)",
-            opacity: titleOpacity,
-            fontSize: 64,
-            fontWeight: 900,
-            letterSpacing: 4,
-            color: TEXT_DARK,
-            whiteSpace: "nowrap",
-          }}
-        >
-          AI 生圖的角色
-        </div>
-      )}
-
       {/* ── 四節點流程（連續，不重建）── */}
       {frame < 607 && (
         <AbsoluteFill style={{ opacity: flowOpacity }}>

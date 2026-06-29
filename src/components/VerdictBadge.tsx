@@ -19,7 +19,7 @@ export const VerdictBadge: React.FC<{
   shadow = false,
 }) => {
   const color = kind === "pass" ? GREEN : RED;
-  const mark = kind === "pass" ? "✓" : "✗";
+  const mark = kind === "pass" ? "✓" : "×";
   return (
     <div
       style={{
