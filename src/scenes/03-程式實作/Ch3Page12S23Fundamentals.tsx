@@ -1,24 +1,24 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLUE, SUBTLE, TEXT_DARK, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import {
+  BLUE,
+  NEUTRAL_50,
+  SUBTLE,
+  TEXT_DARK,
+  YELLOW,
+  withAlpha,
+} from "../../theme/colors";
+import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 12 頁 S23：提醒「基本功很重要」（白底文字卡＋SVG 動畫）
 //   標題 → 兩段短重點 → 程式碼／Unity（＝基本功）匯入放大鏡「找到問題」並高亮
 //   → 結論「基本功 × AI 協作」放大 pop 當主角
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) };
 
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 900 };
 
@@ -31,18 +31,18 @@ const POINTS: React.ReactNode[] = [
   </>,
 ];
 
-export const Ch3Page12Fundamentals: React.FC = () => {
+export const Ch3Page12S23Fundamentals: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
 
   // ── 圖示匯入放大鏡 ──
-  const iconsIn = interpolate(frame, [120, 150], [0, 1], ease);
-  const merge = interpolate(frame, [150, 200], [0, 1], ease);
+  const iconsIn = interpolate(frame, [120, 150], [0, 1], easeStandard);
+  const merge = interpolate(frame, [150, 200], [0, 1], easeStandard);
   const iconsOut = interpolate(frame, [158, 190], [1, 0], clamp);
-  const magIn = interpolate(frame, [186, 216], [0, 1], ease);
-  const magHi = interpolate(frame, [216, 238], [0, 1], ease);
+  const magIn = interpolate(frame, [186, 216], [0, 1], easeStandard);
+  const magHi = interpolate(frame, [216, 238], [0, 1], easeStandard);
   // 放大鏡在結論長出前完全淡出，避免標籤與結論重疊
   const magOut = interpolate(frame, [254, 276], [1, 0], clamp);
   const magPulse = 1 + 0.05 * Math.sin((frame - 216) * 0.35) * magHi * magOut;
@@ -56,9 +56,8 @@ export const Ch3Page12Fundamentals: React.FC = () => {
   const out = interpolate(frame, [312, 330], [1, 0], clamp);
 
   return (
-    <AbsoluteFill
-      style={{ backgroundColor: WHITE, fontFamily: FONT, opacity: out }}
-    >
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
       {/* 標題 */}
       <div
         style={{
@@ -220,6 +219,7 @@ export const Ch3Page12Fundamentals: React.FC = () => {
         <span style={{ color: BLUE }}>AI</span>
         <span style={{ color: TEXT_DARK }}> 協作</span>
       </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

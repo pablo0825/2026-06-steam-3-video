@@ -55,7 +55,7 @@
     - Overlay compositions intentionally preserve transparent output because the storyboard marks S06-S07 as `影片素材＋透明 Overlay`.
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page3-RhythmDoctor` or `Ch3Page3RhythmDoctor` references remain in `src`.
-  - Commit: pending
+  - Commit: included in target commit `split ch3 page3 scenes into S06-S07`
 - [x] `Ch3-Page4-Context`: S08-S09
   - Source: `src/scenes/03-程式實作/Ch3Page4Context.tsx`
   - Source timing:
@@ -68,7 +68,7 @@
     - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page4S08Context.tsx src/scenes/03-程式實作/Ch3Page4S09ContextLimit.tsx` passed.
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page4-Context` or `Ch3Page4Context` references remain in `src`.
-  - Commit: pending
+  - Commit: included in target commit `split ch3 page4 scenes into S08-S09`
 - [x] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
   - Sources:
     - `src/scenes/03-程式實作/Ch3Page5Agents.tsx`
@@ -87,7 +87,7 @@
     - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page5S11AgentsDefinition.tsx src/scenes/03-程式實作/Ch3Page5S12AgentsFlow.tsx src/scenes/03-程式實作/Ch3Page5S13AgentsDemo.tsx` passed.
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page5-Agents`, `Ch3-Page5-AgentsDemo`, or `Ch3Page5Agents` references remain in `src`.
-  - Commit: pending
+  - Commit: included in target commit `split ch3 page5 scenes into S11-S13`
 - [x] `Ch3-Page6-Spec`: S14-S15 implemented as three files
   - Storyboard follow-up: update `docs/03-程式實作/steam - 3 - Vibe Game 教案 - 程式實作 - 分鏡腳本.md` because the storyboard lists S14-S15, but the implementation now has three single-file segments: S14 definition, S14 workflow, and S15 structure.
   - Sources:
@@ -107,7 +107,7 @@
     - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page6S14SpecDefinition.tsx src/scenes/03-程式實作/Ch3Page6S14SpecWorkflow.tsx src/scenes/03-程式實作/Ch3Page6S15SpecStructure.tsx` passed.
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page6-Spec`, `Ch3Page6Spec`, local `FONT`, local `clamp`, or direct `Easing` references remain in Page6 scene files. `Ch3Page6SpecShared` remains only as a shared helper dependency.
-  - Commit: pending
+  - Commit: included in target commit `split ch3 page6 spec scenes into three files`
 - [x] `Ch3-Page7-CelesteSpec`: S16-S18 implemented as four files
   - Storyboard follow-up: update `docs/03-程式實作/steam - 3 - Vibe Game 教案 - 程式實作 - 分鏡腳本.md` because S18 is implemented as two single-file segments: per-feature Spec contrast and Spec workflow.
   - Sources:
@@ -133,10 +133,38 @@
     - Overlay compositions intentionally preserve transparent output because the storyboard marks S16-S17 as `影片素材＋透明 Overlay`.
     - `npm run lint` passed.
     - Search confirmed no active old Page7 composition ids, aggregate wrappers, local `FONT`, local `clamp`, or direct `Easing` references remain in Page7 scene files.
-  - Commit: pending
+  - Commit: included in target commit `split ch3 page7 scenes into S16-S18`
 - [ ] `Ch3-Page8-SpecSetup`: S19
+  - Status: no implemented scene file found in `src/scenes/03-程式實作/` or active `src/Root.tsx` registration.
+  - Storyboard says this is a screen-recording segment. User decision needed: create a Remotion title/annotation scene, wait for recording, or mark as external-only.
+
 - [ ] `Ch3-Page9-SpecBuild`: S20
+  - Status: no implemented scene file found in `src/scenes/03-程式實作/` or active `src/Root.tsx` registration.
+  - Storyboard says this is a screen-recording segment. User decision needed: create a Remotion title/annotation scene, wait for recording, or mark as external-only.
+
 - [ ] `Ch3-Page10-SpecValidation`: S21
+  - Status: no implemented scene file found in `src/scenes/03-程式實作/` or active `src/Root.tsx` registration.
+  - Storyboard says this is a screen-recording segment. User decision needed: create a Remotion title/annotation scene, wait for recording, or mark as external-only.
+
 - [ ] `Ch3-Page11-UpdateFeature`: S22
-- [ ] `Ch3-Page12-Fundamentals`: S23
-- [ ] `Ch3-Page13-Ending`: S24
+  - Status: no implemented scene file found in `src/scenes/03-程式實作/` or active `src/Root.tsx` registration.
+  - Storyboard describes a text/SVG card. User decision needed: implement this missing scene or leave it out of the current split pass.
+
+- [x] `Ch3-Page12-Fundamentals`: S23
+  - Source: `src/scenes/03-程式實作/Ch3Page12Fundamentals.tsx`
+  - Output: `Ch3Page12S23Fundamentals.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page12S23Fundamentals.tsx` passed.
+    - `npm run lint` passed.
+    - Search confirmed no active old Page12 composition id, old export, local `FONT`, local `clamp`, or direct `Easing` references remain.
+  - Commit: included in target commit `split ch3 final scenes into S23-S24`
+
+- [x] `Ch3-Page13-Ending`: S24
+  - Source: `src/scenes/03-程式實作/Ch3Page13Ending.tsx`
+  - Output: `Ch3Page13S24Ending.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page13S24Ending.tsx` passed.
+    - `npm run lint` passed.
+    - Search confirmed no active old Page13 composition id, old export, local `FONT`, or local `clamp` references remain.
+    - Manual inspection confirmed the final black fade is an intentional black content layer, while the outer scene background remains `NEUTRAL_50`.
+  - Commit: included in target commit `split ch3 final scenes into S23-S24`

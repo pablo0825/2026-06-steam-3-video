@@ -11,17 +11,17 @@ import {
 import {
   BLACK,
   BLUE,
+  NEUTRAL_50,
   NEUTRAL_300,
   SUBTLE,
   TEXT_DARK,
-  WHITE,
   withAlpha,
 } from "../../theme/colors";
+import { FONT, clamp } from "../../theme/motion";
 
 // 第 3 集・第 13 頁：結尾（連續上捲）
 //   S24：主持人照片＋感謝聆聽 → 製作團隊、補助計畫與素材來源上捲 → 黑場
 
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 const HOST_PHOTO = staticFile("01-實驗介紹/host-yujia.jpg");
 
 const HOLD_FRAMES = 120;
@@ -69,7 +69,7 @@ const CREDIT_SECTIONS: CreditSection[] = [
 const PROJECT_NAME =
   "STEAM教育新篇章：以永續發展教育培育產業導向之高層次思維能力課程發展與評估－應用STEAM導向之探索解謎遊戲培育數位遊戲產業高層次思維之永續發展人才(3/3)";
 
-export const Ch3Page13Ending: React.FC = () => {
+export const Ch3Page13S24Ending: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -83,20 +83,18 @@ export const Ch3Page13Ending: React.FC = () => {
     frame,
     [SCROLL_START, SCROLL_END],
     [0, -SCROLL_DISTANCE],
-    {
-      extrapolateLeft: "clamp",
-      extrapolateRight: "clamp",
-    },
+    clamp,
   );
 
-  const blackIn = interpolate(frame, [FADE_START, FADE_END], [0, 1], {
-    extrapolateLeft: "clamp",
-    extrapolateRight: "clamp",
-  });
+  const blackIn = interpolate(frame, [FADE_START, FADE_END], [0, 1], clamp);
 
   return (
     <AbsoluteFill
-      style={{ backgroundColor: WHITE, fontFamily: FONT, overflow: "hidden" }}
+      style={{
+        backgroundColor: NEUTRAL_50,
+        fontFamily: FONT,
+        overflow: "hidden",
+      }}
     >
       <div
         style={{

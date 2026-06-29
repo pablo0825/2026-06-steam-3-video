@@ -44,8 +44,8 @@ import { Ch3Page7S17CelesteSpec } from "./scenes/03-程式實作/Ch3Page7S17Cele
 import { Ch3Page7S17CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpecOverlay";
 import { Ch3Page7S18SpecPerFeature } from "./scenes/03-程式實作/Ch3Page7S18SpecPerFeature";
 import { Ch3Page7S18SpecWorkflow } from "./scenes/03-程式實作/Ch3Page7S18SpecWorkflow";
-import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
-import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
+import { Ch3Page12S23Fundamentals } from "./scenes/03-程式實作/Ch3Page12S23Fundamentals";
+import { Ch3Page13S24Ending } from "./scenes/03-程式實作/Ch3Page13S24Ending";
 import { Ch4Page1S01Opening } from "./scenes/04-美術整合/Ch4Page1S01Opening";
 import { Ch4Page1S02Role } from "./scenes/04-美術整合/Ch4Page1S02Role";
 import { Ch4Page1S03Flow } from "./scenes/04-美術整合/Ch4Page1S03Flow";
@@ -467,16 +467,16 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page12-Fundamentals"
-        component={Ch3Page12Fundamentals}
+        id="Ch3-Page12-S23-Fundamentals"
+        component={Ch3Page12S23Fundamentals}
         durationInFrames={330}
         fps={30}
         width={1920}
         height={1080}
       />
       <Composition
-        id="Ch3-Page13-Ending"
-        component={Ch3Page13Ending}
+        id="Ch3-Page13-S24-Ending"
+        component={Ch3Page13S24Ending}
         durationInFrames={690}
         fps={30}
         width={1920}
