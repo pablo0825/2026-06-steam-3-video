@@ -23,7 +23,8 @@ import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT"
 import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
 import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
 import { Ch1Page9S22CodexDemoPlaceholder } from "./scenes/01-實驗介紹/Ch1Page9S22CodexDemoPlaceholder";
-import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
+import { Ch1Page10S25Thanks } from "./scenes/01-實驗介紹/Ch1Page10S25Thanks";
+import { Ch1Page10S26Credits } from "./scenes/01-實驗介紹/Ch1Page10S26Credits";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
 import { Ch2Page1S02Focus } from "./scenes/02-遊戲設計/Ch2Page1S02Focus";
 import { Ch2Page1S03KnowledgeNav } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav";
@@ -322,9 +323,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page10-Ending"
-        component={Page10Ending}
-        durationInFrames={570}
+        id="Ch1-Page10-S25-Thanks"
+        component={Ch1Page10S25Thanks}
+        durationInFrames={90}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page10-S26-Credits"
+        component={Ch1Page10S26Credits}
+        durationInFrames={480}
         fps={30}
         width={1920}
         height={1080}

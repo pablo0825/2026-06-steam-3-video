@@ -73,7 +73,7 @@
   - Outputs: `Ch1Page9S22CodexDemoPlaceholder.tsx`
   - Plan: split the implemented placeholder card for the Codex operation segment. Source was registered as 360f, while storyboard S22 is 90f and S23-S24 are missing recording implementation; use S22 storyboard duration and reduce current `FullVideo` duration to implemented content only.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `0be8b64` (`split ch1 page9 placeholder into S22`)
 
 - [ ] Page9 implementation recording: S23-S24
   - Source: missing from `src/scenes/01-實驗介紹/`
@@ -82,14 +82,15 @@
   - Validation: blocked
   - Commit: not applicable
 
-- [ ] Page10-Ending: S25-S26
+- [x] Page10-Ending: S25-S26
   - Source: `src/scenes/01-實驗介紹/Page10Ending.tsx`
   - Outputs: `Ch1Page10S25Thanks.tsx`, `Ch1Page10S26Credits.tsx`
-  - Plan: split host/thanks opening and rolling credits.
-  - Validation: pending
+  - Plan: split host/thanks opening and rolling credits. Source timing is 90f + 480f while storyboard lists 120f + 330f; keep existing source timing and note storyboard timing should be updated.
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 ## Notes
 
 - `Page0LogoIntro.tsx` is not part of the storyboard S01-S26 scope and is left unchanged.
 - S23-S24 currently have storyboard rows but no Remotion implementation file beyond the S22 placeholder.
+- Page10 source timing differs from storyboard timing; storyboard should be updated to match the implemented 90f + 480f split.
