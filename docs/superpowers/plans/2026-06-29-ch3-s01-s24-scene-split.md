@@ -1,0 +1,51 @@
+# Ch3 S01-S24 Scene Split Plan
+
+- Scope: `ch3 S01-S24`
+- Storyboard: `docs/03-程式實作/steam - 3 - Vibe Game 教案 - 程式實作 - 分鏡腳本.md`
+- Scene dir: `src/scenes/03-程式實作/`
+- Note: storyboard has no S10 row; S19-S22 are recording or not-yet-produced sections and may require user input if no implemented scene exists.
+
+## Targets
+
+- [x] `Ch3-Page1-Opening`: S01-S03
+  - Existing split files:
+    - `Ch3Page1S01Opening.tsx`
+    - `Ch3Page1S02Focus.tsx`
+    - `Ch3Page1S03KnowledgeNav.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page1S01Opening.tsx src/scenes/03-程式實作/Ch3Page1S02Focus.tsx src/scenes/03-程式實作/Ch3Page1S03KnowledgeNav.tsx` passed.
+    - `src/Root.tsx` contains only individual S01-S03 composition ids for Page1.
+  - Commit: `b05423a`
+
+- [x] `Ch3-Page2-UserStory`: S04-S05
+  - Source: `src/scenes/03-程式實作/Ch3Page2UserStory.tsx`
+  - Source timing:
+    - S04: frames 0-360, User Story definition, exit fade 332-356
+    - S05: frames 360-720, format cards, local duration 360
+  - Outputs:
+    - `Ch3Page2S04UserStory.tsx`
+    - `Ch3Page2S05Format.tsx`
+  - Plan:
+    - Split each shot into its own component with local frame timelines.
+    - Normalize outer background to `NEUTRAL_50`.
+    - Import `FONT` and `clamp` from `../../theme/motion`.
+    - Replace `Ch3-Page2-UserStory` with individual S04/S05 composition ids in `src/Root.tsx`.
+    - Remove the old multi-shot source file and old composition id.
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page2S04UserStory.tsx src/scenes/03-程式實作/Ch3Page2S05Format.tsx` passed.
+    - `npm run lint` passed.
+    - `src/Root.tsx` contains only individual S04/S05 composition ids for Page2.
+    - Search confirmed no active `Ch3-Page2-UserStory` or `Ch3Page2UserStory` references remain in `src`.
+  - Commit: included in target commit `split ch3 page2 scenes into S04-S05`
+
+- [ ] `Ch3-Page3-RhythmDoctor`: S06-S07
+- [ ] `Ch3-Page4-Context`: S08-S09
+- [ ] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
+- [ ] `Ch3-Page6-Spec`: S14-S15
+- [ ] `Ch3-Page7-CelesteSpec`: S16-S18
+- [ ] `Ch3-Page8-SpecSetup`: S19
+- [ ] `Ch3-Page9-SpecBuild`: S20
+- [ ] `Ch3-Page10-SpecValidation`: S21
+- [ ] `Ch3-Page11-UpdateFeature`: S22
+- [ ] `Ch3-Page12-Fundamentals`: S23
+- [ ] `Ch3-Page13-Ending`: S24

@@ -24,7 +24,8 @@ import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
 import { Ch3Page1S02Focus } from "./scenes/03-程式實作/Ch3Page1S02Focus";
 import { Ch3Page1S03KnowledgeNav } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav";
-import { Ch3Page2UserStory } from "./scenes/03-程式實作/Ch3Page2UserStory";
+import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
+import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
 import { Ch3Page3RhythmDoctor } from "./scenes/03-程式實作/Ch3Page3RhythmDoctor";
 import { Ch3Page3RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3RhythmDoctorOverlay";
 import { Ch3Page4Context } from "./scenes/03-程式實作/Ch3Page4Context";
@@ -293,9 +294,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page2-UserStory"
-        component={Ch3Page2UserStory}
-        durationInFrames={720}
+        id="Ch3-Page2-S04-UserStory"
+        component={Ch3Page2S04UserStory}
+        durationInFrames={360}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page2-S05-Format"
+        component={Ch3Page2S05Format}
+        durationInFrames={360}
         fps={30}
         width={1920}
         height={1080}
