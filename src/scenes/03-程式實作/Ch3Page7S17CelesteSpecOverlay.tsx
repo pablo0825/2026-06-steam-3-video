@@ -6,10 +6,22 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLACK, BLUE, WHITE, YELLOW, withAlpha } from "../../theme/colors";
+import {
+  BLACK,
+  CARD_BORDER,
+  DOT_RED,
+  GREEN,
+  SUBTLE,
+  TEXT_DARK,
+  WHITE,
+  WINDOW_BAR,
+  YELLOW,
+  withAlpha,
+} from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 7 頁・S17：Celeste jump-spec.md 透明 Overlay（540 幀）
+//   外框採 S12 視窗 chrome：白底卡 + CARD_BORDER 邊框 + 三圓點標題列（淺色主題）。
 const VEIL_IN = [8, 36] as const;
 const VEIL_OUT = [516, 540] as const;
 const HEADING_IN = [44, 74] as const;
@@ -48,7 +60,23 @@ const SPEC_ROWS: SpecRow[] = [
             key={t}
             style={{ display: "flex", alignItems: "center", gap: 12 }}
           >
-            <span style={{ color: YELLOW, fontWeight: 900 }}>☑</span>
+            <span
+              style={{
+                width: 30,
+                height: 30,
+                flexShrink: 0,
+                borderRadius: "50%",
+                background: GREEN,
+                color: WHITE,
+                fontSize: 18,
+                fontWeight: 900,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              ✓
+            </span>
             <span>{t}</span>
           </div>
         ))}
@@ -58,12 +86,18 @@ const SPEC_ROWS: SpecRow[] = [
   { field: "Notes", content: <>無。</> },
 ];
 
+const Dot: React.FC<{ color: string }> = ({ color }) => (
+  <span
+    style={{ width: 13, height: 13, borderRadius: "50%", background: color }}
+  />
+);
+
 export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const veilOpacity =
-    interpolate(frame, VEIL_IN, [0, 0.6], clamp) *
+    interpolate(frame, VEIL_IN, [0, 0.78], clamp) *
     interpolate(frame, VEIL_OUT, [1, 0], clamp);
   const infoOut = interpolate(frame, VEIL_OUT, [1, 0], clamp);
   const headingIn = interpolate(frame, HEADING_IN, [0, 1], easeStandard);
@@ -86,39 +120,35 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
           opacity: headingIn * infoOut,
           borderRadius: 22,
           overflow: "hidden",
-          border: `1px solid ${withAlpha(WHITE, 0.14)}`,
-          backgroundColor: withAlpha(BLACK, 0.82),
+          background: WHITE,
+          border: `3px solid ${CARD_BORDER}`,
           boxShadow: `0 30px 70px ${withAlpha(BLACK, 0.5)}`,
         }}
       >
+        {/* 標題列：三圓點 + 視窗名稱（S12 chrome） */}
         <div
           style={{
             height: 64,
             display: "flex",
             alignItems: "center",
-            gap: 14,
-            padding: "0 30px",
-            color: WHITE,
-            backgroundColor: BLUE,
+            gap: 10,
+            padding: "0 22px",
+            background: WINDOW_BAR,
+            borderBottom: `1px solid ${CARD_BORDER}`,
           }}
         >
-          <svg width="26" height="32" viewBox="0 0 34 40" aria-hidden="true">
-            <path
-              d="M5 2h16l8 8v28H5z"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinejoin="round"
-            />
-            <path
-              d="M21 2v9h8"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="3"
-              strokeLinejoin="round"
-            />
-          </svg>
-          <div style={{ fontSize: 26, fontWeight: 800, letterSpacing: 0.5 }}>
+          <Dot color={DOT_RED} />
+          <Dot color={YELLOW} />
+          <Dot color={GREEN} />
+          <div
+            style={{
+              marginLeft: 12,
+              fontSize: 26,
+              fontWeight: 800,
+              letterSpacing: 0.5,
+              color: TEXT_DARK,
+            }}
+          >
             jump-spec.md
           </div>
         </div>
@@ -140,7 +170,7 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
                   padding: "18px 0",
                   borderBottom:
                     index < SPEC_ROWS.length - 1
-                      ? `1px solid ${withAlpha(WHITE, 0.1)}`
+                      ? `1px solid ${withAlpha(TEXT_DARK, 0.1)}`
                       : "none",
                   opacity: progress * infoOut,
                   transform: `translateY(${interpolate(progress, [0, 1], [12, 0])}px)`,
@@ -154,7 +184,7 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
                     fontSize: 24,
                     fontWeight: 800,
                     letterSpacing: 0.5,
-                    color: withAlpha(WHITE, 0.6),
+                    color: SUBTLE,
                   }}
                 >
                   {row.field}
@@ -165,7 +195,7 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
                     fontSize: 30,
                     fontWeight: 600,
                     lineHeight: 1.45,
-                    color: WHITE,
+                    color: TEXT_DARK,
                   }}
                 >
                   {row.content}
