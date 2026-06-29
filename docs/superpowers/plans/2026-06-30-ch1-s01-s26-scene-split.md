@@ -24,13 +24,13 @@
   - Outputs: `Ch1Page2S03AINode.tsx`, `Ch1Page2S04Domains.tsx`, `Ch1Page2S05PlayablePrototype.tsx`
   - Plan: split AI node, AI-to-domains expansion, and convergence to playable prototype. Source duration 330f while storyboard seconds total 540f; use source timing and note storyboard timing needs review after split.
   - Validation: `validate_scene_split.py` OK; old active Root/FullVideo id/export removed. `npm run lint` currently blocked by unrelated dirty Ch3 Root/file changes outside this target.
-  - Commit: pending
+  - Commit: `aed7779` (`split ch1 page2 scenes into S03-S05`)
 
-- [ ] Page3-Prototype: S06-S09
+- [x] Page3-Prototype: S06-S09
   - Source: `src/scenes/01-實驗介紹/Page3Prototype.tsx`
   - Outputs: `Ch1Page3S06Question.tsx`, `Ch1Page3S07DefinitionRange.tsx`, `Ch1Page3S08FastPlayable.tsx`, `Ch1Page3S09ValidateQuestion.tsx`
   - Plan: split prototype question, broad definition, fastest playable version, and validation purpose.
-  - Validation: pending
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page4-PrototypeVideo: S10-S11

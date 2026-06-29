@@ -6,7 +6,10 @@ import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
 import { Ch1Page2S03AINode } from "./scenes/01-實驗介紹/Ch1Page2S03AINode";
 import { Ch1Page2S04Domains } from "./scenes/01-實驗介紹/Ch1Page2S04Domains";
 import { Ch1Page2S05PlayablePrototype } from "./scenes/01-實驗介紹/Ch1Page2S05PlayablePrototype";
-import { Page3Prototype } from "./scenes/01-實驗介紹/Page3Prototype";
+import { Ch1Page3S06Question } from "./scenes/01-實驗介紹/Ch1Page3S06Question";
+import { Ch1Page3S07DefinitionRange } from "./scenes/01-實驗介紹/Ch1Page3S07DefinitionRange";
+import { Ch1Page3S08FastPlayable } from "./scenes/01-實驗介紹/Ch1Page3S08FastPlayable";
+import { Ch1Page3S09ValidateQuestion } from "./scenes/01-實驗介紹/Ch1Page3S09ValidateQuestion";
 import { Page4PrototypeVideo } from "./scenes/01-實驗介紹/Page4PrototypeVideo";
 import { Page5PrototypeGoal } from "./scenes/01-實驗介紹/Page5PrototypeGoal";
 import { Page6Flow } from "./scenes/01-實驗介紹/Page6Flow";
@@ -176,9 +179,33 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page3-Prototype"
-        component={Page3Prototype}
-        durationInFrames={540}
+        id="Ch1-Page3-S06-Question"
+        component={Ch1Page3S06Question}
+        durationInFrames={90}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page3-S07-DefinitionRange"
+        component={Ch1Page3S07DefinitionRange}
+        durationInFrames={90}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page3-S08-FastPlayable"
+        component={Ch1Page3S08FastPlayable}
+        durationInFrames={180}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch1-Page3-S09-ValidateQuestion"
+        component={Ch1Page3S09ValidateQuestion}
+        durationInFrames={180}
         fps={30}
         width={1920}
         height={1080}
