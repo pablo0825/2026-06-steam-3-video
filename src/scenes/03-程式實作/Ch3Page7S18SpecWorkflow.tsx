@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -10,18 +9,13 @@ import {
 import {
   BLUE,
   CARD_BORDER,
+  NEUTRAL_50,
   TEXT_DARK,
   WHITE,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) };
+import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 const NODE_W = 280;
 const NODE_H = 120;
@@ -48,28 +42,34 @@ const FB_Y = NODE_CY + NODE_H / 2 + 36;
 const FB_DEPTH = 850;
 const FB_LABEL_Y = 786;
 
-export const Ch3Page7SpecWorkflow: React.FC = () => {
+export const Ch3Page7S18SpecWorkflow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
   // 節點間四段連線（i = 0..3）：節點出現後才畫，畫到端點時帶出下一個節點
   const segDraw = (i: number) =>
-    interpolate(frame, [28 + i * STRIDE, 56 + i * STRIDE], [0, 1], ease);
+    interpolate(
+      frame,
+      [28 + i * STRIDE, 56 + i * STRIDE],
+      [0, 1],
+      easeStandard,
+    );
   const segArrow = (i: number) =>
     interpolate(frame, [50 + i * STRIDE, 62 + i * STRIDE], [0, 1], clamp);
   // 手動驗證高亮
-  const verifyHi = interpolate(frame, [218, 238], [0, 1], ease);
+  const verifyHi = interpolate(frame, [218, 238], [0, 1], easeStandard);
   // 回饋曲線 + 標籤
-  const fbDraw = interpolate(frame, [250, 308], [0, 1], ease);
+  const fbDraw = interpolate(frame, [250, 308], [0, 1], easeStandard);
   const fbArrow = interpolate(frame, [300, 312], [0, 1], clamp);
-  const fbLabel = interpolate(frame, [286, 306], [0, 1], ease);
+  const fbLabel = interpolate(frame, [286, 306], [0, 1], easeStandard);
   // 開始實作
-  const startIn = interpolate(frame, [320, 348], [0, 1], ease);
+  const startIn = interpolate(frame, [320, 348], [0, 1], easeStandard);
   const out = interpolate(frame, [366, 388], [1, 0], clamp);
 
   return (
-    <AbsoluteFill style={{ backgroundColor: WHITE, fontFamily: FONT, opacity: out }}>
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
       <div
         style={{
           position: "absolute",
@@ -210,6 +210,7 @@ export const Ch3Page7SpecWorkflow: React.FC = () => {
       >
         開始實作 →
       </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

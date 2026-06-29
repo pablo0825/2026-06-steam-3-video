@@ -108,7 +108,32 @@
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page6-Spec`, `Ch3Page6Spec`, local `FONT`, local `clamp`, or direct `Easing` references remain in Page6 scene files. `Ch3Page6SpecShared` remains only as a shared helper dependency.
   - Commit: pending
-- [ ] `Ch3-Page7-CelesteSpec`: S16-S18
+- [x] `Ch3-Page7-CelesteSpec`: S16-S18 implemented as four files
+  - Storyboard follow-up: update `docs/03-程式實作/steam - 3 - Vibe Game 教案 - 程式實作 - 分鏡腳本.md` because S18 is implemented as two single-file segments: per-feature Spec contrast and Spec workflow.
+  - Sources:
+    - `src/scenes/03-程式實作/Ch3Page7CelesteSpec.tsx`
+    - `src/scenes/03-程式實作/Ch3Page7CelesteSpecOverlay.tsx`
+    - `src/scenes/03-程式實作/Ch3Page7SpecPractice.tsx`
+    - `src/scenes/03-程式實作/Ch3Page7SpecPerFeature.tsx`
+    - `src/scenes/03-程式實作/Ch3Page7SpecWorkflow.tsx`
+  - Source timing:
+    - S16: 240 frames, Celeste title overlay
+    - S17: 540 frames, jump-spec.md overlay
+    - S18 per-feature contrast: 330 frames
+    - S18 workflow: 390 frames
+  - Outputs:
+    - `Ch3Page7S16CelesteSpec.tsx`
+    - `Ch3Page7S16CelesteSpecOverlay.tsx`
+    - `Ch3Page7S17CelesteSpec.tsx`
+    - `Ch3Page7S17CelesteSpecOverlay.tsx`
+    - `Ch3Page7S18SpecPerFeature.tsx`
+    - `Ch3Page7S18SpecWorkflow.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page7S16CelesteSpec.tsx src/scenes/03-程式實作/Ch3Page7S17CelesteSpec.tsx src/scenes/03-程式實作/Ch3Page7S18SpecPerFeature.tsx src/scenes/03-程式實作/Ch3Page7S18SpecWorkflow.tsx` passed for non-overlay compositions.
+    - Overlay compositions intentionally preserve transparent output because the storyboard marks S16-S17 as `影片素材＋透明 Overlay`.
+    - `npm run lint` passed.
+    - Search confirmed no active old Page7 composition ids, aggregate wrappers, local `FONT`, local `clamp`, or direct `Easing` references remain in Page7 scene files.
+  - Commit: pending
 - [ ] `Ch3-Page8-SpecSetup`: S19
 - [ ] `Ch3-Page9-SpecBuild`: S20
 - [ ] `Ch3-Page10-SpecValidation`: S21

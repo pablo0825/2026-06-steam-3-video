@@ -1,7 +1,6 @@
 import React from "react";
 import {
   AbsoluteFill,
-  Easing,
   interpolate,
   spring,
   useCurrentFrame,
@@ -10,24 +9,19 @@ import {
 import {
   BLUE,
   CARD_BORDER,
+  NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   withAlpha,
 } from "../../theme/colors";
 import { VerdictBadge } from "../../components/VerdictBadge";
+import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 7 頁 S18 前半：左右對比「一個功能，一份 Spec」
 //   左＝正例：三個功能各自連到一份獨立文件 → ✓（先完整出現）
 //   右＝反例：三個功能全部塞進同一份文件 → ✗（後出現，形成對比）
 //   兩邊用相同的正常顏色，差別只在「結構 ＋ ✓／✗」，靠對比讓觀眾理解。
-
-const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const clamp = {
-  extrapolateLeft: "clamp",
-  extrapolateRight: "clamp",
-} as const;
-const ease = { ...clamp, easing: Easing.bezier(0.4, 0, 0.2, 1) };
 
 const FEATURES = ["跳躍", "衝刺", "攀牆"] as const;
 const DOC_NAMES = ["jump-spec.md", "dash-spec.md", "climb-spec.md"] as const;
@@ -120,7 +114,7 @@ const Pill: React.FC<{ label: string }> = ({ label }) => (
   </div>
 );
 
-export const Ch3Page7SpecPerFeature: React.FC = () => {
+export const Ch3Page7S18SpecPerFeature: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -131,8 +125,8 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
   });
 
   // 正例先（~0–135），反例後（~140–270），最後兩邊並陳 hold 再淡出
-  const goodLines = interpolate(frame, [62, 104], [0, 1], ease);
-  const badLines = interpolate(frame, [196, 238], [0, 1], ease);
+  const goodLines = interpolate(frame, [62, 104], [0, 1], easeStandard);
+  const badLines = interpolate(frame, [196, 238], [0, 1], easeStandard);
   const badDocIn = spring({
     frame: frame - 170,
     fps,
@@ -151,9 +145,8 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
   const out = interpolate(frame, [300, 330], [1, 0], clamp);
 
   return (
-    <AbsoluteFill
-      style={{ backgroundColor: WHITE, fontFamily: FONT, opacity: out }}
-    >
+    <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
+      <AbsoluteFill style={{ opacity: out }}>
       {/* 標題 */}
       <div
         style={{
@@ -326,6 +319,7 @@ export const Ch3Page7SpecPerFeature: React.FC = () => {
       >
         <VerdictBadge kind="fail" size={92} shadow />
       </div>
+      </AbsoluteFill>
     </AbsoluteFill>
   );
 };

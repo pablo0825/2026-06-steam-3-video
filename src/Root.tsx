@@ -38,9 +38,12 @@ import { Ch3Page5S13AgentsDemo } from "./scenes/03-程式實作/Ch3Page5S13Agent
 import { Ch3Page6S14SpecDefinition } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition";
 import { Ch3Page6S14SpecWorkflow } from "./scenes/03-程式實作/Ch3Page6S14SpecWorkflow";
 import { Ch3Page6S15SpecStructure } from "./scenes/03-程式實作/Ch3Page6S15SpecStructure";
-import { Ch3Page7CelesteSpec } from "./scenes/03-程式實作/Ch3Page7CelesteSpec";
-import { Ch3Page7CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7CelesteSpecOverlay";
-import { Ch3Page7SpecPractice } from "./scenes/03-程式實作/Ch3Page7SpecPractice";
+import { Ch3Page7S16CelesteSpec } from "./scenes/03-程式實作/Ch3Page7S16CelesteSpec";
+import { Ch3Page7S16CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S16CelesteSpecOverlay";
+import { Ch3Page7S17CelesteSpec } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpec";
+import { Ch3Page7S17CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpecOverlay";
+import { Ch3Page7S18SpecPerFeature } from "./scenes/03-程式實作/Ch3Page7S18SpecPerFeature";
+import { Ch3Page7S18SpecWorkflow } from "./scenes/03-程式實作/Ch3Page7S18SpecWorkflow";
 import { Ch3Page12Fundamentals } from "./scenes/03-程式實作/Ch3Page12Fundamentals";
 import { Ch3Page13Ending } from "./scenes/03-程式實作/Ch3Page13Ending";
 import { Ch4Page1S01Opening } from "./scenes/04-美術整合/Ch4Page1S01Opening";
@@ -414,26 +417,51 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page7-CelesteSpec"
-        component={Ch3Page7CelesteSpec}
-        durationInFrames={780}
+        id="Ch3-Page7-S16-CelesteSpec"
+        component={Ch3Page7S16CelesteSpec}
+        durationInFrames={240}
         fps={30}
         width={1920}
         height={1080}
       />
       <Composition
-        id="Ch3-Page7-CelesteSpec-Overlay"
-        component={Ch3Page7CelesteSpecOverlay}
-        durationInFrames={780}
+        id="Ch3-Page7-S16-CelesteSpec-Overlay"
+        component={Ch3Page7S16CelesteSpecOverlay}
+        durationInFrames={240}
         fps={30}
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
       />
       <Composition
-        id="Ch3-Page7-SpecPractice"
-        component={Ch3Page7SpecPractice}
-        durationInFrames={720}
+        id="Ch3-Page7-S17-CelesteSpec"
+        component={Ch3Page7S17CelesteSpec}
+        durationInFrames={540}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page7-S17-CelesteSpec-Overlay"
+        component={Ch3Page7S17CelesteSpecOverlay}
+        durationInFrames={540}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page7-S18-SpecPerFeature"
+        component={Ch3Page7S18SpecPerFeature}
+        durationInFrames={330}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page7-S18-SpecWorkflow"
+        component={Ch3Page7S18SpecWorkflow}
+        durationInFrames={390}
         fps={30}
         width={1920}
         height={1080}
