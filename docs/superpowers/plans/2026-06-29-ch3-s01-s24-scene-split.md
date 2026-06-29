@@ -56,7 +56,19 @@
     - `npm run lint` passed.
     - Search confirmed no active `Ch3-Page3-RhythmDoctor` or `Ch3Page3RhythmDoctor` references remain in `src`.
   - Commit: pending
-- [ ] `Ch3-Page4-Context`: S08-S09
+- [x] `Ch3-Page4-Context`: S08-S09
+  - Source: `src/scenes/03-程式實作/Ch3Page4Context.tsx`
+  - Source timing:
+    - S08: frames 0-240, Context definition
+    - S09: frames 240-690, Context capacity limit, local duration 450
+  - Outputs:
+    - `Ch3Page4S08Context.tsx`
+    - `Ch3Page4S09ContextLimit.tsx`
+  - Validation:
+    - `python3 .agents/skills/split-remotion-scenes/scripts/validate_scene_split.py src/scenes/03-程式實作/Ch3Page4S08Context.tsx src/scenes/03-程式實作/Ch3Page4S09ContextLimit.tsx` passed.
+    - `npm run lint` passed.
+    - Search confirmed no active `Ch3-Page4-Context` or `Ch3Page4Context` references remain in `src`.
+  - Commit: pending
 - [ ] `Ch3-Page5-Agents` / `Ch3-Page5-AgentsDemo`: S11-S13
 - [ ] `Ch3-Page6-Spec`: S14-S15
 - [ ] `Ch3-Page7-CelesteSpec`: S16-S18
