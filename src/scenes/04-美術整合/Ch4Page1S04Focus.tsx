@@ -7,11 +7,11 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  CARD_BORDER,
   NEUTRAL_50,
   TEXT_DARK,
   WHITE,
   withAlpha,
+  SUBTLE,
 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
@@ -46,16 +46,26 @@ export const Ch4Page1S04Focus: React.FC = () => {
       >
         <div
           style={{
-            fontSize: 64,
-            fontWeight: 800,
+            fontSize: 36,
+            fontWeight: 600,
             letterSpacing: 6,
-            color: TEXT_DARK,
+            color: SUBTLE,
             marginBottom: 64,
           }}
         >
           本次重點
         </div>
-        <div style={{ display: "flex", gap: 48 }}>
+        {/* 固定寬 + 左右內推 240 + grid 等分欄：三欄中心等距，不受字長影響 */}
+        <div
+          style={{
+            width: 1920,
+            padding: "0 240px",
+            boxSizing: "border-box",
+            display: "grid",
+            gridTemplateColumns: "repeat(3, 1fr)",
+            alignItems: "start",
+          }}
+        >
           {FOCUS_CARDS.map((c, i) => {
             const s = spring({
               frame: frame - (FOCUS_FIRST + i * FOCUS_STEP),
@@ -66,12 +76,6 @@ export const Ch4Page1S04Focus: React.FC = () => {
               <div
                 key={c.label}
                 style={{
-                  width: 480,
-                  padding: "52px 32px",
-                  background: WHITE,
-                  border: `2px solid ${CARD_BORDER}`,
-                  borderRadius: 28,
-                  boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
                   opacity: s,
                   transform: `translateY(${interpolate(s, [0, 1], [48, 0])}px)`,
                   display: "flex",
@@ -80,7 +84,21 @@ export const Ch4Page1S04Focus: React.FC = () => {
                   gap: 24,
                 }}
               >
-                <div style={{ fontSize: 76 }}>{c.icon}</div>
+                {/* emoji 淡色圓底 */}
+                <div
+                  style={{
+                    width: 200,
+                    height: 200,
+                    borderRadius: 999,
+                    background: WHITE,
+                    boxShadow: `0 8px 24px ${withAlpha(TEXT_DARK, 0.06)}`,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <div style={{ fontSize: 76 }}>{c.icon}</div>
+                </div>
                 <div
                   style={{
                     fontSize: 34,

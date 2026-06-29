@@ -99,7 +99,7 @@ export const KnowledgeNav: React.FC<KnowledgeNavProps> = ({
     >
       <div
         style={{
-          marginBottom: 64,
+          marginBottom: 72,
           fontSize: 36,
           fontWeight: 600,
           letterSpacing: 4,
