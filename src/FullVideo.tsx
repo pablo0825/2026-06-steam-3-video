@@ -21,11 +21,11 @@ import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18C
 import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT";
 import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
 import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
-import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
+import { Ch1Page9S22CodexDemoPlaceholder } from "./scenes/01-實驗介紹/Ch1Page9S22CodexDemoPlaceholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 
 // 整支影片：10 頁依序接起來（第 9 頁為佔位卡）
-// 各頁長度加總 = 4630 frames（見 Root.tsx 的 FullVideo composition）
+// 目前已實作內容長度加總 = 4360 frames（S23-S24 螢幕錄影待補）
 
 export const FullVideo: React.FC = () => {
   return (
@@ -93,8 +93,8 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={90}>
         <Ch1Page8S21NoManualWork />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={360}>
-        <Page9Placeholder />
+      <Series.Sequence durationInFrames={90}>
+        <Ch1Page9S22CodexDemoPlaceholder />
       </Series.Sequence>
       <Series.Sequence durationInFrames={570}>
         <Page10Ending />

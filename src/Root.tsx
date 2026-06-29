@@ -22,7 +22,7 @@ import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18C
 import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT";
 import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
 import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
-import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
+import { Ch1Page9S22CodexDemoPlaceholder } from "./scenes/01-實驗介紹/Ch1Page9S22CodexDemoPlaceholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
 import { Ch2Page1S02Focus } from "./scenes/02-遊戲設計/Ch2Page1S02Focus";
@@ -132,7 +132,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="FullVideo"
         component={FullVideo}
-        durationInFrames={4630}
+        durationInFrames={4360}
         fps={30}
         width={1920}
         height={1080}
@@ -314,9 +314,9 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Page9-Placeholder"
-        component={Page9Placeholder}
-        durationInFrames={360}
+        id="Ch1-Page9-S22-CodexDemoPlaceholder"
+        component={Ch1Page9S22CodexDemoPlaceholder}
+        durationInFrames={90}
         fps={30}
         width={1920}
         height={1080}

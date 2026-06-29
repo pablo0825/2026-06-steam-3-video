@@ -66,13 +66,13 @@
   - Outputs: `Ch1Page8S19ChatGPT.tsx`, `Ch1Page8S20Codex.tsx`, `Ch1Page8S21NoManualWork.tsx`
   - Plan: split ChatGPT side, Codex side, and conclusion comparison.
   - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
-  - Commit: pending
+  - Commit: `a6a371d` (`split ch1 page8 scenes into S19-S21`)
 
-- [ ] Page9-Placeholder: S22
+- [x] Page9-Placeholder: S22
   - Source: `src/scenes/01-實驗介紹/Page9Placeholder.tsx`
   - Outputs: `Ch1Page9S22CodexDemoPlaceholder.tsx`
-  - Plan: split the implemented placeholder card for the Codex operation segment.
-  - Validation: pending
+  - Plan: split the implemented placeholder card for the Codex operation segment. Source was registered as 360f, while storyboard S22 is 90f and S23-S24 are missing recording implementation; use S22 storyboard duration and reduce current `FullVideo` duration to implemented content only.
+  - Validation: `validate_scene_split.py` OK; `npm run lint` OK; old active Root/FullVideo id/export removed.
   - Commit: pending
 
 - [ ] Page9 implementation recording: S23-S24
@@ -92,4 +92,4 @@
 ## Notes
 
 - `Page0LogoIntro.tsx` is not part of the storyboard S01-S26 scope and is left unchanged.
-- S23-S24 currently have storyboard rows but no Remotion implementation file beyond `Page9Placeholder.tsx`.
+- S23-S24 currently have storyboard rows but no Remotion implementation file beyond the S22 placeholder.
