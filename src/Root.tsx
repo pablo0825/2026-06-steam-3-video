@@ -11,7 +11,9 @@ import { Page7Codex } from "./scenes/01-實驗介紹/Page7Codex";
 import { Page8Compare } from "./scenes/01-實驗介紹/Page8Compare";
 import { Page9Placeholder } from "./scenes/01-實驗介紹/Page9Placeholder";
 import { Page10Ending } from "./scenes/01-實驗介紹/Page10Ending";
-import { Ch2Page1Opening } from "./scenes/02-遊戲設計/Ch2Page1Opening";
+import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
+import { Ch2Page1S02Focus } from "./scenes/02-遊戲設計/Ch2Page1S02Focus";
+import { Ch2Page1S03KnowledgeNav } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav";
 import { Ch2Page2Constraint } from "./scenes/02-遊戲設計/Ch2Page2Constraint";
 import { Ch2Page3RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctor";
 import { Ch2Page3RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3RhythmDoctorOverlay";
@@ -195,9 +197,25 @@ export const RemotionRoot: React.FC = () => {
 
       {/* ── 第 2 集・遊戲設計 ── */}
       <Composition
-        id="Ch2-Page1-Opening"
-        component={Ch2Page1Opening}
-        durationInFrames={720}
+        id="Ch2-Page1-S01-Opening"
+        component={Ch2Page1S01Opening}
+        durationInFrames={210}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page1-S02-Focus"
+        component={Ch2Page1S02Focus}
+        durationInFrames={240}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page1-S03-KnowledgeNav"
+        component={Ch2Page1S03KnowledgeNav}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}
