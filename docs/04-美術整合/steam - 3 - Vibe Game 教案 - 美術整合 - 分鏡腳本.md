@@ -28,7 +28,8 @@
 | 3   | `Ch4-Page3-ScreenSizeDemo`   | sX       | 實機示範：依螢幕尺寸估算素材大小           | Figma／Storyboard／Unity 螢幕錄影 | ⏳ 待錄影 |
 | 4   | `Ch4-Page4-S09-ToUnity`      | S09      | 把美術圖匯進 Unity（確認大小、比例）        | SVG 動畫                          | ✅ 已完成 |
 | 4   | `Ch4-Page4-S10-BaseUnit`     | S10      | 素材大小的基礎單位（unit ↔ px）            | SVG 動畫                          | ✅ 已完成 |
-| 4   | `Ch4-Page4-S11-PPU`          | S11      | PPU 定義                                   | SVG 動畫                          | ✅ 已完成 |
+| 4   | `Ch4-Page4-S11-PPU-01`       | S11      | PPU 鋪陳（1 unit → px 逐一進出）           | SVG 動畫                          | ✅ 已完成 |
+| 4   | `Ch4-Page4-S11-PPU-02`       | S11      | PPU 定義                                   | SVG 動畫                          | ✅ 已完成 |
 | 4   | `Ch4-Page4-S12-Comparison`   | S12      | PPU=100→128：sprite 對齊 1 unit            | SVG 動畫                          | ✅ 已完成 |
 | 5   | `Ch4-Page5-PPUDemo`          | S13      | 實機示範：設定圖片 PPU                     | Unity 螢幕錄影                    | ⏳ 待錄影 |
 | 6   | `Ch4-Page6-S14-Definition`   | S14      | Sprite Sheet 定義卡                        | 文字卡／SVG 動畫                  | ✅ 已完成 |

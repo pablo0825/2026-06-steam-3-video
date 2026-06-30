@@ -88,7 +88,8 @@ import { Ch4Page2S07ScreenSizes } from "./scenes/04-美術整合/Ch4Page2S07Scre
 import { Ch4Page2S08WhySize } from "./scenes/04-美術整合/Ch4Page2S08WhySize";
 import { Ch4Page4S09ToUnity } from "./scenes/04-美術整合/Ch4Page4S09ToUnity";
 import { Ch4Page4S10BaseUnit } from "./scenes/04-美術整合/Ch4Page4S10BaseUnit";
-import { Ch4Page4S11PPU } from "./scenes/04-美術整合/Ch4Page4S11PPU";
+import { Ch4Page4S11PPU01 } from "./scenes/04-美術整合/Ch4Page4S11PPU01";
+import { Ch4Page4S11PPU02 } from "./scenes/04-美術整合/Ch4Page4S11PPU02";
 import { Ch4Page4S12Comparison } from "./scenes/04-美術整合/Ch4Page4S12Comparison";
 import { Ch4Page6S14Definition } from "./scenes/04-美術整合/Ch4Page6S14Definition";
 import { Ch4Page6S15Contrast } from "./scenes/04-美術整合/Ch4Page6S15Contrast";
@@ -849,7 +850,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page4-S09-ToUnity"
         component={Ch4Page4S09ToUnity}
-        durationInFrames={240}
+        durationInFrames={264}
         fps={30}
         width={1920}
         height={1080}
@@ -863,8 +864,16 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch4-Page4-S11-PPU"
-        component={Ch4Page4S11PPU}
+        id="Ch4-Page4-S11-PPU-01"
+        component={Ch4Page4S11PPU01}
+        durationInFrames={168}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch4-Page4-S11-PPU-02"
+        component={Ch4Page4S11PPU02}
         durationInFrames={322}
         fps={30}
         width={1920}
@@ -873,7 +882,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page4-S12-Comparison"
         component={Ch4Page4S12Comparison}
-        durationInFrames={450}
+        durationInFrames={540}
         fps={30}
         width={1920}
         height={1080}

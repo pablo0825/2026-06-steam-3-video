@@ -24,9 +24,10 @@ import {
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 import { VerdictBadge } from "../../components/VerdictBadge";
 
-// 第 4 集・第 4 頁・S09：把美術圖匯進 Unity（240 幀，結尾淡出到 NEUTRAL_50）
-//   Unity 視窗進場 → 美術圖落入框內 → 拉高、拉寬後彈回正常 → 跳出「確認大小、比例是否正常」。
-//   承接動機，銜接 S10 的 unit↔px。
+// 第 4 集・第 4 頁・S09：把美術圖匯進 Unity（264 幀，結尾淡出到 NEUTRAL_50）
+//   開場先停留空白底一拍 → Unity 視窗進場 → 美術圖落入框內 → 拉高、拉寬後彈回正常
+//   → 跳出「確認大小、比例是否正常」。承接動機，銜接 S10 的 unit↔px。
+const HOLD = 24; // 視窗出現前，空白底先停留的幀數
 const ENDING_FADE = [212, 240] as const;
 
 const WIN_CX = 960; // 視窗中心 x
@@ -56,30 +57,33 @@ export const Ch4Page4S09ToUnity: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  // 整段動畫延後 HOLD 幀，開場先停留空白底
+  const f = frame - HOLD;
+
   const winEnter = spring({
-    frame,
+    frame: f,
     fps,
     config: { damping: 16, stiffness: 115 },
   });
   // 美術圖由上方落入視窗
   const artDrop = spring({
-    frame: frame - 50,
+    frame: f - 50,
     fps,
     config: { damping: 17, stiffness: 120 },
   });
   const dropY = interpolate(artDrop, [0, 1], [-190, 0]);
-  const artOpacity = interpolate(frame, [50, 66], [0, 1], clamp);
+  const artOpacity = interpolate(f, [50, 66], [0, 1], clamp);
 
   // 變形序列：拉高 → 拉寬 → 復原（超出虛線參考框 = 比例不對，貼合 = 正常）
-  const scaleY = interpolate(frame, [92, 116, 142], [1, 1.6, 1], easeStandard);
-  const scaleX = interpolate(frame, [116, 142, 168], [1, 1.55, 1], easeStandard);
+  const scaleY = interpolate(f, [92, 116, 142], [1, 1.6, 1], easeStandard);
+  const scaleX = interpolate(f, [116, 142, 168], [1, 1.55, 1], easeStandard);
 
   const verify = spring({
-    frame: frame - 172,
+    frame: f - 172,
     fps,
     config: { damping: 15, stiffness: 120 },
   });
-  const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
+  const out = interpolate(f, ENDING_FADE, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
