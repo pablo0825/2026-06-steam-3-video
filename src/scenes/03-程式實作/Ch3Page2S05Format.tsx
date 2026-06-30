@@ -6,127 +6,74 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import {
-  BLUE,
-  CARD_BORDER,
-  NEUTRAL_50,
-  SUBTLE,
-  TEXT_DARK,
-  WHITE,
-  YELLOW,
-  withAlpha,
-} from "../../theme/colors";
-import { FONT, clamp } from "../../theme/motion";
+import { NEUTRAL_50, TEXT_DARK } from "../../theme/colors";
+import { FONT, easeOutExpo as ease } from "../../theme/motion";
+import { HighlightWord } from "../../components/HighlightWord";
 
-// 第 3 集・第 2 頁・S05：User Story 格式（360 幀）
-const CONTENT_IN = [0, 20] as const;
-const CARD_FIRST = 20;
-const CARD_STEP = 42;
-const TIP_IN = [152, 184] as const;
+// 第 3 集・第 2 頁・S05：User Story 固定句型（384 幀）
+//   一整句置中當畫面中心亮點，逐段出現：每段（連接詞＋「重點詞」）先進場，
+//   該段出現後其重點詞才用 HighlightWord 刷上黃襯底高亮，再帶出下一段。Ch4 DefinitionCard 風格。
+const HOLD = 24; // 進場白底先停留的幀數
+const SEG_FIRST = 4; // 第一段進場
+const SEG_STEP = 72; // 每段（進場＋高亮）的間隔（拉長，讓高亮停留更久再帶下一段）
+const HL_DELAY = 22; // 段落出現後，重點詞才開始高亮
+const HL_RAMP = 18; // 高亮漸入幀數
 
-const STORY_CARDS = [
-  { label: "身為一位", value: "角色", icon: "👤" },
-  { label: "我想要", value: "需求", icon: "🎯" },
-  { label: "為了", value: "價值", icon: "⭐" },
+// 整行版面保留：各段在最終位置淡入，避免逐段出現時其他字位移
+const SEGMENTS = [
+  { pre: "身為一位「", word: "角色", post: "」，" },
+  { pre: "我想要「", word: "需求", post: "」，" },
+  { pre: "為了「", word: "某個目的", post: "」。" },
 ] as const;
 
 export const Ch3Page2S05Format: React.FC = () => {
-  const frame = useCurrentFrame();
+  // 開場白底先停留 HOLD 幀：整段往後延（負幀時 spring／interpolate 自動維持初始＝白底）
+  const frame = useCurrentFrame() - HOLD;
   const { fps } = useVideoConfig();
-
-  const opacity = interpolate(frame, CONTENT_IN, [0, 1], clamp);
-  const tip = interpolate(frame, TIP_IN, [0, 1], clamp);
-  const tipRise = interpolate(frame, TIP_IN, [18, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      <AbsoluteFill
-        style={{
-          opacity,
-          justifyContent: "center",
-          alignItems: "center",
-          flexDirection: "column",
-        }}
-      >
+      <AbsoluteFill style={{ justifyContent: "center", alignItems: "center" }}>
         <div
           style={{
-            display: "flex",
-            gap: 48,
+            fontSize: 54,
+            fontWeight: 700,
+            letterSpacing: 2,
+            color: TEXT_DARK,
+            whiteSpace: "nowrap",
           }}
         >
-          {STORY_CARDS.map((c, i) => {
-            const s = spring({
-              frame: frame - (CARD_FIRST + i * CARD_STEP),
+          {SEGMENTS.map((seg, i) => {
+            const at = SEG_FIRST + i * SEG_STEP;
+            // 該段進場（純淡入，不做位移以免文字次像素抖動）
+            const appear = spring({
+              frame: frame - at,
               fps,
-              config: { damping: 16, stiffness: 120 },
+              config: { damping: 18, stiffness: 120 },
             });
+            // 該段出現後，重點詞才高亮
+            const hl = interpolate(
+              frame,
+              [at + HL_DELAY, at + HL_DELAY + HL_RAMP],
+              [0, 1],
+              ease,
+            );
             return (
-              <div
-                key={c.value}
+              <span
+                key={seg.word}
                 style={{
-                  width: 460,
-                  padding: "64px 36px",
-                  background: WHITE,
-                  border: `2px solid ${CARD_BORDER}`,
-                  borderRadius: 28,
-                  boxShadow: `0 18px 44px ${withAlpha(TEXT_DARK, 0.08)}`,
-                  opacity: s,
-                  transform: `translateY(${interpolate(s, [0, 1], [56, 0])}px)`,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  gap: 18,
+                  display: "inline-block",
+                  opacity: appear,
                 }}
               >
-                <div
-                  style={{
-                    height: 100,
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontSize: 84,
-                    lineHeight: 1,
-                  }}
-                >
-                  {c.icon}
-                </div>
-                <div
-                  style={{
-                    fontSize: 32,
-                    fontWeight: 600,
-                    letterSpacing: 2,
-                    color: SUBTLE,
-                  }}
-                >
-                  {c.label}
-                </div>
-                <div
-                  style={{
-                    fontSize: 56,
-                    fontWeight: 800,
-                    letterSpacing: 2,
-                    color: YELLOW,
-                  }}
-                >
-                  「{c.value}」
-                </div>
-              </div>
+                {seg.pre}
+                <HighlightWord show={hl} fromColor={TEXT_DARK}>
+                  {seg.word}
+                </HighlightWord>
+                {seg.post}
+              </span>
             );
           })}
-        </div>
-
-        <div
-          style={{
-            marginTop: 64,
-            fontSize: 34,
-            fontWeight: 600,
-            letterSpacing: 2,
-            color: BLUE,
-            opacity: tip,
-            transform: `translateY(${tipRise}px)`,
-          }}
-        >
-          先看案例，再一起寫 →
         </div>
       </AbsoluteFill>
     </AbsoluteFill>

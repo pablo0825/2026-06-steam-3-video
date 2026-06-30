@@ -5,7 +5,8 @@ import { FONT, clamp } from "../../theme/motion";
 import { OpeningTitle } from "../../components/OpeningTitle";
 
 // 第 3 集・第 1 頁・S01：開場標題（210 幀，結尾淡出到 NEUTRAL_50）
-const ENDING_FADE = [188, 210] as const;
+//   淡出在第 206 幀就到 0（總長 210，最後算到 209），多留幾幀全透明確保淡乾淨。
+const ENDING_FADE = [184, 206] as const;
 
 export const Ch3Page1S01Opening: React.FC = () => {
   const frame = useCurrentFrame();

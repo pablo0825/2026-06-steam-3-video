@@ -570,7 +570,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S02-Focus"
         component={Ch3Page1S02Focus}
-        durationInFrames={240}
+        durationInFrames={264}
         fps={30}
         width={1920}
         height={1080}
@@ -578,7 +578,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S03-KnowledgeNav"
         component={Ch3Page1S03KnowledgeNav}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}
@@ -586,7 +586,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S03-KnowledgeNav-2"
         component={Ch3Page1S03KnowledgeNav2}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}
@@ -594,7 +594,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S03-KnowledgeNav-3"
         component={Ch3Page1S03KnowledgeNav3}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}
@@ -602,7 +602,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page1-S03-KnowledgeNav-4"
         component={Ch3Page1S03KnowledgeNav4}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}
@@ -618,7 +618,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page2-S05-Format"
         component={Ch3Page2S05Format}
-        durationInFrames={360}
+        durationInFrames={384}
         fps={30}
         width={1920}
         height={1080}
@@ -726,7 +726,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page7-S18-SpecPerFeature"
         component={Ch3Page7S18SpecPerFeature}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}
@@ -734,7 +734,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page7-S18-SpecWorkflow"
         component={Ch3Page7S18SpecWorkflow}
-        durationInFrames={390}
+        durationInFrames={414}
         fps={30}
         width={1920}
         height={1080}
@@ -742,7 +742,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page12-S23-Fundamentals"
         component={Ch3Page12S23Fundamentals}
-        durationInFrames={330}
+        durationInFrames={354}
         fps={30}
         width={1920}
         height={1080}

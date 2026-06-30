@@ -43,7 +43,9 @@ const FB_DEPTH = 850;
 const FB_LABEL_Y = 786;
 
 export const Ch3Page7S18SpecWorkflow: React.FC = () => {
-  const frame = useCurrentFrame();
+  // 開場白底先停留 HOLD 幀：整段往後延（負幀時 spring／interpolate 自動維持初始＝白底）
+  const HOLD = 24;
+  const frame = useCurrentFrame() - HOLD;
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
@@ -63,8 +65,6 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
   const fbDraw = interpolate(frame, [250, 308], [0, 1], easeStandard);
   const fbArrow = interpolate(frame, [300, 312], [0, 1], clamp);
   const fbLabel = interpolate(frame, [286, 306], [0, 1], easeStandard);
-  // 開始實作
-  const startIn = interpolate(frame, [320, 348], [0, 1], easeStandard);
   const out = interpolate(frame, [366, 388], [1, 0], clamp);
 
   return (
@@ -193,23 +193,6 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
           </div>
         );
       })}
-
-      {/* 開始實作 轉場 */}
-      <div
-        style={{
-          position: "absolute",
-          left: 960,
-          top: 900,
-          transform: `translateX(-50%) translateY(${interpolate(startIn, [0, 1], [16, 0])}px)`,
-          opacity: startIn,
-          fontSize: 46,
-          fontWeight: 900,
-          letterSpacing: 4,
-          color: BLUE,
-        }}
-      >
-        開始實作 →
-      </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );

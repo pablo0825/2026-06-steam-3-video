@@ -32,7 +32,9 @@ const POINTS: React.ReactNode[] = [
 ];
 
 export const Ch3Page12S23Fundamentals: React.FC = () => {
-  const frame = useCurrentFrame();
+  // 開場白底先停留 HOLD 幀：整段往後延（負幀時 spring／interpolate 自動維持初始＝白底）
+  const HOLD = 24;
+  const frame = useCurrentFrame() - HOLD;
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
