@@ -108,7 +108,7 @@ export const Ch4Page1S03Flow: React.FC = () => {
     fps,
     config: { damping: 15, stiffness: 120 },
   });
-  const phraseRuleW = interpolate(frame, PHRASE_RULE, [0, 360], {
+  const phraseRuleW = interpolate(frame, PHRASE_RULE, [0, 460], {
     ...clamp,
     easing: Easing.bezier(0.16, 1, 0.3, 1),
   });

@@ -776,7 +776,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page1-S02-Role"
         component={Ch4Page1S02Role}
-        durationInFrames={210}
+        durationInFrames={240}
         fps={30}
         width={1920}
         height={1080}
@@ -898,7 +898,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch4-Page6-S15-Contrast"
         component={Ch4Page6S15Contrast}
-        durationInFrames={426}
+        durationInFrames={450}
         fps={30}
         width={1920}
         height={1080}

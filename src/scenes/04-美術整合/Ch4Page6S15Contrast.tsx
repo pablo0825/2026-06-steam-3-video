@@ -26,9 +26,10 @@ import { VerdictBadge } from "../../components/VerdictBadge";
 
 // 第 4 集・第 6 頁・S15：散亂 vs. 集中 左右對比
 //   原合併檔的 frame 區間（228–600）已全部 −228 重新基準化為 0 起算。
-//   放大定格(350)後多停 1 秒(30幀)再淡出 [390,418]，淡到 0 後露出 NEUTRAL_50 白底（停到 426）。
-const S15_IN = [0, 34] as const; // 進場淡入
-const ENDING_FADE = [390, 418] as const; // 結尾淡出到 NEUTRAL_50
+//   兩側齊備後停留，[390,418] 左右一起淡出（右側不放大、左側不變暗），淡到 0 後露出 NEUTRAL_50 白底（停到 426）。
+const HOLD = 24; // 進場前白底先停留的幀數
+const S15_IN = [0, 34] as const; // 進場淡入（相對 f）
+const ENDING_FADE = [390, 418] as const; // 結尾淡出到 NEUTRAL_50（相對 f）
 
 // 瓦片種類
 type TileKind = "floor" | "brick" | "spike" | "coin" | "grass" | "box" | "gem";
@@ -181,19 +182,20 @@ export const Ch4Page6S15Contrast: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
+  // 整段動畫延後 HOLD 幀，進場前白底先多停留
+  const f = frame - HOLD;
+
   // 進場淡入 × 結尾淡出，淡到 0 後露出 NEUTRAL_50 白底
   const sceneOpacity =
-    interpolate(frame, S15_IN, [0, 1], ease) *
-    interpolate(frame, ENDING_FADE, [1, 0], clamp);
-  const crossLabel = interpolate(frame, [122, 154], [0, 1], ease);
+    interpolate(f, S15_IN, [0, 1], ease) *
+    interpolate(f, ENDING_FADE, [1, 0], clamp);
+  const crossLabel = interpolate(f, [122, 154], [0, 1], ease);
   const sheetSpring = spring({
-    frame: frame - 164,
+    frame: f - 164,
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const checkLabel = interpolate(frame, [282, 312], [0, 1], ease);
-  const leftDim = interpolate(frame, [312, 350], [1, 0.45], clamp);
-  const rightScale = interpolate(frame, [312, 350], [1, 1.02], clamp);
+  const checkLabel = interpolate(f, [282, 312], [0, 1], ease);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -218,12 +220,11 @@ export const Ch4Page6S15Contrast: React.FC = () => {
             top: 0,
             width: 960,
             height: 1080,
-            opacity: leftDim,
           }}
         >
           {SCATTER.map((t, i) => {
             const appear = spring({
-              frame: frame - (42 + i * 11),
+              frame: f - (42 + i * 11),
               fps,
               config: { damping: 13, stiffness: 130 },
             });
@@ -271,18 +272,8 @@ export const Ch4Page6S15Contrast: React.FC = () => {
                 [0, 1],
                 [60, 0],
                 clamp,
-              )}px) scale(${rightScale})`,
-              boxShadow: `0 ${interpolate(
-                rightScale,
-                [1, 1.02],
-                [12, 26],
-                clamp,
-              )}px ${interpolate(
-                rightScale,
-                [1, 1.02],
-                [28, 50],
-                clamp,
-              )}px ${withAlpha(TEXT_DARK, 0.12)}`,
+              )}px)`,
+              boxShadow: `0 12px 28px ${withAlpha(TEXT_DARK, 0.12)}`,
             }}
           >
             {SHEET_TILES.map((kind, j) => {
@@ -291,7 +282,7 @@ export const Ch4Page6S15Contrast: React.FC = () => {
               const cell = 144;
               const gap = 12;
               const appear = interpolate(
-                frame,
+                f,
                 [200 + j * 7, 222 + j * 7],
                 [0, 1],
                 ease,
