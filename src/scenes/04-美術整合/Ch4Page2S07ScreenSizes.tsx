@@ -128,13 +128,17 @@ export const Ch4Page2S07ScreenSizes: React.FC = () => {
                   objectFit: "contain",
                   display: "block",
                 }}
+                from={-63}
               />
             </div>
           );
         })}
 
         {/* 尺寸標籤（左上，隨圖切換） */}
-        <CornerLabel text={EXAMPLES[activeIdx].dim} opacity={panelIn * labelOp} />
+        <CornerLabel
+          text={EXAMPLES[activeIdx].dim}
+          opacity={panelIn * labelOp}
+        />
 
         {/* 進度小圓點（底部置中，獨佔中央） */}
         <div
