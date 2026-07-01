@@ -64,7 +64,8 @@ import { Ch3Page3S06RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page
 import { Ch3Page3S07UserStoryOverlay01 } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay-01";
 import { Ch3Page3S07UserStoryOverlay02 } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay-02";
 import { Ch3Page4S08Context } from "./scenes/03-程式實作/Ch3Page4S08Context";
-import { Ch3Page4S09ContextLimit } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit";
+import { Ch3Page4S09ContextLimit01 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-01";
+import { Ch3Page4S09ContextLimit02 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-02";
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
 import { Ch3Page5S12AgentsFlow } from "./scenes/03-程式實作/Ch3Page5S12AgentsFlow";
 import { Ch3Page5S13AgentsDemo } from "./scenes/03-程式實作/Ch3Page5S13AgentsDemo";
@@ -660,9 +661,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page4-S09-ContextLimit"
-        component={Ch3Page4S09ContextLimit}
-        durationInFrames={450}
+        id="Ch3-Page4-S09-ContextLimit-01"
+        component={Ch3Page4S09ContextLimit01}
+        durationInFrames={270}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page4-S09-ContextLimit-02"
+        component={Ch3Page4S09ContextLimit02}
+        durationInFrames={360}
         fps={30}
         width={1920}
         height={1080}
