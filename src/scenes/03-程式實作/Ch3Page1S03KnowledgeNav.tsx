@@ -12,7 +12,7 @@ import { KnowledgeNav } from "../../components/KnowledgeNav";
 // 第 3 集・第 1 頁・S03：知識導覽（354 幀，開場白底先停留 24 幀）
 const HOLD = 24; // 開場白底先停留的幀數
 const CONTENT_IN = [0, 20] as const;
-const ENDING_FADE = [306, 330] as const;
+const ENDING_FADE = [305, 329] as const; // f 座標；f=329 對應最後渲染幀 353（durationInFrames 354 − HOLD 位移），確保淡出在片尾前收到 0
 const TAGS = ["User Story", "Context", "AGENTS.md", "Spec"] as const;
 const TAG_STEP = 24;
 const TAG_FIRST = 38;

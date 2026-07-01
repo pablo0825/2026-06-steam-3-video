@@ -18,7 +18,7 @@ const TAG_FIRST = 72;
 const TAG_STEP = 24;
 const HIGHLIGHT = [50, 90] as const; // 四項直接到位後提早跑高亮（複用版不重跑進場）
 const OPENING_FADE = [0, 20] as const; // 開場淡入（與 Ch2/Ch3 一致）
-const ENDING_FADE = [306, 330] as const;
+const ENDING_FADE = [305, 329] as const; // f 座標；f=329 對應最後渲染幀 353（durationInFrames 354 − HOLD 位移），確保淡出在片尾前收到 0
 
 export const Ch3Page1S03KnowledgeNav4: React.FC = () => {
   const frame = useCurrentFrame();
