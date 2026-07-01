@@ -11,6 +11,7 @@ import {
   CARD_BORDER,
   DOT_RED,
   GREEN,
+  NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
@@ -22,10 +23,12 @@ import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 7 頁・S17：Celeste jump-spec.md 透明 Overlay（540 幀）
 //   外框採 S12 視窗 chrome：白底卡 + CARD_BORDER 邊框 + 三圓點標題列（淺色主題）。
-const VEIL_IN = [8, 36] as const;
-const VEIL_OUT = [516, 540] as const;
-const HEADING_IN = [44, 74] as const;
-const ROW_START = [80, 132, 184, 236, 288, 340] as const;
+//   開場先出貼底黑條（出處條）並淡出，空檔停留後 veil 才淡入；結尾淡入白底銜接 S18。
+const BAR_OUT = [48, 72] as const; // 開場黑條全程存在，72 前淡出完全消失
+const VEIL_IN = [100, 128] as const; // 空檔停留後，半透明黑幕才淡入
+const HEADING_IN = [136, 166] as const;
+const ROW_START = [172, 224, 276, 328, 380, 432] as const;
+const END_FILL = [498, 526] as const; // 結尾淡入滿版 NEUTRAL_50，無縫接 S18
 
 const AC_ITEMS = [
   "按下空白鍵會跳躍",
@@ -96,10 +99,11 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const veilOpacity =
-    interpolate(frame, VEIL_IN, [0, 0.78], clamp) *
-    interpolate(frame, VEIL_OUT, [1, 0], clamp);
-  const infoOut = interpolate(frame, VEIL_OUT, [1, 0], clamp);
+  const veilOpacity = interpolate(frame, VEIL_IN, [0, 0.78], clamp);
+  // 結尾淡入滿版白底，蓋掉遊戲畫面與卡片，停在純白銜接 S18（NEUTRAL_50）
+  const endFill = interpolate(frame, END_FILL, [0, 1], clamp);
+  // 開場即滿版存在（不淡入），停留後淡出，空檔後 veil 才淡入
+  const barOpacity = interpolate(frame, BAR_OUT, [1, 0], clamp);
   const headingIn = interpolate(frame, HEADING_IN, [0, 1], easeStandard);
 
   return (
@@ -117,7 +121,7 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
             [16, 0],
           )}px)`,
           width: 1080,
-          opacity: headingIn * infoOut,
+          opacity: headingIn,
           borderRadius: 22,
           overflow: "hidden",
           background: WHITE,
@@ -172,7 +176,7 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
                     index < SPEC_ROWS.length - 1
                       ? `1px solid ${withAlpha(TEXT_DARK, 0.1)}`
                       : "none",
-                  opacity: progress * infoOut,
+                  opacity: progress,
                   transform: `translateY(${interpolate(progress, [0, 1], [12, 0])}px)`,
                 }}
               >
@@ -205,6 +209,49 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
           })}
         </div>
       </div>
+
+      {/* 開場貼底黑條（出處條）：開場即存在、停留後淡出，空檔後 veil 才淡入 */}
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 72,
+          padding: "0 64px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: withAlpha(BLACK, 0.82),
+          opacity: barOpacity,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 24,
+            fontWeight: 600,
+            letterSpacing: 2,
+            color: WHITE,
+          }}
+        >
+          此影片僅用於教學實驗上
+        </div>
+        <div
+          style={{
+            fontSize: 26,
+            fontWeight: 700,
+            letterSpacing: 2,
+            color: WHITE,
+          }}
+        >
+          蔚藍 Celeste
+        </div>
+      </div>
+
+      {/* 結尾淡入滿版白底，與下一支 S18（NEUTRAL_50）無縫銜接 */}
+      <AbsoluteFill
+        style={{ backgroundColor: NEUTRAL_50, opacity: endFill }}
+      />
     </AbsoluteFill>
   );
 };
