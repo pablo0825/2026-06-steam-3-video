@@ -16,7 +16,8 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
-// 第 3 集・第 3 頁・S07：Rhythm Doctor User Story 透明 Overlay（600 幀）
+// 第 3 集・第 3 頁・S07-01：Rhythm Doctor User Story 透明 Overlay（600 幀）
+//   原版：三列 tag-pill 版面。S07-02 為 S05 句型風格的替代版。
 const VEIL_IN = [8, 36] as const;
 const VEIL_OUT = [570, 600] as const;
 const US_HEADING_IN = [60, 90] as const;
@@ -37,7 +38,7 @@ const STORY_ROWS: { tag: string; node: React.ReactNode }[] = [
   { tag: "為了", node: <>配合節奏救活病人，完成關卡</> },
 ];
 
-export const Ch3Page3S07UserStoryOverlay: React.FC = () => {
+export const Ch3Page3S07UserStoryOverlay01: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 

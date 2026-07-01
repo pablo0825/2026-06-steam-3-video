@@ -61,7 +61,8 @@ import { Ch3Page1S03KnowledgeNav4 } from "./scenes/03-程式實作/Ch3Page1S03Kn
 import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
 import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
 import { Ch3Page3S06RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctorOverlay";
-import { Ch3Page3S07UserStoryOverlay } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay";
+import { Ch3Page3S07UserStoryOverlay01 } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay-01";
+import { Ch3Page3S07UserStoryOverlay02 } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay-02";
 import { Ch3Page4S08Context } from "./scenes/03-程式實作/Ch3Page4S08Context";
 import { Ch3Page4S09ContextLimit } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit";
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
@@ -633,8 +634,17 @@ export const RemotionRoot: React.FC = () => {
         calculateMetadata={calculateAlphaOverlayMetadata}
       />
       <Composition
-        id="Ch3-Page3-S07-UserStory-Overlay"
-        component={Ch3Page3S07UserStoryOverlay}
+        id="Ch3-Page3-S07-UserStory-Overlay-01"
+        component={Ch3Page3S07UserStoryOverlay01}
+        durationInFrames={600}
+        fps={30}
+        width={1920}
+        height={1080}
+        calculateMetadata={calculateAlphaOverlayMetadata}
+      />
+      <Composition
+        id="Ch3-Page3-S07-UserStory-Overlay-02"
+        component={Ch3Page3S07UserStoryOverlay02}
         durationInFrames={600}
         fps={30}
         width={1920}
