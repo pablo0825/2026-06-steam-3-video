@@ -9,6 +9,7 @@ import {
 import {
   BLACK,
   BORDER_LIGHT,
+  NEUTRAL_50,
   TEXT_DARK,
   WHITE,
   YELLOW,
@@ -17,11 +18,13 @@ import {
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 2 集・第 3 頁・S08：節奏醫生限制說明透明 Overlay（339 幀）
-const VEIL_IN = [0, 24] as const;
-const HEADING_IN = [30, 60] as const;
-const LABEL_START = [72, 114, 156] as const;
+const BAR_OUT = [48, 72] as const;
+const VEIL_IN = [102, 130] as const;
+const HEADING_IN = [138, 168] as const;
+const LABEL_START = [180, 222, 264] as const;
 const INFO_OUT = [294, 318] as const;
 const VEIL_OUT = [306, 338] as const;
+const END_FILL = [310, 338] as const;
 
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 800 };
 
@@ -59,12 +62,50 @@ export const Ch2Page3S08LimitOverlay: React.FC = () => {
   const veilOpacity =
     interpolate(frame, VEIL_IN, [0, 0.54], clamp) *
     interpolate(frame, VEIL_OUT, [1, 0], clamp);
+  const barOpacity = interpolate(frame, BAR_OUT, [1, 0], clamp);
+  const endFill = interpolate(frame, END_FILL, [0, 1], clamp);
   const headingIn = interpolate(frame, HEADING_IN, [0, 1], easeStandard);
   const infoOut = interpolate(frame, INFO_OUT, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ fontFamily: FONT }}>
       <AbsoluteFill style={{ backgroundColor: BLACK, opacity: veilOpacity }} />
+      <div
+        style={{
+          position: "absolute",
+          left: 0,
+          right: 0,
+          bottom: 0,
+          height: 72,
+          padding: "0 64px",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          backgroundColor: withAlpha(BLACK, 0.82),
+          opacity: barOpacity,
+        }}
+      >
+        <div
+          style={{
+            fontSize: 24,
+            fontWeight: 600,
+            letterSpacing: 2,
+            color: WHITE,
+          }}
+        >
+          此影片僅用於教學實驗
+        </div>
+        <div
+          style={{
+            fontSize: 26,
+            fontWeight: 700,
+            letterSpacing: 2,
+            color: WHITE,
+          }}
+        >
+          節奏醫生 Rhythm Doctor
+        </div>
+      </div>
       <div
         style={{
           position: "absolute",
@@ -145,6 +186,7 @@ export const Ch2Page3S08LimitOverlay: React.FC = () => {
           </div>
         );
       })}
+      <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, opacity: endFill }} />
     </AbsoluteFill>
   );
 };
