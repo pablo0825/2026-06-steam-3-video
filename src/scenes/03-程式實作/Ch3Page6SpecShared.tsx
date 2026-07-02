@@ -1,10 +1,10 @@
 import React from "react";
 import {
-  BLUE,
   CARD_BORDER,
   SUBTLE,
   TEXT_DARK,
   WHITE,
+  WINDOW_BAR,
   withAlpha,
 } from "../../theme/colors";
 import { FONT } from "../../theme/motion";
@@ -55,8 +55,9 @@ export const SpecDocumentCard: React.FC<SpecDocumentCardProps> = ({
           alignItems: "center",
           padding: "0 34px",
           gap: 18,
-          color: WHITE,
-          backgroundColor: BLUE,
+          color: TEXT_DARK,
+          backgroundColor: WINDOW_BAR,
+          borderBottom: `1px solid ${CARD_BORDER}`,
         }}
       >
         <svg width="34" height="40" viewBox="0 0 34 40" aria-hidden="true">
@@ -83,13 +84,13 @@ export const SpecDocumentCard: React.FC<SpecDocumentCardProps> = ({
       <div style={{ padding: "34px 40px" }}>
         <div
           style={{
-            fontSize: 25,
+            fontSize: 32,
             fontWeight: 900,
             color: TEXT_DARK,
             letterSpacing: 1,
           }}
         >
-          Jump Feature
+          跳躍
         </div>
         {showRows && (
           <div style={{ marginTop: 28, display: "grid", gap: 18 }}>
@@ -100,8 +101,7 @@ export const SpecDocumentCard: React.FC<SpecDocumentCardProps> = ({
                   width: `${rowWidth * 100}%`,
                   height: index === 0 ? 15 : 12,
                   borderRadius: 999,
-                  backgroundColor:
-                    index === 0 ? withAlpha(BLUE, 0.28) : withAlpha(SUBTLE, 0.2),
+                  backgroundColor: withAlpha(SUBTLE, 0.2),
                 }}
               />
             ))}
