@@ -1,5 +1,5 @@
 import "./index.css";
-import { CalculateMetadataFunction, Composition, Series } from "remotion";
+import { CalculateMetadataFunction, Composition } from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
 import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
 import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
@@ -107,23 +107,6 @@ const calculateAlphaOverlayMetadata: CalculateMetadataFunction<
   defaultPixelFormat: "yuva444p10le",
   defaultProResProfile: "4444",
 });
-
-const Ch4PageS01S04: React.FC = () => (
-  <Series>
-    <Series.Sequence durationInFrames={210}>
-      <Ch4Page1S01Opening />
-    </Series.Sequence>
-    <Series.Sequence durationInFrames={210}>
-      <Ch4Page1S02Role />
-    </Series.Sequence>
-    <Series.Sequence durationInFrames={605}>
-      <Ch4Page1S03Flow />
-    </Series.Sequence>
-    <Series.Sequence durationInFrames={245}>
-      <Ch4Page1S04Focus />
-    </Series.Sequence>
-  </Series>
-);
 
 export const RemotionRoot: React.FC = () => {
   return (
@@ -767,14 +750,6 @@ export const RemotionRoot: React.FC = () => {
       />
 
       {/* ── 第 4 集・美術整合 ── */}
-      <Composition
-        id="Ch4-Page-S01-S04"
-        component={Ch4PageS01S04}
-        durationInFrames={1270}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
       <Composition
         id="Ch4-Page1-S01-Opening"
         component={Ch4Page1S01Opening}
