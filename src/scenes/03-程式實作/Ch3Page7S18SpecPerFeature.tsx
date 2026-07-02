@@ -7,18 +7,19 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  BLUE,
   CARD_BORDER,
   NEUTRAL_50,
+  NEUTRAL_100,
   SUBTLE,
   TEXT_DARK,
   WHITE,
+  WINDOW_BAR,
   withAlpha,
 } from "../../theme/colors";
 import { VerdictBadge } from "../../components/VerdictBadge";
 import { FONT, clamp } from "../../theme/motion";
 
-// 第 3 集・第 7 頁 S18 前半：左右對比「一個功能，一份 Spec」（簡潔文件卡版）
+// 第 3 集・第 7 頁 S18 前半：左右對比「一個功能，一份 Spec」（S17 視窗外框版）
 //   左＝反例：三個功能全塞進「一個」視窗（spec.md） → ✗（先出現）
 //   右＝正例：三個功能各自「一個」視窗（jump/dash/climb-spec.md） → ✓（後出現）
 const FEATURES = [
@@ -32,13 +33,34 @@ const VERDICT_TOP = 880;
 // 反例（左，先出現）：單一視窗中心
 const LEFT_CX = 480;
 const LEFT_CY = 460;
-const LEFT_W = 470;
+const LEFT_W = 512;
 // 正例（右，後出現）：三視窗直排（中心 x，各自 y；間距拉大）
 const RIGHT_CX = 1440;
-const RIGHT_CY = [260, 460, 660] as const;
-const RIGHT_W = 440;
+const RIGHT_CY = [280, 480, 680] as const;
+const RIGHT_W = 512;
 
-// 簡潔文件卡外框：白底圓角＋淺邊框＋柔和陰影，檔名為藍色小標題，body 放 children
+// 折角文件 icon（沿用 S17 樣式）：白頁＋折角（無內文線）
+const FileGlyph: React.FC<{ size: number }> = ({ size }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
+    <path
+      d="M24 8 H60 L80 28 V92 H24 Z"
+      fill={WHITE}
+      stroke={CARD_BORDER}
+      strokeWidth={6}
+      strokeLinejoin="round"
+    />
+    <path d="M60 8 V28 H80 Z" fill={NEUTRAL_100} />
+    <path
+      d="M60 8 V28 H80"
+      fill="none"
+      stroke={CARD_BORDER}
+      strokeWidth={6}
+      strokeLinejoin="round"
+    />
+  </svg>
+);
+
+// 視窗外框（沿用 S17）：白底卡＋邊框＋標題列（折角文件 icon＋檔名），body 放 children
 const SpecWindow: React.FC<{
   fileName: string;
   width: number;
@@ -56,25 +78,37 @@ const SpecWindow: React.FC<{
       width,
       transform: `translate(-50%, -50%) scale(${scale})`,
       opacity,
-      borderRadius: 16,
+      borderRadius: 20,
+      overflow: "hidden",
       backgroundColor: WHITE,
-      border: `1px solid ${CARD_BORDER}`,
-      boxShadow: `0 10px 30px ${withAlpha(TEXT_DARK, 0.07)}`,
-      padding: "22px 26px",
+      border: `3px solid ${CARD_BORDER}`,
+      boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
     }}
   >
     <div
       style={{
-        fontSize: 22,
-        fontWeight: 800,
-        letterSpacing: 0.5,
-        color: BLUE,
-        marginBottom: 16,
+        height: 54,
+        display: "flex",
+        alignItems: "center",
+        gap: 12,
+        padding: "0 20px",
+        background: WINDOW_BAR,
+        borderBottom: `1px solid ${CARD_BORDER}`,
       }}
     >
-      {fileName}
+      <FileGlyph size={32} />
+      <div
+        style={{
+          fontSize: 24,
+          fontWeight: 800,
+          letterSpacing: 0.5,
+          color: TEXT_DARK,
+        }}
+      >
+        {fileName}
+      </div>
     </div>
-    {children}
+    <div style={{ padding: "20px 26px" }}>{children}</div>
   </div>
 );
 
@@ -133,19 +167,38 @@ export const Ch3Page7S18SpecPerFeature: React.FC = () => {
           opacity={leftWin}
           scale={interpolate(leftWin, [0, 1], [0.9, 1])}
         >
-          <div style={{ display: "grid", gap: 20 }}>
-            {FEATURES.map((f) => (
-              <div key={f.name}>
+          <div>
+            {FEATURES.map((f, i) => (
+              <div
+                key={f.name}
+                style={{
+                  display: "flex",
+                  alignItems: "center",
+                  gap: 16,
+                  padding: "16px 0",
+                  borderBottom:
+                    i < FEATURES.length - 1
+                      ? `1px solid ${withAlpha(TEXT_DARK, 0.1)}`
+                      : "none",
+                }}
+              >
                 <div
-                  style={{ fontSize: 28, fontWeight: 900, color: TEXT_DARK }}
+                  style={{
+                    width: 92,
+                    flexShrink: 0,
+                    fontSize: 28,
+                    fontWeight: 800,
+                    color: TEXT_DARK,
+                  }}
                 >
                   {f.name}
                 </div>
                 <div
                   style={{
-                    marginTop: 6,
-                    fontSize: 22,
+                    flex: 1,
+                    fontSize: 28,
                     fontWeight: 600,
+                    lineHeight: 1.4,
                     color: SUBTLE,
                   }}
                 >
@@ -173,23 +226,30 @@ export const Ch3Page7S18SpecPerFeature: React.FC = () => {
               opacity={win}
               scale={interpolate(win, [0, 1], [0.9, 1])}
             >
-              <>
+              <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
                 <div
-                  style={{ fontSize: 30, fontWeight: 900, color: TEXT_DARK }}
+                  style={{
+                    width: 92,
+                    flexShrink: 0,
+                    fontSize: 28,
+                    fontWeight: 800,
+                    color: TEXT_DARK,
+                  }}
                 >
                   {f.name}
                 </div>
                 <div
                   style={{
-                    marginTop: 8,
-                    fontSize: 22,
+                    flex: 1,
+                    fontSize: 28,
                     fontWeight: 600,
+                    lineHeight: 1.4,
                     color: SUBTLE,
                   }}
                 >
                   {f.desc}
                 </div>
-              </>
+              </div>
             </SpecWindow>
           );
         })}

@@ -9,20 +9,19 @@ import {
 import {
   BLACK,
   CARD_BORDER,
-  DOT_RED,
   GREEN,
   NEUTRAL_50,
+  NEUTRAL_100,
   SUBTLE,
   TEXT_DARK,
   WHITE,
   WINDOW_BAR,
-  YELLOW,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 7 頁・S17：Celeste jump-spec.md 透明 Overlay（540 幀）
-//   外框採 S12 視窗 chrome：白底卡 + CARD_BORDER 邊框 + 三圓點標題列（淺色主題）。
+//   外框：白底卡 + CARD_BORDER 邊框 + 折角文件 icon 標題列（淺色主題）。
 //   開場先出貼底黑條（出處條）並淡出，空檔停留後 veil 才淡入；結尾淡入白底銜接 S18。
 const BAR_OUT = [48, 72] as const; // 開場黑條全程存在，72 前淡出完全消失
 const VEIL_IN = [100, 128] as const; // 空檔停留後，半透明黑幕才淡入
@@ -89,10 +88,25 @@ const SPEC_ROWS: SpecRow[] = [
   { field: "Notes", content: <>無。</> },
 ];
 
-const Dot: React.FC<{ color: string }> = ({ color }) => (
-  <span
-    style={{ width: 13, height: 13, borderRadius: "50%", background: color }}
-  />
+// 折角文件 icon（沿用 S09-02 樣式）：白頁＋折角（無內文線）
+const FileGlyph: React.FC<{ size: number }> = ({ size }) => (
+  <svg width={size} height={size} viewBox="0 0 100 100" aria-hidden="true">
+    <path
+      d="M24 8 H60 L80 28 V92 H24 Z"
+      fill={WHITE}
+      stroke={CARD_BORDER}
+      strokeWidth={6}
+      strokeLinejoin="round"
+    />
+    <path d="M60 8 V28 H80 Z" fill={NEUTRAL_100} />
+    <path
+      d="M60 8 V28 H80"
+      fill="none"
+      stroke={CARD_BORDER}
+      strokeWidth={6}
+      strokeLinejoin="round"
+    />
+  </svg>
 );
 
 export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
@@ -129,24 +143,21 @@ export const Ch3Page7S17CelesteSpecOverlay: React.FC = () => {
           boxShadow: `0 30px 70px ${withAlpha(BLACK, 0.5)}`,
         }}
       >
-        {/* 標題列：三圓點 + 視窗名稱（S12 chrome） */}
+        {/* 標題列：折角文件 icon + 視窗名稱 */}
         <div
           style={{
             height: 64,
             display: "flex",
             alignItems: "center",
-            gap: 10,
+            gap: 12,
             padding: "0 22px",
             background: WINDOW_BAR,
             borderBottom: `1px solid ${CARD_BORDER}`,
           }}
         >
-          <Dot color={DOT_RED} />
-          <Dot color={YELLOW} />
-          <Dot color={GREEN} />
+          <FileGlyph size={36} />
           <div
             style={{
-              marginLeft: 12,
               fontSize: 26,
               fontWeight: 800,
               letterSpacing: 0.5,
