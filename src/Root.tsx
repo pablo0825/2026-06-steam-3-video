@@ -671,7 +671,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page4-S09-ContextLimit-02"
         component={Ch3Page4S09ContextLimit02}
-        durationInFrames={360}
+        durationInFrames={290}
         fps={30}
         width={1920}
         height={1080}

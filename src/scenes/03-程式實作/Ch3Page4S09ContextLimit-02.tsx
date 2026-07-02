@@ -22,30 +22,38 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
-// 第 3 集・第 4 頁・S09-02：Context 視窗裝滿 → 新檔案擠掉最舊的（360 幀）
-//   沿用 S12 視窗 chrome（三圓點）。視窗彈入 → 4 個檔案從上方落入裝滿 →
-//   第 5 個落下、最舊（最左）滑出視窗、其餘左移補位。
+// 第 3 集・第 4 頁・S09-02：Context 視窗裝滿（2×4）→ 新檔案擠掉最舊的（420 幀）
+//   沿用 S12 視窗 chrome（三圓點）。8 檔逐一在視窗內出現（淡入＋pop）→
+//   第 9 個新檔從上落下、最舊（左上）滑出、其餘 FIFO 依序遞補。
 const WIN_W = 960;
-const WIN_H = 460;
-const SLOT0 = 637; // 第一格檔案中心 X（場景座標）
-const SLOT_STEP = 215;
-const TARGET_Y = 530; // 檔案落定的中心 Y（視窗內容區中央）
-const DROP_START_Y = 200; // 檔案自視窗上方落下的起點 Y
-const FILE_FIRST = 44; // 第一個檔案落下
-const FILE_STEP = 32; // 每個檔案間隔
-const PUSH_AT = 200; // 第 5 個檔案落下＋最舊擠出的時點
-const PUSH_DUR = 40;
-const CAPTION_IN = [268, 298] as const;
+const WIN_H = 540; // 加高：讓上下排與視窗邊緣留白
+const COL0 = 645; // 第一欄檔案中心 X（場景座標）
+const COL_STEP = 210;
+const ROW_Y = [430, 630] as const; // 上排／下排檔案中心 Y（與視窗邊緣各留約 70px）
+const DROP_START_Y = 200; // 新檔案自視窗上方落下的起點 Y
+const FILES_FIRST = 20; // 第一個檔案出現
+const FILES_STEP = 11; // 逐一出現的間隔
+const PUSH_AT = 170; // 新檔案落下＋最舊擠出＋其餘遞補
+const PUSH_DUR = 42;
+const ENDING_FADE = [258, 282] as const; // 結尾淡入滿版 NEUTRAL_50（收白）
 
 const FILES = [
   { id: "a", name: "需求.md" },
   { id: "b", name: "規則.md" },
   { id: "c", name: "對話.md" },
-  { id: "d", name: "紀錄.md" },
+  { id: "d", name: "修改.md" },
+  { id: "e", name: "測試.md" },
+  { id: "f", name: "紀錄.md" },
+  { id: "g", name: "問題.md" },
+  { id: "h", name: "筆記.md" },
 ] as const;
 const NEW_FILE = { name: "新檔案.md" };
 
-const slotX = (idx: number) => SLOT0 + idx * SLOT_STEP;
+// 閱讀順序 slot（0–7）→ 場景座標
+const slotPos = (idx: number) => ({
+  x: COL0 + (idx % 4) * COL_STEP,
+  y: ROW_Y[Math.floor(idx / 4)],
+});
 
 // 折角文件 icon（accent＝新檔案，改藍色強調）
 const FileGlyph: React.FC<{ size: number; accent?: boolean }> = ({
@@ -64,16 +72,43 @@ const FileGlyph: React.FC<{ size: number; accent?: boolean }> = ({
         strokeLinejoin="round"
       />
       <path
+        d="M60 8 V28 H80 Z"
+        fill={accent ? withAlpha(BLUE, 0.15) : NEUTRAL_100}
+      />
+      <path
         d="M60 8 V28 H80"
         fill="none"
         stroke={stroke}
         strokeWidth={3}
         strokeLinejoin="round"
       />
-      <path d="M60 8 V28 H80 Z" fill={accent ? withAlpha(BLUE, 0.15) : NEUTRAL_100} />
-      <line x1={34} y1={48} x2={70} y2={48} stroke={line} strokeWidth={4} strokeLinecap="round" />
-      <line x1={34} y1={62} x2={70} y2={62} stroke={line} strokeWidth={4} strokeLinecap="round" />
-      <line x1={34} y1={76} x2={56} y2={76} stroke={line} strokeWidth={4} strokeLinecap="round" />
+      <line
+        x1={34}
+        y1={48}
+        x2={70}
+        y2={48}
+        stroke={line}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
+      <line
+        x1={34}
+        y1={62}
+        x2={70}
+        y2={62}
+        stroke={line}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
+      <line
+        x1={34}
+        y1={76}
+        x2={56}
+        y2={76}
+        stroke={line}
+        strokeWidth={4}
+        strokeLinecap="round"
+      />
     </svg>
   );
 };
@@ -84,27 +119,28 @@ const FileNode: React.FC<{
   opacity: number;
   name: string;
   accent?: boolean;
-}> = ({ x, y, opacity, name, accent }) => (
+  scale?: number;
+}> = ({ x, y, opacity, name, accent, scale = 1 }) => (
   <div
     style={{
       position: "absolute",
       left: x,
       top: y,
-      transform: "translate(-50%, -50%)",
+      transform: `translate(-50%, -50%) scale(${scale})`,
       opacity,
       display: "flex",
       flexDirection: "column",
       alignItems: "center",
-      gap: 12,
+      gap: 8,
     }}
   >
-    <FileGlyph size={132} accent={accent} />
+    <FileGlyph size={104} accent={accent} />
     <div
       style={{
-        fontSize: 24,
+        fontSize: 22,
         fontWeight: 800,
         letterSpacing: 0.5,
-        color: accent ? BLUE : TEXT_DARK,
+        color: accent ? BLUE : SUBTLE,
         whiteSpace: "nowrap",
       }}
     >
@@ -122,13 +158,14 @@ export const Ch3Page4S09ContextLimit02: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 115 },
   });
-  const captionIn = interpolate(frame, CAPTION_IN, [0, 1], easeStandard);
   const pushProgress = interpolate(
     frame,
     [PUSH_AT, PUSH_AT + PUSH_DUR],
     [0, 1],
     easeStandard,
   );
+  const endFill = interpolate(frame, ENDING_FADE, [0, 1], clamp);
+  const captionIn = interpolate(frame, [120, 148], [0, 1], easeStandard);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -160,9 +197,30 @@ export const Ch3Page4S09ContextLimit02: React.FC = () => {
             padding: "0 22px",
           }}
         >
-          <span style={{ width: 13, height: 13, borderRadius: "50%", background: DOT_RED }} />
-          <span style={{ width: 13, height: 13, borderRadius: "50%", background: YELLOW }} />
-          <span style={{ width: 13, height: 13, borderRadius: "50%", background: GREEN }} />
+          <span
+            style={{
+              width: 13,
+              height: 13,
+              borderRadius: "50%",
+              background: DOT_RED,
+            }}
+          />
+          <span
+            style={{
+              width: 13,
+              height: 13,
+              borderRadius: "50%",
+              background: YELLOW,
+            }}
+          />
+          <span
+            style={{
+              width: 13,
+              height: 13,
+              borderRadius: "50%",
+              background: GREEN,
+            }}
+          />
           <div
             style={{
               marginLeft: 12,
@@ -178,64 +236,112 @@ export const Ch3Page4S09ContextLimit02: React.FC = () => {
         <div style={{ height: WIN_H - 60, background: NEUTRAL_50 }} />
       </div>
 
-      {/* 檔案（場景座標，浮在視窗上方，自上落入視窗內部槽位） */}
+      {/* 8 檔逐一在視窗內出現（淡入＋pop）；擠出時最舊滑出、其餘 FIFO 遞補 */}
       {FILES.map((file, i) => {
-        const dropAt = FILE_FIRST + i * FILE_STEP;
-        const drop = spring({
-          frame: frame - dropAt,
+        // 各檔於原位錯開淡入＋輕微放大 pop
+        const enter = spring({
+          frame: frame - (FILES_FIRST + i * FILES_STEP),
           fps,
-          config: { damping: 15, stiffness: 120 },
+          config: { damping: 16, stiffness: 120 },
         });
-        const y = interpolate(drop, [0, 1], [DROP_START_Y, TARGET_Y]);
-        const dropOpacity = interpolate(frame, [dropAt, dropAt + 8], [0, 1], clamp);
+        const enterOpacity = interpolate(enter, [0, 1], [0, 1], clamp);
+        const scale = interpolate(enter, [0, 1], [0.9, 1]);
 
-        const isOldest = i === 0;
-        // 擠出：最舊滑出視窗左側＋淡出；其餘左移一格補位
-        const x = isOldest
-          ? interpolate(pushProgress, [0, 1], [slotX(0), 480 - 140], easeStandard)
-          : slotX(interpolate(pushProgress, [0, 1], [i, i - 1]));
-        const opacity = isOldest
-          ? dropOpacity * interpolate(pushProgress, [0, 0.7, 1], [1, 1, 0], clamp)
-          : dropOpacity;
+        if (i === 0) {
+          // 最舊：滑出視窗左側＋淡出
+          const x = interpolate(
+            pushProgress,
+            [0, 1],
+            [slotPos(0).x, 480 - 160],
+            easeStandard,
+          );
+          const opacity =
+            enterOpacity *
+            interpolate(pushProgress, [0, 0.7, 1], [1, 1, 0], clamp);
+          return (
+            <FileNode
+              key={file.id}
+              x={x}
+              y={slotPos(0).y}
+              opacity={opacity}
+              scale={scale}
+              name={file.name}
+            />
+          );
+        }
 
+        // 其餘：FIFO 依序遞補一格（slot i → slot i-1）
+        const to = slotPos(i - 1);
+        const from = slotPos(i);
+        const x = interpolate(
+          pushProgress,
+          [0, 1],
+          [from.x, to.x],
+          easeStandard,
+        );
+        const y = interpolate(
+          pushProgress,
+          [0, 1],
+          [from.y, to.y],
+          easeStandard,
+        );
         return (
-          <FileNode key={file.id} x={x} y={y} opacity={opacity} name={file.name} />
+          <FileNode
+            key={file.id}
+            x={x}
+            y={y}
+            opacity={enterOpacity}
+            scale={scale}
+            name={file.name}
+          />
         );
       })}
 
-      {/* 第 5 個新檔案：於 PUSH_AT 落下，進入最右格 */}
+      {/* 第 9 個新檔案：於 PUSH_AT 落下，進入右下 slot7 */}
       {(() => {
         const drop = spring({
           frame: frame - PUSH_AT,
           fps,
           config: { damping: 15, stiffness: 120 },
         });
-        const y = interpolate(drop, [0, 1], [DROP_START_Y, TARGET_Y]);
-        const opacity = interpolate(frame, [PUSH_AT, PUSH_AT + 8], [0, 1], clamp);
+        const y = interpolate(drop, [0, 1], [DROP_START_Y, slotPos(7).y]);
+        const opacity = interpolate(
+          frame,
+          [PUSH_AT, PUSH_AT + 8],
+          [0, 1],
+          clamp,
+        );
         return (
-          <FileNode x={slotX(3)} y={y} opacity={opacity} name={NEW_FILE.name} accent />
+          <FileNode
+            x={slotPos(7).x}
+            y={y}
+            opacity={opacity}
+            name={NEW_FILE.name}
+            accent
+          />
         );
       })()}
 
-      {/* 收尾字 */}
+      {/* 視窗下方說明 */}
       <div
-        aria-label="Context 有容量上限，裝滿後新檔案會擠掉最舊的"
         style={{
           position: "absolute",
           left: 960,
-          top: 828,
+          top: 880,
           transform: `translate(-50%, ${interpolate(captionIn, [0, 1], [18, 0])}px)`,
           opacity: captionIn,
-          fontSize: 44,
+          fontSize: 58,
           fontWeight: 800,
-          letterSpacing: 1,
+          letterSpacing: 2,
           color: TEXT_DARK,
           whiteSpace: "nowrap",
         }}
       >
-        Context 有<span style={{ color: YELLOW }}>容量上限</span>
-        ，裝滿後新檔案會<span style={{ color: YELLOW }}>擠掉最舊的</span>
+        Context 有容量限制
       </div>
+
+      {/* 結尾淡入滿版白底（收白） */}
+      <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, opacity: endFill }} />
     </AbsoluteFill>
   );
 };
