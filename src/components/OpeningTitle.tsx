@@ -80,9 +80,8 @@ export const OpeningTitle: React.FC<OpeningTitleProps> = ({
           }),
         }}
       >
-        <Img src={LOGO} style={{ width: logoW, height: "auto" }} />
+        <Img src={LOGO} style={{ width: logoW, height: "auto" }} from={-25} />
       </div>
-
       {frame >= TITLE_START && (
         <>
           <div
