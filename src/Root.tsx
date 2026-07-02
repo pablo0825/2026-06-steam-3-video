@@ -736,7 +736,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch3-Page7-S18-SpecPerFeature"
         component={Ch3Page7S18SpecPerFeature}
-        durationInFrames={354}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}
