@@ -20,7 +20,7 @@ import { FONT, clamp, easeStandard } from "../../theme/motion";
 const VEIL_IN = [0, 24] as const;
 const HEADING_IN = [18, 48] as const;
 const ACTION_START = [56, 98, 140] as const;
-const CONTENT_OUT = [184, 208] as const;
+const CONTENT_OUT = [184, 207] as const;
 
 const ACTIONS = [
   { emoji: "⬆️", label: "跳躍" },

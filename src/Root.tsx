@@ -28,6 +28,9 @@ import { Ch1Page10S26Credits } from "./scenes/01-實驗介紹/Ch1Page10S26Credit
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
 import { Ch2Page1S02Focus } from "./scenes/02-遊戲設計/Ch2Page1S02Focus";
 import { Ch2Page1S03KnowledgeNav } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav";
+import { Ch2Page1S03KnowledgeNav02 } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav-02";
+import { Ch2Page1S03KnowledgeNav03 } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav-03";
+import { Ch2Page1S03KnowledgeNav04 } from "./scenes/02-遊戲設計/Ch2Page1S03KnowledgeNav-04";
 import { Ch2Page2S04Constraint } from "./scenes/02-遊戲設計/Ch2Page2S04Constraint";
 import { Ch2Page2S05GameJam } from "./scenes/02-遊戲設計/Ch2Page2S05GameJam";
 import { Ch2Page2S06Question } from "./scenes/02-遊戲設計/Ch2Page2S06Question";
@@ -340,7 +343,31 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch2-Page1-S03-KnowledgeNav"
         component={Ch2Page1S03KnowledgeNav}
-        durationInFrames={270}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page1-S03-KnowledgeNav-02"
+        component={Ch2Page1S03KnowledgeNav02}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page1-S03-KnowledgeNav-03"
+        component={Ch2Page1S03KnowledgeNav03}
+        durationInFrames={300}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch2-Page1-S03-KnowledgeNav-04"
+        component={Ch2Page1S03KnowledgeNav04}
+        durationInFrames={300}
         fps={30}
         width={1920}
         height={1080}
@@ -348,7 +375,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch2-Page2-S04-Constraint"
         component={Ch2Page2S04Constraint}
-        durationInFrames={240}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}
@@ -414,7 +441,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch2-Page4-S10-CorePlay"
         component={Ch2Page4S10CorePlay}
-        durationInFrames={220}
+        durationInFrames={250}
         fps={30}
         width={1920}
         height={1080}
@@ -456,7 +483,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch2-Page5-S13-CoreLoop"
         component={Ch2Page5S13CoreLoop}
-        durationInFrames={286}
+        durationInFrames={316}
         fps={30}
         width={1920}
         height={1080}
@@ -496,7 +523,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="Ch2-Page7-S18-StoryboardIntro"
         component={Ch2Page7S18StoryboardIntro}
-        durationInFrames={240}
+        durationInFrames={270}
         fps={30}
         width={1920}
         height={1080}

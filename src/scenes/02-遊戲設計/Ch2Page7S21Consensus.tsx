@@ -23,7 +23,7 @@ import {
 } from "./Ch2Page7StoryboardShared";
 
 // 第 2 集・第 7 頁・S21：用分鏡圖凝聚團隊共識（490 幀）
-const CONTENT_OUT = [460, 490] as const;
+const CONTENT_OUT = [460, 489] as const;
 const AVATAR_START = [60, 90, 120] as const;
 const LINE_START = [98, 128, 158] as const;
 

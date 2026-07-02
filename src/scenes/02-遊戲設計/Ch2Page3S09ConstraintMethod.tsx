@@ -9,7 +9,7 @@ const CON_MOVE = [68, 98] as const;
 const ARROW_IN = [102, 126] as const;
 const INSPIRE_IN = [124, 156] as const;
 const CAP_IN = [164, 190] as const;
-const CONTENT_OUT = [229, 251] as const;
+const CONTENT_OUT = [229, 250] as const;
 
 const CON_X_CENTER = 960;
 const CON_X_LEFT = 720;

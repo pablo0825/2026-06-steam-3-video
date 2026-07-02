@@ -31,7 +31,7 @@ const SHIFT = [416, 454] as const;
 const COMPARE_IN = [450, 482] as const;
 const COMPARE_OUT = [506, 536] as const;
 const CONCLUSION_IN = [534, 566] as const;
-const CONTENT_OUT = [566, 588] as const;
+const CONTENT_OUT = [566, 587] as const;
 
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 800 };
 

@@ -5,7 +5,7 @@ import { FONT, clamp, easeSoft } from "../../theme/motion";
 
 // 第 2 集・第 7 頁・S20：形式多元，但夥伴看得懂最重要（210 幀）
 const CONTENT_IN = [0, 24] as const;
-const CONTENT_OUT = [180, 210] as const;
+const CONTENT_OUT = [180, 209] as const;
 const MAIN_IN = [38, 68] as const;
 const KEY_IN = [92, 124] as const;
 

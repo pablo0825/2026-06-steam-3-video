@@ -27,7 +27,7 @@ export const STORYBOARD_SAMPLES = [
   {
     src: "02-遊戲設計/storyboard-sample-3.png",
     fadeIn: [170, 178],
-    fadeOut: [252, 276],
+    fadeOut: [252, 275],
     objectPosition: "center 18%",
   },
 ] as const;

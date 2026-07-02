@@ -5,7 +5,7 @@ import { FONT, clamp } from "../../theme/motion";
 
 // 第 2 集・第 2 頁・S06：轉場提問（210 幀）
 const CONTENT_IN = [6, 42] as const;
-const CONTENT_OUT = [188, 210] as const;
+const CONTENT_OUT = [188, 209] as const;
 const ARROW_START = 104;
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 800 };
 

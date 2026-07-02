@@ -12,7 +12,7 @@ import { CHECKLIST, ChecklistCard } from "./Ch2Page7StoryboardShared";
 
 // 第 2 集・第 7 頁・S22：繪製分鏡圖的重點（270 幀）
 const CONTENT_IN = [0, 24] as const;
-const CONTENT_OUT = [248, 270] as const;
+const CONTENT_OUT = [248, 269] as const;
 
 export const Ch2Page7S22Checklist: React.FC = () => {
   const frame = useCurrentFrame();

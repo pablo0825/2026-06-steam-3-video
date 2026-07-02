@@ -35,6 +35,8 @@ export const DefinitionCard: React.FC<{
   hlStart?: number;
   /** 高亮詞之間的錯開幀數，預設 30；短場景可壓縮。 */
   hlStagger?: number;
+  /** 開場白底停留幀數；停留期間只顯示背景，不推進卡片動畫。 */
+  openingHoldFrames?: number;
 }> = ({
   title,
   segments,
@@ -42,9 +44,11 @@ export const DefinitionCard: React.FC<{
   defMaxWidth,
   hlStart = HL_START,
   hlStagger = HL_STAGGER,
+  openingHoldFrames = 0,
 }) => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
+  const localFrame = frame - openingHoldFrames;
 
   const fadeOut = interpolate(
     frame,
@@ -57,16 +61,16 @@ export const DefinitionCard: React.FC<{
   ); // 透明度 1 → 0，做結尾淡出
   // 標題的彈簧進場
   const titleSpring = spring({
-    frame: frame - 8, // 延後 8 幀進場
+    frame: localFrame - 8, // 延後 8 幀進場
     fps,
     config: { damping: 14, stiffness: 120 }, // stiffness (剛性), damping (阻尼)
   });
-  const defLine = interpolate(frame, [44, 70], [0, 1], ease);
+  const defLine = interpolate(localFrame, [44, 70], [0, 1], ease);
 
   // 第 k 個高亮詞的亮起進度（0→1）
   const highlightShow = (k: number) =>
     interpolate(
-      frame,
+      localFrame,
       [hlStart + k * hlStagger, hlStart + k * hlStagger + HL_RAMP],
       [0, 1],
       ease,

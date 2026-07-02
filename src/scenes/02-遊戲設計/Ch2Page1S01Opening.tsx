@@ -5,7 +5,7 @@ import { FONT, clamp } from "../../theme/motion";
 import { OpeningTitle } from "../../components/OpeningTitle";
 
 // 第 2 集・第 1 頁・S01：開場標題（210 幀，結尾淡出到 NEUTRAL_50）
-const CONTENT_OUT = [188, 210] as const;
+const CONTENT_OUT = [188, 209] as const;
 
 export const Ch2Page1S01Opening: React.FC = () => {
   const frame = useCurrentFrame();

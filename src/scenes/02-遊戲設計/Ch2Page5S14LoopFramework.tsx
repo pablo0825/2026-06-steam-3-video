@@ -17,7 +17,7 @@ import {
 // 第 2 集・第 5 頁・S14：核心循環框架建立（234 幀）
 const NODE_START = [48, 84, 120, 156] as const;
 const ARROW_START = [72, 108, 144, 180] as const;
-const CONTENT_OUT = [210, 234] as const;
+const CONTENT_OUT = [210, 233] as const;
 
 const NODES: CoreLoopNodeData[] = [
   { label: "動作", example: "打怪・解謎", icon: "action" },

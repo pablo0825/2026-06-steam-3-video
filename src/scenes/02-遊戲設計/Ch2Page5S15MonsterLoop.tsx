@@ -12,7 +12,7 @@ import {
 const TITLE_IN = [0, 28] as const;
 const EXAMPLE_START = [46, 166, 286, 406] as const;
 const NEXT_IN = [560, 590] as const;
-const CONTENT_OUT = [626, 650] as const;
+const CONTENT_OUT = [626, 649] as const;
 const KEY: React.CSSProperties = { color: YELLOW, fontWeight: 800 };
 
 const NODES: CoreLoopNodeData[] = [
