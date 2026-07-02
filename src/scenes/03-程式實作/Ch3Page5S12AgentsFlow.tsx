@@ -19,6 +19,12 @@ import {
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 5 頁・S12：AGENTS.md 運作方式（360 幀）
+//   AI 先出現 → 反向箭頭自 AI 往左三個區塊畫出 → 箭頭抵達時該卡片才 pop。
+const AI_AT = 24; // AI 先出現
+const LINE_FIRST = 70; // 第一條反向線（AI→卡片）開始
+const LINE_DUR = 30; // 每條線畫出時長
+const LINE_STEP = 22; // 三條線的錯開間隔
+
 const CARD_STYLE: React.CSSProperties = {
   position: "absolute",
   width: 420,
@@ -42,15 +48,29 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const questionIn = interpolate(frame, [30, 52], [0, 1], easeStandard);
-  const contextIn = interpolate(frame, [48, 70], [0, 1], easeStandard);
-  const rulesIn = interpolate(frame, [66, 88], [0, 1], easeStandard);
-  const inputLines = interpolate(frame, [104, 146], [0, 1], easeStandard);
-  const inputArrows = interpolate(frame, [138, 150], [0, 1], easeStandard);
+  // AI 先出現
   const aiIn = spring({
-    frame: frame - 148,
+    frame: frame - AI_AT,
     fps,
     config: { damping: 17, stiffness: 115, overshootClamping: true },
+  });
+  // 三條反向線（AI→卡片）逐條錯開：線畫出 → 箭頭抵達 → 該卡片 pop
+  const inputs = [0, 1, 2].map((i) => {
+    const start = LINE_FIRST + i * LINE_STEP;
+    return {
+      line: interpolate(frame, [start, start + LINE_DUR], [0, 1], easeStandard),
+      arrow: interpolate(
+        frame,
+        [start + LINE_DUR - 6, start + LINE_DUR + 4],
+        [0, 1],
+        easeStandard,
+      ),
+      card: spring({
+        frame: frame - (start + LINE_DUR - 8),
+        fps,
+        config: { damping: 18, stiffness: 120 },
+      }),
+    };
   });
   const outputLine = interpolate(frame, [195, 235], [0, 1], easeStandard);
   const outputArrow = interpolate(frame, [227, 239], [0, 1], easeStandard);
@@ -90,12 +110,9 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
             ...CARD_STYLE,
             left: 170,
             top: 355,
-            opacity: questionIn,
-            transform: `translateX(${interpolate(
-              questionIn,
-              [0, 1],
-              [-28, 0],
-            )}px)`,
+            opacity: inputs[0].card,
+            transform: `scale(${interpolate(inputs[0].card, [0, 1], [0.9, 1])})`,
+            transformOrigin: "center",
           }}
         >
           <div style={{ fontSize: 26, fontWeight: 800, color: SUBTLE }}>
@@ -118,12 +135,9 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
             ...CARD_STYLE,
             left: 170,
             top: 555,
-            opacity: contextIn,
-            transform: `translateX(${interpolate(
-              contextIn,
-              [0, 1],
-              [-28, 0],
-            )}px)`,
+            opacity: inputs[1].card,
+            transform: `scale(${interpolate(inputs[1].card, [0, 1], [0.9, 1])})`,
+            transformOrigin: "center",
           }}
         >
           <div style={{ fontSize: 26, fontWeight: 800, color: SUBTLE }}>
@@ -146,8 +160,9 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
             ...CARD_STYLE,
             left: 170,
             top: 755,
-            opacity: rulesIn,
-            transform: `translateX(${interpolate(rulesIn, [0, 1], [-28, 0])}px)`,
+            opacity: inputs[2].card,
+            transform: `scale(${interpolate(inputs[2].card, [0, 1], [0.9, 1])})`,
+            transformOrigin: "center",
           }}
         >
           <div style={{ fontSize: 26, fontWeight: 800, color: SUBTLE }}>
@@ -172,46 +187,46 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
           style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
         >
           <path
-            d="M590 420 C720 420 800 500 898 571"
+            d="M933 571 C800 500 720 420 640 420"
             fill="none"
             stroke={BLUE}
             strokeWidth="6"
             strokeLinecap="round"
             pathLength="1"
             strokeDasharray="1"
-            strokeDashoffset={1 - inputLines}
+            strokeDashoffset={1 - inputs[0].line}
           />
           <path
-            d="M590 620 L889 620"
+            d="M919 620 L640 620"
             fill="none"
             stroke={BLUE}
             strokeWidth="6"
             strokeLinecap="round"
             pathLength="1"
             strokeDasharray="1"
-            strokeDashoffset={1 - inputLines}
+            strokeDashoffset={1 - inputs[1].line}
           />
           <path
-            d="M590 820 C720 820 800 740 898 669"
+            d="M933 669 C800 740 720 820 640 820"
             fill="none"
             stroke={BLUE}
             strokeWidth="6"
             strokeLinecap="round"
             pathLength="1"
             strokeDasharray="1"
-            strokeDashoffset={1 - inputLines}
+            strokeDashoffset={1 - inputs[2].line}
           />
-          <g opacity={inputArrows} transform="translate(934 584) rotate(21)">
-            <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+          <g opacity={inputs[0].arrow} transform="translate(606 420)">
+            <path d="M0 0 L38 -20 L38 20 Z" fill={BLUE} />
           </g>
-          <g opacity={inputArrows} transform="translate(927 620)">
-            <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+          <g opacity={inputs[1].arrow} transform="translate(606 620)">
+            <path d="M0 0 L38 -20 L38 20 Z" fill={BLUE} />
           </g>
-          <g opacity={inputArrows} transform="translate(934 656) rotate(-21)">
-            <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
+          <g opacity={inputs[2].arrow} transform="translate(606 820)">
+            <path d="M0 0 L38 -20 L38 20 Z" fill={BLUE} />
           </g>
           <path
-            d="M1133 620 L1340 620"
+            d="M1141 620 L1330 620"
             fill="none"
             stroke={BLUE}
             strokeWidth="7"
@@ -220,7 +235,7 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
             strokeDasharray="1"
             strokeDashoffset={1 - outputLine}
           />
-          <g opacity={outputArrow} transform="translate(1360 620)">
+          <g opacity={outputArrow} transform="translate(1364 620)">
             <path d="M0 0 L-38 -21 L-38 21 Z" fill={BLUE} />
           </g>
         </svg>
