@@ -134,7 +134,7 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
               marginTop: 10,
               fontSize: 38,
               fontWeight: 900,
-              color: BLUE,
+              color: TEXT_DARK,
             }}
           >
             Context
@@ -158,7 +158,7 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
               marginTop: 12,
               fontSize: 38,
               fontWeight: 900,
-              color: BLUE,
+              color: TEXT_DARK,
             }}
           >
             AGENTS.md
@@ -171,9 +171,36 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
           viewBox="0 0 1920 1080"
           style={{ position: "absolute", inset: 0, pointerEvents: "none" }}
         >
-          <path d="M590 420 C720 420 800 500 898 571" fill="none" stroke={BLUE} strokeWidth="6" strokeLinecap="round" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - inputLines} />
-          <path d="M590 620 L889 620" fill="none" stroke={BLUE} strokeWidth="6" strokeLinecap="round" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - inputLines} />
-          <path d="M590 820 C720 820 800 740 898 669" fill="none" stroke={BLUE} strokeWidth="6" strokeLinecap="round" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - inputLines} />
+          <path
+            d="M590 420 C720 420 800 500 898 571"
+            fill="none"
+            stroke={BLUE}
+            strokeWidth="6"
+            strokeLinecap="round"
+            pathLength="1"
+            strokeDasharray="1"
+            strokeDashoffset={1 - inputLines}
+          />
+          <path
+            d="M590 620 L889 620"
+            fill="none"
+            stroke={BLUE}
+            strokeWidth="6"
+            strokeLinecap="round"
+            pathLength="1"
+            strokeDasharray="1"
+            strokeDashoffset={1 - inputLines}
+          />
+          <path
+            d="M590 820 C720 820 800 740 898 669"
+            fill="none"
+            stroke={BLUE}
+            strokeWidth="6"
+            strokeLinecap="round"
+            pathLength="1"
+            strokeDasharray="1"
+            strokeDashoffset={1 - inputLines}
+          />
           <g opacity={inputArrows} transform="translate(934 584) rotate(21)">
             <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
           </g>
@@ -183,9 +210,18 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
           <g opacity={inputArrows} transform="translate(934 656) rotate(-21)">
             <path d="M0 0 L-38 -20 L-38 20 Z" fill={BLUE} />
           </g>
-          <path d="M1133 620 L1340 620" fill="none" stroke={YELLOW} strokeWidth="7" strokeLinecap="round" pathLength="1" strokeDasharray="1" strokeDashoffset={1 - outputLine} />
+          <path
+            d="M1133 620 L1340 620"
+            fill="none"
+            stroke={BLUE}
+            strokeWidth="7"
+            strokeLinecap="round"
+            pathLength="1"
+            strokeDasharray="1"
+            strokeDashoffset={1 - outputLine}
+          />
           <g opacity={outputArrow} transform="translate(1360 620)">
-            <path d="M0 0 L-38 -21 L-38 21 Z" fill={YELLOW} />
+            <path d="M0 0 L-38 -21 L-38 21 Z" fill={BLUE} />
           </g>
         </svg>
 
@@ -233,12 +269,12 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
             fontSize: 40,
             fontWeight: 900,
             color: TEXT_DARK,
-            backgroundColor: withAlpha(YELLOW, 0.1),
-            border: `3px solid ${withAlpha(YELLOW, 0.7)}`,
+            backgroundColor: withAlpha(WHITE, 1),
+            border: `3px solid ${withAlpha(CARD_BORDER, 0.8)}`,
           }}
         >
           符合
-          <span style={{ color: YELLOW, margin: "0 10px" }}>專案規則</span>
+          <span style={{ color: YELLOW, margin: "0 10px" }}>脈絡、規範</span>
           的回答
         </div>
       </AbsoluteFill>

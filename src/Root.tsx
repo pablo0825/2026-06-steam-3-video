@@ -68,7 +68,6 @@ import { Ch3Page4S09ContextLimit01 } from "./scenes/03-程式實作/Ch3Page4S09C
 import { Ch3Page4S09ContextLimit02 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-02";
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
 import { Ch3Page5S12AgentsFlow } from "./scenes/03-程式實作/Ch3Page5S12AgentsFlow";
-import { Ch3Page5S13AgentsDemo } from "./scenes/03-程式實作/Ch3Page5S13AgentsDemo";
 import { Ch3Page6S14SpecDefinition } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition";
 import { Ch3Page6S14SpecWorkflow } from "./scenes/03-程式實作/Ch3Page6S14SpecWorkflow";
 import { Ch3Page6S15SpecStructure } from "./scenes/03-程式實作/Ch3Page6S15SpecStructure";
@@ -688,14 +687,6 @@ export const RemotionRoot: React.FC = () => {
         id="Ch3-Page5-S12-AgentsFlow"
         component={Ch3Page5S12AgentsFlow}
         durationInFrames={360}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Ch3-Page5-S13-AgentsDemo"
-        component={Ch3Page5S13AgentsDemo}
-        durationInFrames={180}
         fps={30}
         width={1920}
         height={1080}

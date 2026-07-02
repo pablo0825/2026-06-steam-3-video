@@ -9,9 +9,7 @@ import {
 //   之後留約 1 秒停留，再於 [140,168] 淡出。
 const SEGMENTS: DefinitionSegment[] = [
   { text: "讓 AI 不會忘記，你的" },
-  { text: "專案需求", highlight: true },
-  { text: "與" },
-  { text: "協作規則", highlight: true },
+  { text: "所有要求", highlight: true },
 ];
 
 export const Ch3Page5S11AgentsDefinition: React.FC = () => (
