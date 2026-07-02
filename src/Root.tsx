@@ -34,20 +34,15 @@ import { Ch2Page1S03KnowledgeNav04 } from "./scenes/02-遊戲設計/Ch2Page1S03K
 import { Ch2Page2S04Constraint } from "./scenes/02-遊戲設計/Ch2Page2S04Constraint";
 import { Ch2Page2S05GameJam } from "./scenes/02-遊戲設計/Ch2Page2S05GameJam";
 import { Ch2Page2S06Question } from "./scenes/02-遊戲設計/Ch2Page2S06Question";
-import { Ch2Page3S07RhythmDoctor } from "./scenes/02-遊戲設計/Ch2Page3S07RhythmDoctor";
 import { Ch2Page3S07RhythmDoctorOverlay } from "./scenes/02-遊戲設計/Ch2Page3S07RhythmDoctorOverlay";
-import { Ch2Page3S08Limit } from "./scenes/02-遊戲設計/Ch2Page3S08Limit";
 import { Ch2Page3S08LimitOverlay } from "./scenes/02-遊戲設計/Ch2Page3S08LimitOverlay";
 import { Ch2Page3S09ConstraintMethod } from "./scenes/02-遊戲設計/Ch2Page3S09ConstraintMethod";
 import { Ch2Page4S10CorePlay } from "./scenes/02-遊戲設計/Ch2Page4S10CorePlay";
-import { Ch2Page4S11Celeste } from "./scenes/02-遊戲設計/Ch2Page4S11Celeste";
 import { Ch2Page4S11CelesteOverlay } from "./scenes/02-遊戲設計/Ch2Page4S11CelesteOverlay";
-import { Ch2Page4S12Actions } from "./scenes/02-遊戲設計/Ch2Page4S12Actions";
 import { Ch2Page4S12ActionsOverlay } from "./scenes/02-遊戲設計/Ch2Page4S12ActionsOverlay";
 import { Ch2Page5S13CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5S13CoreLoop";
 import { Ch2Page5S14LoopFramework } from "./scenes/02-遊戲設計/Ch2Page5S14LoopFramework";
 import { Ch2Page5S15MonsterLoop } from "./scenes/02-遊戲設計/Ch2Page5S15MonsterLoop";
-import { Ch2Page6S16CelesteVideo } from "./scenes/02-遊戲設計/Ch2Page6S16CelesteVideo";
 import { Ch2Page6S17CelesteLoop } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop";
 import { Ch2Page7S18StoryboardIntro } from "./scenes/02-遊戲設計/Ch2Page7S18StoryboardIntro";
 import { Ch2Page7S19Examples } from "./scenes/02-遊戲設計/Ch2Page7S19Examples";
@@ -397,14 +392,6 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page3-S07-RhythmDoctor"
-        component={Ch2Page3S07RhythmDoctor}
-        durationInFrames={150}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
         id="Ch2-Page3-S07-RhythmDoctor-Overlay"
         component={Ch2Page3S07RhythmDoctorOverlay}
         durationInFrames={150}
@@ -412,14 +399,6 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
-      />
-      <Composition
-        id="Ch2-Page3-S08-Limit"
-        component={Ch2Page3S08Limit}
-        durationInFrames={339}
-        fps={30}
-        width={1920}
-        height={1080}
       />
       <Composition
         id="Ch2-Page3-S08-Limit-Overlay"
@@ -447,14 +426,6 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch2-Page4-S11-Celeste"
-        component={Ch2Page4S11Celeste}
-        durationInFrames={272}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
         id="Ch2-Page4-S11-Celeste-Overlay"
         component={Ch2Page4S11CelesteOverlay}
         durationInFrames={272}
@@ -462,14 +433,6 @@ export const RemotionRoot: React.FC = () => {
         width={1920}
         height={1080}
         calculateMetadata={calculateAlphaOverlayMetadata}
-      />
-      <Composition
-        id="Ch2-Page4-S12-Actions"
-        component={Ch2Page4S12Actions}
-        durationInFrames={208}
-        fps={30}
-        width={1920}
-        height={1080}
       />
       <Composition
         id="Ch2-Page4-S12-Actions-Overlay"
@@ -500,14 +463,6 @@ export const RemotionRoot: React.FC = () => {
         id="Ch2-Page5-S15-MonsterLoop"
         component={Ch2Page5S15MonsterLoop}
         durationInFrames={650}
-        fps={30}
-        width={1920}
-        height={1080}
-      />
-      <Composition
-        id="Ch2-Page6-S16-CelesteVideo"
-        component={Ch2Page6S16CelesteVideo}
-        durationInFrames={252}
         fps={30}
         width={1920}
         height={1080}
