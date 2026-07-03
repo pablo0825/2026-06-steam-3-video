@@ -56,7 +56,8 @@ import { Ch3Page1S03KnowledgeNav } from "./scenes/03-程式實作/Ch3Page1S03Kno
 import { Ch3Page1S03KnowledgeNav2 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-2";
 import { Ch3Page1S03KnowledgeNav3 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-3";
 import { Ch3Page1S03KnowledgeNav4 } from "./scenes/03-程式實作/Ch3Page1S03KnowledgeNav-4";
-import { Ch3Page2S04UserStory } from "./scenes/03-程式實作/Ch3Page2S04UserStory";
+import { Ch3Page2S04UserStory01 } from "./scenes/03-程式實作/Ch3Page2S04UserStory-01";
+import { Ch3Page2S04UserStory02 } from "./scenes/03-程式實作/Ch3Page2S04UserStory-02";
 import { Ch3Page2S05Format } from "./scenes/03-程式實作/Ch3Page2S05Format";
 import { Ch3Page3S06RhythmDoctorOverlay } from "./scenes/03-程式實作/Ch3Page3S06RhythmDoctorOverlay";
 import { Ch3Page3S07UserStoryOverlay01 } from "./scenes/03-程式實作/Ch3Page3S07UserStoryOverlay-01";
@@ -574,9 +575,17 @@ export const RemotionRoot: React.FC = () => {
         height={1080}
       />
       <Composition
-        id="Ch3-Page2-S04-UserStory"
-        component={Ch3Page2S04UserStory}
+        id="Ch3-Page2-S04-UserStory-01"
+        component={Ch3Page2S04UserStory01}
         durationInFrames={360}
+        fps={30}
+        width={1920}
+        height={1080}
+      />
+      <Composition
+        id="Ch3-Page2-S04-UserStory-02"
+        component={Ch3Page2S04UserStory02}
+        durationInFrames={410}
         fps={30}
         width={1920}
         height={1080}

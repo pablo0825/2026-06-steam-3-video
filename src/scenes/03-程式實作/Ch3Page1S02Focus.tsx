@@ -14,6 +14,6 @@ export const Ch3Page1S02Focus: React.FC = () => (
     firstFrame={52}
     step={32}
     inRange={[24, 44]}
-    outRange={[242, 264]}
+    outRange={[242, 262]}
   />
 );

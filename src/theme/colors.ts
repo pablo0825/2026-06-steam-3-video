@@ -16,6 +16,9 @@ export const CAT_CODE = "#3B82C4"; // 程式
 export const CAT_PLAN = "#E8A33D"; // 企劃
 export const CAT_ART = "#D9645F"; // 美術
 
+// ── 插畫 / 圖形 ────────────────────────────────────────
+export const FIGURE = "#8593a8"; // 人像剪影（冷調石板灰）
+
 // ── 純色 ──────────────────────────────────────────────
 export const WHITE = "#ffffff";
 export const BLACK = "#000000"; // 影片框底色
