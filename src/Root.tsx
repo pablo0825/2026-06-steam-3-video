@@ -67,7 +67,8 @@ import { Ch3Page4S09ContextLimit01 } from "./scenes/03-程式實作/Ch3Page4S09C
 import { Ch3Page4S09ContextLimit02 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-02";
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
 import { Ch3Page5S12AgentsFlow } from "./scenes/03-程式實作/Ch3Page5S12AgentsFlow";
-import { Ch3Page6S14SpecDefinition } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition";
+import { Ch3Page6S14SpecDefinition01 } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition-01";
+import { Ch3Page6S14SpecDefinition02 } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition-02";
 import { Ch3Page6S14SpecWorkflow } from "./scenes/03-程式實作/Ch3Page6S14SpecWorkflow";
 import { Ch3Page6S15SpecStructure } from "./scenes/03-程式實作/Ch3Page6S15SpecStructure";
 import { Ch3Page7S16CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S16CelesteSpecOverlay";
@@ -690,9 +691,17 @@ export const RemotionRoot: React.FC = () => {
         </Folder>
         <Folder name="k4">
           <Composition
-            id="Ch3-Page6-S14-SpecDefinition"
-            component={Ch3Page6S14SpecDefinition}
+            id="Ch3-Page6-S14-SpecDefinition-01"
+            component={Ch3Page6S14SpecDefinition01}
             durationInFrames={180}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Ch3-Page6-S14-SpecDefinition-02"
+            component={Ch3Page6S14SpecDefinition02}
+            durationInFrames={384}
             fps={30}
             width={1920}
             height={1080}
