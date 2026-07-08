@@ -9,6 +9,7 @@ import {
 } from "./CoreLoopDiagram";
 
 // 第 2 集・第 5 頁・S15-02：打怪遊戲核心循環（650 幀，無標題、迴圈位置對齊 S14）
+const OPENING_IN = [0, 24] as const; // 開場整體淡入
 const EXAMPLE_START = [46, 166, 286, 406] as const;
 const HL_RAMP = 16; // 高亮淡入／淡出幀數
 const HL_HOLD = 110; // 高亮停留（起點→開始淡出）；與下一個交疊成行進脈衝
@@ -23,7 +24,9 @@ const NODES: CoreLoopNodeData[] = [
 
 export const Ch2Page5S15MonsterLoop02: React.FC = () => {
   const frame = useCurrentFrame();
-  const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
+  const opacity =
+    interpolate(frame, OPENING_IN, [0, 1], clamp) *
+    interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
   // 行進脈衝：每個節點/箭頭高亮淡入→停留→淡出（先快後慢），彼此交疊繞行；
   // 最後一個也淡回原色。
