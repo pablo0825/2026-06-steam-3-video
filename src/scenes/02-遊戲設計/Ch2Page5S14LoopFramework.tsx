@@ -6,18 +6,17 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { NEUTRAL_50, TEXT_DARK } from "../../theme/colors";
-import { FONT, clamp, easeStandard } from "../../theme/motion";
+import { NEUTRAL_50 } from "../../theme/colors";
+import { FONT, easeStandard } from "../../theme/motion";
 import {
   CORE_LOOP_ARROW_PATHS,
   CoreLoopDiagram,
   type CoreLoopNodeData,
 } from "./CoreLoopDiagram";
 
-// 第 2 集・第 5 頁・S14：核心循環框架建立（234 幀）
+// 第 2 集・第 5 頁・S14：核心循環框架建立（234 幀，結尾不淡出、保持原樣到最後）
 const NODE_START = [48, 84, 120, 156] as const;
 const ARROW_START = [72, 108, 144, 180] as const;
-const CONTENT_OUT = [210, 233] as const;
 
 const NODES: CoreLoopNodeData[] = [
   { label: "動作", example: "打怪・解謎", icon: "action" },
@@ -29,27 +28,10 @@ const NODES: CoreLoopNodeData[] = [
 export const Ch2Page5S14LoopFramework: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      <AbsoluteFill style={{ opacity }}>
-        <div
-          style={{
-            position: "absolute",
-            left: 960,
-            top: 112,
-            transform: "translateX(-50%)",
-            fontSize: 64,
-            fontWeight: 800,
-            letterSpacing: 5,
-            color: TEXT_DARK,
-            whiteSpace: "nowrap",
-          }}
-        >
-          核心循環
-        </div>
-
+      <AbsoluteFill style={{ transform: "translateY(-62px)" }}>
         <CoreLoopDiagram
           nodes={NODES}
           nodeProgress={NODE_START.map((start) =>

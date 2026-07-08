@@ -16,7 +16,7 @@ import {
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
-import { FONT, clamp, easeStandard } from "../../theme/motion";
+import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 import {
   CORE_LOOP_ARROW_PATHS,
   CoreLoopDiagram,
@@ -27,6 +27,8 @@ import {
 const NODE_START = [30, 60, 90, 120] as const;
 const ARROW_START = [48, 78, 108, 138] as const;
 const EXAMPLE_START = [198, 258, 318, 378] as const;
+const HL_RAMP = 14; // 高亮淡入／淡出幀數
+const HL_HOLD = 50; // 高亮停留（起點→開始淡出）；與下一個交疊成行進脈衝
 const SHIFT = [416, 454] as const;
 const COMPARE_IN = [450, 482] as const;
 const COMPARE_OUT = [506, 536] as const;
@@ -51,18 +53,17 @@ export const Ch2Page6S17CelesteLoop: React.FC = () => {
     interpolate(frame, [0, 28], [0, 1], clamp) *
     interpolate(frame, COMPARE_OUT, [1, 0], clamp);
   const titleY = interpolate(frame, [0, 28], [20, 0], easeStandard);
-  const activeIndex =
-    frame >= SHIFT[0]
-      ? -1
-      : frame >= EXAMPLE_START[3]
-        ? 3
-        : frame >= EXAMPLE_START[2]
-          ? 2
-          : frame >= EXAMPLE_START[1]
-            ? 1
-            : frame >= EXAMPLE_START[0]
-              ? 0
-              : -1;
+  // 行進脈衝：每個節點/箭頭高亮淡入→停留→淡出（先快後慢），彼此交疊繞行、結束回原色。
+  const highlight = EXAMPLE_START.map(
+    (start) =>
+      interpolate(frame, [start, start + HL_RAMP], [0, 1], easeOutExpo) *
+      interpolate(
+        frame,
+        [start + HL_HOLD, start + HL_HOLD + HL_RAMP],
+        [1, 0],
+        easeOutExpo,
+      ),
+  );
 
   const diagramScale = interpolate(frame, SHIFT, [1, 0.72], easeStandard);
   const diagramX = interpolate(frame, SHIFT, [0, -350], easeStandard);
@@ -122,7 +123,7 @@ export const Ch2Page6S17CelesteLoop: React.FC = () => {
                   easeStandard,
                 ),
               )}
-              activeIndex={activeIndex}
+              highlight={highlight}
               markerPrefix="page6-s17-loop-arrow"
               exampleFontSize={22}
             />

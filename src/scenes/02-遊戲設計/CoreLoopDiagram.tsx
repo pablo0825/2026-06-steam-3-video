@@ -1,7 +1,7 @@
 import React from "react";
 import { interpolate } from "remotion";
 import {
-  BORDER_LIGHT,
+  CARD_BORDER,
   SUBTLE,
   TEXT_DARK,
   WHITE,
@@ -17,11 +17,12 @@ export type CoreLoopNodeData = {
   icon: CoreLoopIconName;
 };
 
+// 迴圈四條邊（順時針）：值僅供各場景以 index 建立 arrowProgress 陣列。
 export const CORE_LOOP_ARROW_PATHS = [
-  "M 1070 385 C 1210 405, 1255 455, 1277 498",
-  "M 1288 694 C 1260 770, 1168 814, 1074 830",
-  "M 846 830 C 752 814, 665 772, 643 722",
-  "M 632 526 C 652 474, 705 408, 850 385",
+  [0, 1],
+  [1, 2],
+  [2, 3],
+  [3, 0],
 ] as const;
 
 const POSITIONS = [
@@ -30,6 +31,64 @@ const POSITIONS = [
   { x: 960, y: 850 },
   { x: 600, y: 610 },
 ] as const;
+
+// 迴圈中心（四節點形心），用來決定弧線往外凸的方向。
+const LOOP_CENTER = { x: 960, y: 605 };
+const NODE_TIP_R = 114; // 箭頭尖端落在圓邊外緣的半徑
+const ARROW_LEN = 24; // 箭頭三角形長度
+const ARROW_HW = 13; // 箭頭三角形半寬
+
+const unit = (x: number, y: number) => {
+  const m = Math.hypot(x, y) || 1;
+  return { x: x / m, y: y / m };
+};
+
+// 兩個 #rrggbb 色之間依 t（0..1）線性漸變，供高亮平滑過渡用。
+const lerpColor = (a: string, b: string, t: number) => {
+  const parse = (h: string) =>
+    [1, 3, 5].map((i) => parseInt(h.slice(i, i + 2), 16));
+  const ca = parse(a);
+  const cb = parse(b);
+  const m = ca.map((v, i) => Math.round(v + (cb[i] - v) * t));
+  return `rgb(${m[0]}, ${m[1]}, ${m[2]})`;
+};
+
+// 節點處的迴圈切線方向（順時針），線沿此方向離開／進入 → 平滑繞行不外凸。
+const travelDir = (p: { x: number; y: number }) => {
+  const o = unit(p.x - LOOP_CENTER.x, p.y - LOOP_CENTER.y);
+  return { x: -o.y, y: o.x };
+};
+
+// 依來源／目標節點座標計算一條沿迴圈切線平滑連接的弧線：
+//   自 S 沿切線離開、於 T 沿切線切入；線收在箭頭底部，箭頭順流向切進節點。
+const computeArrow = (s: number, t: number) => {
+  const S = POSITIONS[s];
+  const T = POSITIONS[t];
+  const dirExit = travelDir(S);
+  const dirEnter = travelDir(T);
+
+  const p0 = {
+    x: S.x + NODE_TIP_R * dirExit.x,
+    y: S.y + NODE_TIP_R * dirExit.y,
+  };
+  const tip = {
+    x: T.x - NODE_TIP_R * dirEnter.x,
+    y: T.y - NODE_TIP_R * dirEnter.y,
+  };
+  const angle = (Math.atan2(dirEnter.y, dirEnter.x) * 180) / Math.PI;
+  const base = {
+    x: tip.x - ARROW_LEN * dirEnter.x,
+    y: tip.y - ARROW_LEN * dirEnter.y,
+  };
+
+  const k = 0.5 * Math.hypot(base.x - p0.x, base.y - p0.y);
+  const c1 = { x: p0.x + k * dirExit.x, y: p0.y + k * dirExit.y };
+  const c2 = { x: base.x - k * dirEnter.x, y: base.y - k * dirEnter.y };
+  const path = `M ${p0.x.toFixed(1)} ${p0.y.toFixed(1)} C ${c1.x.toFixed(1)} ${c1.y.toFixed(1)}, ${c2.x.toFixed(1)} ${c2.y.toFixed(1)}, ${base.x.toFixed(1)} ${base.y.toFixed(1)}`;
+  return { path, tip, angle };
+};
+
+const ARROWS = CORE_LOOP_ARROW_PATHS.map(([s, t]) => computeArrow(s, t));
 
 const LoopIcon: React.FC<{ name: CoreLoopIconName; color: string }> = ({
   name,
@@ -86,7 +145,8 @@ export const CoreLoopDiagram: React.FC<{
   nodeProgress: number[];
   exampleProgress: number[];
   arrowProgress: number[];
-  activeIndex: number;
+  activeIndex?: number;
+  highlight?: number[]; // 每個 index 的高亮強度 0..1（優先於 activeIndex）
   markerPrefix: string;
   exampleFontSize?: number;
 }> = ({
@@ -94,10 +154,13 @@ export const CoreLoopDiagram: React.FC<{
   nodeProgress,
   exampleProgress,
   arrowProgress,
-  activeIndex,
-  markerPrefix,
+  activeIndex = -1,
+  highlight,
   exampleFontSize = 25,
 }) => {
+  // 每個 index 的高亮強度：優先用 highlight 陣列，否則退回 activeIndex（0/1）。
+  const hlAt = (i: number) =>
+    Math.max(0, Math.min(1, highlight?.[i] ?? (activeIndex === i ? 1 : 0)));
   return (
     <div style={{ position: "absolute", inset: 0 }}>
       <svg
@@ -106,60 +169,44 @@ export const CoreLoopDiagram: React.FC<{
         viewBox="0 0 1920 1080"
         style={{ position: "absolute", inset: 0, overflow: "visible" }}
       >
-        <defs>
-          {CORE_LOOP_ARROW_PATHS.flatMap((_, index) => [
-            <marker
-              key={`base-${index}`}
-              id={`${markerPrefix}-${index}-base`}
-              markerWidth="12"
-              markerHeight="12"
-              refX="10"
-              refY="6"
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              <path d="M0,0 L12,6 L0,12 Z" fill={BORDER_LIGHT} />
-            </marker>,
-            <marker
-              key={`active-${index}`}
-              id={`${markerPrefix}-${index}-active`}
-              markerWidth="12"
-              markerHeight="12"
-              refX="10"
-              refY="6"
-              orient="auto"
-              markerUnits="strokeWidth"
-            >
-              <path d="M0,0 L12,6 L0,12 Z" fill={YELLOW} />
-            </marker>,
-          ])}
-        </defs>
-
-        {CORE_LOOP_ARROW_PATHS.map((path, index) => {
-          const active = activeIndex === index;
+        {ARROWS.map((arrow, index) => {
+          const h = hlAt(index);
+          const color = lerpColor(CARD_BORDER, YELLOW, h);
+          const progress = arrowProgress[index];
+          const headOpacity = interpolate(progress, [0.82, 1], [0, 1], {
+            extrapolateLeft: "clamp",
+            extrapolateRight: "clamp",
+          });
           return (
-            <path
-              key={path}
-              d={path}
-              pathLength={1}
-              fill="none"
-              stroke={active ? YELLOW : BORDER_LIGHT}
-              strokeWidth={active ? 8 : 6}
-              strokeLinecap="round"
-              strokeDasharray={1}
-              strokeDashoffset={1 - arrowProgress[index]}
-              markerEnd={`url(#${markerPrefix}-${index}-${active ? "active" : "base"})`}
-              opacity={arrowProgress[index]}
-            />
+            <g key={index}>
+              <path
+                d={arrow.path}
+                pathLength={1}
+                fill="none"
+                stroke={color}
+                strokeWidth={6 + 2 * h}
+                strokeLinecap="round"
+                strokeDasharray={1}
+                strokeDashoffset={1 - progress}
+                opacity={progress}
+              />
+              <path
+                d={`M0 0 L ${-ARROW_LEN} ${-ARROW_HW} L ${-ARROW_LEN} ${ARROW_HW} Z`}
+                fill={color}
+                opacity={headOpacity}
+                transform={`translate(${arrow.tip.x} ${arrow.tip.y}) rotate(${arrow.angle})`}
+              />
+            </g>
           );
         })}
       </svg>
 
       {nodes.map((node, index) => {
-        const active = activeIndex === index;
+        const h = hlAt(index);
         const progress = nodeProgress[index];
         const position = POSITIONS[index];
-        const scale = interpolate(progress, [0, 1], [0.82, active ? 1.04 : 1]);
+        const scale = interpolate(progress, [0, 1], [0.82, 1 + 0.04 * h]);
+        const accent = lerpColor(SUBTLE, YELLOW, h);
 
         return (
           <div
@@ -174,10 +221,11 @@ export const CoreLoopDiagram: React.FC<{
               opacity: progress,
               borderRadius: "50%",
               backgroundColor: WHITE,
-              border: `4px solid ${active ? YELLOW : BORDER_LIGHT}`,
-              boxShadow: active
-                ? `0 18px 44px ${withAlpha(YELLOW, 0.2)}`
-                : `0 12px 30px ${withAlpha(TEXT_DARK, 0.08)}`,
+              border: `4px solid ${lerpColor(CARD_BORDER, YELLOW, h)}`,
+              boxShadow: `0 ${12 + 6 * h}px ${30 + 14 * h}px ${withAlpha(
+                lerpColor(TEXT_DARK, YELLOW, h),
+                0.08 + 0.12 * h,
+              )}`,
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -186,10 +234,7 @@ export const CoreLoopDiagram: React.FC<{
               zIndex: 2,
             }}
           >
-            <LoopIcon
-              name={node.icon}
-              color={active ? YELLOW : SUBTLE}
-            />
+            <LoopIcon name={node.icon} color={accent} />
             <div
               style={{
                 fontSize: 42,
@@ -209,7 +254,7 @@ export const CoreLoopDiagram: React.FC<{
                 lineHeight: 1.2,
                 fontWeight: 700,
                 letterSpacing: 1,
-                color: active ? YELLOW : SUBTLE,
+                color: accent,
                 opacity: exampleProgress[index],
                 transform: `translateY(${interpolate(
                   exampleProgress[index],
