@@ -8,7 +8,6 @@ import {
 } from "remotion";
 import {
   BLACK,
-  BORDER_LIGHT,
   NEUTRAL_50,
   TEXT_DARK,
   WHITE,
@@ -26,9 +25,9 @@ const CONTENT_OUT = [206, 229] as const;
 const END_FILL = [206, 229] as const;
 
 const ACTIONS = [
-  { emoji: "⬆️", label: "跳躍" },
-  { emoji: "🧗", label: "攀牆" },
-  { emoji: "💨", label: "衝刺" },
+  { emoji: "⬆️", label: "跳躍", count: 24 },
+  { emoji: "🧗", label: "攀牆", count: 17 },
+  { emoji: "💨", label: "衝刺", count: 21 },
 ] as const;
 
 export const Ch2Page4S12ActionsOverlay: React.FC = () => {
@@ -127,9 +126,9 @@ export const Ch2Page4S12ActionsOverlay: React.FC = () => {
               padding: "20px 58px",
               boxSizing: "border-box",
               borderRadius: 22,
-              backgroundColor: withAlpha(WHITE, 0.94),
-              border: `2px solid ${withAlpha(BORDER_LIGHT, 0.9)}`,
-              boxShadow: `0 18px 46px ${withAlpha(BLACK, 0.22)}`,
+              backgroundColor: withAlpha(NEUTRAL_50, 0.85),
+              border: `2px solid ${withAlpha(WHITE, 0.55)}`,
+              boxShadow: `0 18px 46px ${withAlpha(BLACK, 0.32)}`,
             }}
           >
             <div
@@ -155,6 +154,19 @@ export const Ch2Page4S12ActionsOverlay: React.FC = () => {
               }}
             >
               {action.label}
+            </div>
+            <div
+              style={{
+                flexShrink: 0,
+                marginLeft: 24,
+                fontSize: 44,
+                fontWeight: 800,
+                letterSpacing: 1,
+                color: YELLOW,
+                whiteSpace: "nowrap",
+              }}
+            >
+              ×{action.count}
             </div>
           </div>
         );
