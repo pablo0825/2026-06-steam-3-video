@@ -352,30 +352,6 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
-            id="Ch2-Page1-S03-KnowledgeNav-02"
-            component={Ch2Page1S03KnowledgeNav02}
-            durationInFrames={300}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
-            id="Ch2-Page1-S03-KnowledgeNav-03"
-            component={Ch2Page1S03KnowledgeNav03}
-            durationInFrames={300}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
-            id="Ch2-Page1-S03-KnowledgeNav-04"
-            component={Ch2Page1S03KnowledgeNav04}
-            durationInFrames={300}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
             id="Ch2-Page2-S04-Constraint"
             component={Ch2Page2S04Constraint}
             durationInFrames={270}
@@ -411,7 +387,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch2-Page3-S08-Limit-Overlay"
             component={Ch2Page3S08LimitOverlay}
-            durationInFrames={339}
+            durationInFrames={480}
             fps={30}
             width={1920}
             height={1080}
@@ -427,6 +403,14 @@ export const RemotionRoot: React.FC = () => {
           />
         </Folder>
         <Folder name="k2">
+          <Composition
+            id="Ch2-Page1-S03-KnowledgeNav-02"
+            component={Ch2Page1S03KnowledgeNav02}
+            durationInFrames={300}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
           <Composition
             id="Ch2-Page4-S10-CorePlay"
             component={Ch2Page4S10CorePlay}
@@ -455,6 +439,14 @@ export const RemotionRoot: React.FC = () => {
           />
         </Folder>
         <Folder name="k3">
+          <Composition
+            id="Ch2-Page1-S03-KnowledgeNav-03"
+            component={Ch2Page1S03KnowledgeNav03}
+            durationInFrames={300}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
           <Composition
             id="Ch2-Page5-S13-CoreLoop"
             component={Ch2Page5S13CoreLoop}
@@ -489,6 +481,14 @@ export const RemotionRoot: React.FC = () => {
           />
         </Folder>
         <Folder name="k4">
+          <Composition
+            id="Ch2-Page1-S03-KnowledgeNav-04"
+            component={Ch2Page1S03KnowledgeNav04}
+            durationInFrames={300}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
           <Composition
             id="Ch2-Page7-S18-StoryboardIntro"
             component={Ch2Page7S18StoryboardIntro}

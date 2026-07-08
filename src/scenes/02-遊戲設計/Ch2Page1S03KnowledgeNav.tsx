@@ -16,11 +16,14 @@ const TAGS = ["限制設計", "核心玩法", "核心循環", "Storyboard"] as c
 const TAG_STEP = 24;
 const TAG_FIRST = OPENING_HOLD + 38;
 const HILITE = [OPENING_HOLD + 186, OPENING_HOLD + 218] as const;
+const ENDING_FADE = [270, 296] as const; // 於最後一格前完成淡出（300 幀的最後格為 299）
 
 export const Ch2Page1S03KnowledgeNav: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const opacity = interpolate(frame, CONTENT_IN, [0, 1], clamp);
+  const opacity =
+    interpolate(frame, CONTENT_IN, [0, 1], clamp) *
+    interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>

@@ -16,7 +16,7 @@ const TAG_FIRST = 72;
 const TAG_STEP = 24;
 const HIGHLIGHT = [50, 90] as const;
 const OPENING_FADE = [0, 20] as const;
-const ENDING_FADE = [245, 269] as const;
+const ENDING_FADE = [242, 266] as const; // 提前於最後一格前完成淡出（f=frame-30；300 幀最後格 299）
 
 export const Ch2Page1S03KnowledgeNav04: React.FC = () => {
   const frame = useCurrentFrame();

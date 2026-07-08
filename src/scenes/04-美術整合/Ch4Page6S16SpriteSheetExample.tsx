@@ -12,7 +12,7 @@ import { FONT, clamp } from "../../theme/motion";
 // 第 4 集・第 6 頁・S16：Sprite Sheet 範例（角色動畫／物件／UI）（350 幀）
 //   全螢幕看圖模式：黑底淡入 → 一次一張滿版大圖輪播（留白填黑）→ 結尾淡出回米白。
 //   上方黑帶放標籤、下方黑帶放進度點＋固定免責標示，避免蓋住素材。
-const ENDING_FADE = [320, 350] as const;
+const ENDING_FADE = [314, 344] as const; // 於最後一格前完成淡出（350 幀的最後格為 349）
 
 // pixelated：放大時保持像素清晰；角色圖原圖較大(1024²)為縮小顯示，用 auto 平滑即可。
 // w/h：原圖尺寸，用來精算 contain 後的實際顯示大小（白底要剛好等於圖片）。
