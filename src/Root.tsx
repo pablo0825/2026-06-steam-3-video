@@ -483,7 +483,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch2-Page6-S17-CelesteLoop"
             component={Ch2Page6S17CelesteLoop}
-            durationInFrames={588}
+            durationInFrames={620}
             fps={30}
             width={1920}
             height={1080}
