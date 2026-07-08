@@ -1,7 +1,7 @@
 import React from "react";
 import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
 import { BLACK, NEUTRAL_50, WHITE, withAlpha } from "../../theme/colors";
-import { FONT, clamp, easeStandard } from "../../theme/motion";
+import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
 // 第 2 集・第 3 頁・S08：節奏醫生限制說明透明 Overlay（480 幀）
 //   資訊區：兩段大小標題原地替換（cross-fade）＋下方 7 個圓點＝7 拍。
@@ -19,8 +19,9 @@ const MESSAGES = [
   { big: "集中注意力", small: "專注在節拍與時機上" },
 ] as const;
 const MSG1_IN = [138, 168] as const;
-const MSG1_OUT = [258, 282] as const;
-const MSG2_IN = [286, 314] as const;
+const MSG1_OUT = [258, 288] as const;
+const MSG2_IN = [290, 320] as const; // 第一段淡出結束後才升入，兩段時間不重疊
+const MSG_SHIFT = 90; // 切換時的垂直位移（第一段往上走、第二段自下方升入）
 
 // 圓點節奏（貫穿兩段、持續循環）
 const DOTS = 7;
@@ -43,11 +44,15 @@ export const Ch2Page3S08LimitOverlay: React.FC = () => {
   const infoOut = interpolate(frame, INFO_OUT, [1, 0], clamp);
   const dotsIn = interpolate(frame, DOTS_IN, [0, 1], clamp);
 
-  // 兩段訊息的顯示透明度（原地 cross-fade）
+  // 兩段訊息的顯示透明度（cross-fade）與垂直位移（往上切換）
   const msgEnv = [
     interpolate(frame, MSG1_IN, [0, 1], clamp) *
       interpolate(frame, MSG1_OUT, [1, 0], clamp),
     interpolate(frame, MSG2_IN, [0, 1], clamp),
+  ];
+  const msgTy = [
+    interpolate(frame, MSG1_OUT, [0, -MSG_SHIFT], easeStandard), // 第一段往上離開
+    interpolate(frame, MSG2_IN, [MSG_SHIFT, 0], easeOutExpo), // 第二段自下方升到定點
   ];
 
   // 圓點播放頭（持續循環）；frame < DOT_START 時維持暗色軌
@@ -118,7 +123,7 @@ export const Ch2Page3S08LimitOverlay: React.FC = () => {
                 position: "absolute",
                 left: "50%",
                 top: 0,
-                transform: "translateX(-50%)",
+                transform: `translateX(-50%) translateY(${msgTy[i]}px)`,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
