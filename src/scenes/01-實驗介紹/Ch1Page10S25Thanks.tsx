@@ -12,7 +12,7 @@ import { BLACK, NEUTRAL_50, SUBTLE, TEXT_DARK, withAlpha } from "../../theme/col
 import { FONT, clamp } from "../../theme/motion";
 
 // 第 1 集・第 10 頁・S25：感謝聆聽（90 幀，依既有實作節奏）
-const CONTENT_OUT = [70, 90] as const;
+const CONTENT_OUT = [70, 89] as const;
 const HOST_PHOTO = staticFile("01-實驗介紹/host-yujia.jpg");
 
 export const Ch1Page10S25Thanks: React.FC = () => {

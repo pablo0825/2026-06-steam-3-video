@@ -4,7 +4,7 @@ import { BLUE, NEUTRAL_300, NEUTRAL_50, SUBTLE, TEXT_DARK } from "../../theme/co
 import { FONT, clamp } from "../../theme/motion";
 
 // 第 1 集・第 10 頁・S26：製作團隊與素材來源上捲（480 幀，依既有實作節奏）
-const CONTENT_OUT = [450, 480] as const;
+const CONTENT_OUT = [450, 479] as const;
 const SCROLL_END = 450;
 const SCROLL_DISTANCE = 3000;
 const FS_TITLE = 60;

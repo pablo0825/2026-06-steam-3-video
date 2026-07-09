@@ -26,7 +26,7 @@ import { FONT, clamp, easeStandard } from "../../theme/motion";
 // 第 1 集・第 4 頁・S11：想驗證的核心玩法問題（430 幀）
 const VIDEO = staticFile("01-實驗介紹/prototype-demo.mp4");
 const VIDEO_VOLUME = 0.25;
-const CONTENT_OUT = [408, 430] as const;
+const CONTENT_OUT = [408, 429] as const;
 const VIDEO_HEIGHT = 900;
 const VIDEO_WIDTH = Math.round((VIDEO_HEIGHT * 714) / 1270);
 const VIDEO_Y = 565;

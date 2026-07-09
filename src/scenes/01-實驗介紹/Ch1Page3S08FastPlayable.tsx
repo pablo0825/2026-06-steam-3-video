@@ -10,7 +10,7 @@ import { BLACK, BLUE, NEUTRAL_50, SUBTLE, TEXT_DARK, WHITE, withAlpha, YELLOW } 
 import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
 // 第 1 集・第 3 頁・S08：最快的方法做出可玩版本（180 幀）
-const CONTENT_OUT = [160, 180] as const;
+const CONTENT_OUT = [160, 179] as const;
 const LEFT = { x: 360, y: 520 };
 const RIGHT = { x: 1560, y: 520 };
 const NODE_R = 92;

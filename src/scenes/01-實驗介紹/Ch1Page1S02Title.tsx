@@ -15,7 +15,7 @@ import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 const LOGO = staticFile("知點LOGO_FIN-03.png");
 const TITLE_START = 30;
 const SUB_START = 56;
-const CONTENT_OUT = [132, 150] as const;
+const CONTENT_OUT = [132, 149] as const;
 const SUBTITLE = "用 AI 開發遊戲原型";
 
 export const Ch1Page1S02Title: React.FC = () => {
