@@ -9,20 +9,29 @@ import {
 import {
   BLACK,
   BLUE,
+  CARD_BORDER,
   CAT_ART,
   CAT_CODE,
   CAT_PLAN,
+  DOT_RED,
+  GREEN,
   NEUTRAL_50,
+  NEUTRAL_200,
+  NEUTRAL_400,
+  SUBTLE,
   TEXT_DARK,
   WHITE,
+  WINDOW_BAR,
+  YELLOW,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
-// 第 1 集・第 2 頁・S03：AI → 程式/企劃/美術 → 聚合成可遊玩的遊戲原型（330 幀）
+// 第 1 集・第 2 頁・S03：AI → 程式/企劃/美術 → 聚合成可以玩的遊戲原型（330 幀）
 //   原本被拆成 S03(AI 出現)/S04(連三領域)/S05(聚合) 三顆，此處合併回單一連續鏡頭：
-//   AI 置中彈入 → 上移到上方 → 線往下連三領域 → 三領域聚合到中央成 🎮。
-const CONTENT_OUT = [315, 329] as const;
+//   AI 置中彈入 → 上移到上方 → 線往下連三領域 → 三領域聚合淡出、視窗成形，
+//   視窗內角色跳過兩個平台抵達終點（迷你遊戲原型），下方出「可以玩的遊戲原型」。
+const CONTENT_OUT = [325, 329] as const;
 
 const AI_X = 960;
 const AI_Y_CENTER = 540;
@@ -37,7 +46,36 @@ const CENTER = { x: 960, y: 540 };
 const AI_MOVE = [48, 78] as const;
 // 三領域聚合
 const CONVERGE = [210, 258] as const;
-const HUB_START = 245;
+
+// 第三拍：視窗內迷你跳關（視窗成形 → 角色跳兩平台到終點）
+const WIN_START = 232;
+const WIN_LEFT = 440;
+const WIN_TOP = 200;
+const WIN_W = 1040;
+const TITLE_H = 56;
+const CANVAS_H = 520;
+const FLOOR_Y = 440; // 地板頂面（canvas 座標）
+const CHAR_W = 56;
+const CHAR_H = 84;
+const JUMP_H = 90;
+// 平台（canvas 座標）：A、B、終點 C
+const PLATFORMS = [
+  { x: 290, y: 350, w: 150 },
+  { x: 545, y: 265, w: 150 },
+  { x: 800, y: 180, w: 170 },
+] as const;
+// 落點（角色底部中心，canvas 座標）
+const W0 = { x: 150, y: FLOOR_Y };
+const WP = [
+  { x: 365, y: 350 },
+  { x: 620, y: 265 },
+  { x: 885, y: 180 },
+] as const;
+const HOPS = [
+  { from: W0, to: WP[0], t0: 256, t1: 270 },
+  { from: WP[0], to: WP[1], t0: 272, t1: 286 },
+  { from: WP[1], to: WP[2], t0: 288, t1: 302 },
+] as const;
 
 type Domain = {
   label: string;
@@ -71,15 +109,43 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
   const converge = interpolate(frame, CONVERGE, [0, 1], easeStandard);
   const lineFade = interpolate(frame, [210, 228], [1, 0], clamp);
 
-  // 🎮 hub。
-  const hubScale = spring({
-    frame: frame - HUB_START,
+  // 第三拍：視窗成形、角色跳關、旗子升起、下方標籤。
+  const winSpring = spring({
+    frame: frame - WIN_START,
     fps,
-    config: { damping: 10, stiffness: 120 },
+    config: { damping: 16, stiffness: 110 },
   });
-  const hubVisible = frame >= HUB_START;
-  const pulse = hubVisible ? 0.55 + 0.45 * Math.sin((frame - HUB_START) / 12) : 0;
-  const labelProgress = interpolate(frame, [HUB_START + 12, HUB_START + 30], [0, 1], clamp);
+  const winVisible = frame >= WIN_START - 2;
+  const winTitle = interpolate(frame, [248, 264], [0, 1], easeOutExpo);
+  const flagRaise = interpolate(frame, [300, 314], [0, 1], easeOutExpo);
+  const labelIn = interpolate(frame, [296, 314], [0, 1], easeOutExpo);
+
+  // 角色位置（逐段拋物線跳躍）＋落地壓扁。
+  let charX = W0.x;
+  let charBottom = W0.y;
+  let charSy = 1;
+  for (let i = 0; i < HOPS.length; i++) {
+    const h = HOPS[i];
+    if (frame >= h.t1) {
+      charX = h.to.x;
+      charBottom = h.to.y;
+    } else if (frame >= h.t0) {
+      const p = (frame - h.t0) / (h.t1 - h.t0);
+      charX = interpolate(p, [0, 1], [h.from.x, h.to.x]);
+      const baseY = interpolate(p, [0, 1], [h.from.y, h.to.y]);
+      charBottom = baseY - JUMP_H * Math.sin(Math.PI * p);
+      break;
+    } else {
+      charX = h.from.x;
+      charBottom = h.from.y;
+      break;
+    }
+  }
+  for (const h of HOPS) {
+    if (frame >= h.t1 && frame < h.t1 + 6) {
+      charSy = interpolate((frame - h.t1) / 6, [0, 1], [0.82, 1]);
+    }
+  }
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -207,50 +273,172 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
           );
         })}
 
-        {/* 聚合成 🎮 可遊玩的遊戲原型 */}
-        {hubVisible && (
+        {/* 第三拍：視窗（Ch4 風格）內的迷你跳關 */}
+        {winVisible && (
           <div
             style={{
               position: "absolute",
-              left: CENTER.x,
-              top: CENTER.y,
-              transform: `translate(-50%, -50%) scale(${hubScale})`,
+              left: WIN_LEFT,
+              top: WIN_TOP,
+              width: WIN_W,
+              background: WHITE,
+              border: `3px solid ${CARD_BORDER}`,
+              borderRadius: 22,
+              overflow: "hidden",
+              boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
+              opacity: winSpring,
+              transform: `scale(${interpolate(winSpring, [0, 1], [0.94, 1])})`,
+              transformOrigin: "center center",
             }}
           >
+            {/* 標題列：三色點 */}
             <div
               style={{
-                width: 260,
-                height: 260,
-                borderRadius: "50%",
-                background: WHITE,
-                border: `6px solid ${BLUE}`,
+                height: TITLE_H,
+                background: WINDOW_BAR,
+                borderBottom: `1px solid ${CARD_BORDER}`,
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontSize: 130,
-                boxShadow: `0 0 ${40 + pulse * 45}px ${withAlpha(BLUE, 0.22 + pulse * 0.25)}`,
+                gap: 10,
+                padding: "0 22px",
               }}
             >
-              🎮
+              <span style={{ width: 13, height: 13, borderRadius: "50%", background: DOT_RED }} />
+              <span style={{ width: 13, height: 13, borderRadius: "50%", background: YELLOW }} />
+              <span style={{ width: 13, height: 13, borderRadius: "50%", background: GREEN }} />
+              <span
+                style={{
+                  marginLeft: 12,
+                  color: TEXT_DARK,
+                  fontSize: 28,
+                  fontWeight: 850,
+                  letterSpacing: 2,
+                  opacity: winTitle,
+                }}
+              >
+                遊戲原型
+              </span>
             </div>
-            <div
-              style={{
-                position: "absolute",
-                top: "100%",
-                left: "50%",
-                transform: `translate(-50%, ${interpolate(labelProgress, [0, 1], [20, 0])}px)`,
-                marginTop: 28,
-                fontSize: 52,
-                fontWeight: 800,
-                color: TEXT_DARK,
-                whiteSpace: "nowrap",
-                opacity: labelProgress,
-              }}
-            >
-              可遊玩的遊戲原型
+
+            {/* 遊戲畫面 */}
+            <div style={{ position: "relative", width: WIN_W, height: CANVAS_H, background: WHITE, overflow: "hidden" }}>
+              {/* 地板 */}
+              <div style={{ position: "absolute", left: 0, top: FLOOR_Y, width: WIN_W, height: CANVAS_H - FLOOR_Y, display: "flex" }}>
+                {Array.from({ length: 18 }).map((_, i) => (
+                  <div
+                    key={i}
+                    style={{
+                      flex: 1,
+                      height: "100%",
+                      background: NEUTRAL_200,
+                      borderRight: `1px solid ${NEUTRAL_400}`,
+                      borderTop: `3px solid ${NEUTRAL_400}`,
+                    }}
+                  />
+                ))}
+              </div>
+
+              {/* 平台 */}
+              {PLATFORMS.map((p) => (
+                <div
+                  key={p.x}
+                  style={{
+                    position: "absolute",
+                    left: p.x,
+                    top: p.y,
+                    width: p.w,
+                    height: 22,
+                    background: NEUTRAL_200,
+                    borderTop: `4px solid ${NEUTRAL_400}`,
+                    borderRadius: 8,
+                  }}
+                />
+              ))}
+
+              {/* 終點旗杆（角色抵達時展開旗面） */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: PLATFORMS[2].x + PLATFORMS[2].w - 26,
+                  top: PLATFORMS[2].y - 90,
+                  width: 4,
+                  height: 90,
+                  background: SUBTLE,
+                }}
+              />
+              <div
+                style={{
+                  position: "absolute",
+                  left: PLATFORMS[2].x + PLATFORMS[2].w - 22,
+                  top: PLATFORMS[2].y - 88,
+                  width: 46,
+                  height: 30,
+                  background: GREEN,
+                  clipPath: "polygon(0 0, 100% 50%, 0 100%)",
+                  transform: `scaleX(${flagRaise})`,
+                  transformOrigin: "left center",
+                }}
+              />
+
+              {/* 角色 */}
+              <div
+                style={{
+                  position: "absolute",
+                  left: charX - CHAR_W / 2,
+                  top: charBottom - CHAR_H,
+                  width: CHAR_W,
+                  height: CHAR_H,
+                  transform: `scaleY(${charSy})`,
+                  transformOrigin: "center bottom",
+                }}
+              >
+                <div style={{ position: "relative", width: "100%", height: "100%" }}>
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: 0,
+                      transform: "translateX(-50%)",
+                      width: "54%",
+                      aspectRatio: "1",
+                      borderRadius: "50%",
+                      background: BLUE,
+                    }}
+                  />
+                  <div
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      bottom: 0,
+                      transform: "translateX(-50%)",
+                      width: "78%",
+                      height: "62%",
+                      borderRadius: "42% 42% 20% 20%",
+                      background: BLUE,
+                    }}
+                  />
+                </div>
+              </div>
             </div>
           </div>
         )}
+
+        {/* 下方標籤 */}
+        <div
+          style={{
+            position: "absolute",
+            left: 960,
+            top: WIN_TOP + TITLE_H + CANVAS_H + 44,
+            transform: `translate(-50%, ${interpolate(labelIn, [0, 1], [20, 0])}px)`,
+            opacity: labelIn,
+            fontSize: 52,
+            fontWeight: 800,
+            color: TEXT_DARK,
+            whiteSpace: "nowrap",
+          }}
+        >
+          可以玩的遊戲原型
+        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
