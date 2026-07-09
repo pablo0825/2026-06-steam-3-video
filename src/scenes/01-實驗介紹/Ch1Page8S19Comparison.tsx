@@ -10,6 +10,7 @@ import {
   BLUE,
   DIVIDER,
   GREEN,
+  HAIRLINE,
   HEADER_BG,
   NEUTRAL_50,
   RED,
@@ -18,24 +19,35 @@ import {
   WHITE,
   withAlpha,
 } from "../../theme/colors";
+import { VerdictBadge } from "../../components/VerdictBadge";
 import { FONT, clamp } from "../../theme/motion";
 
-// 第 1 集・第 8 頁・S20：Codex 右欄兩步驟（240 幀）
-const CONTENT_OUT = [218, 240] as const;
+// 第 1 集・第 8 頁・S19：ChatGPT vs Codex 對比＋結論（630 幀）
+//   原本被拆成 S19(建左欄)/S20(建右欄)/S21(左右結論徽章) 三顆，此處合併回單一連續鏡頭：
+//   左欄 ChatGPT 只建一次並持續留著 → 約 f=300（Codex 那句）後建右欄 Codex →
+//   約 f=540 兩欄建完後，底部分隔線＋左右結論徽章（✗ 還要自己動手 / ✓ 完全不用動手）。
+const CONTENT_OUT = [608, 629] as const;
 const LX = 520;
 const RX = 1400;
 const CHIP_W = 520;
 const HEADER_Y = 210;
+const HLINE_Y = 720;
 const LEFT_Y = [350, 480, 610] as const;
 const RIGHT_Y = [350, 480] as const;
+
+// 右欄延後於左句講完後（~300 幀）開始建。
+const RIGHT_OFFSET = 300;
+// 結論徽章在兩欄建完後（~540 幀）出現。
+const VERDICT_OFFSET = 540;
+
 const LEFT = [
-  { emoji: "💬", text: "你問它問題", color: SUBTLE, highlight: false },
-  { emoji: "🤖", text: "它給你答案", color: SUBTLE, highlight: false },
-  { emoji: "🧑", text: "你自己貼到文件", color: RED, highlight: true },
+  { emoji: "💬", text: "你問它問題", color: SUBTLE, start: 40, highlight: false },
+  { emoji: "🤖", text: "它給你答案", color: SUBTLE, start: 95, highlight: false },
+  { emoji: "🧑", text: "你自己貼到文件", color: RED, start: 150, highlight: true },
 ] as const;
 const RIGHT = [
-  { emoji: "💬", text: "你問它問題", color: SUBTLE, start: 50, highlight: false },
-  { emoji: "⚡", text: "直接幫你寫進文件", color: GREEN, start: 105, highlight: true },
+  { emoji: "💬", text: "你問它問題", color: SUBTLE, start: RIGHT_OFFSET + 50, highlight: false },
+  { emoji: "⚡", text: "直接幫你寫進文件", color: GREEN, start: RIGHT_OFFSET + 105, highlight: true },
 ] as const;
 
 const Chip: React.FC<{
@@ -75,14 +87,48 @@ const Chip: React.FC<{
   </div>
 );
 
-export const Ch1Page8S20Codex: React.FC = () => {
+const Verdict: React.FC<{
+  cx: number;
+  kind: "pass" | "fail";
+  text: string;
+  scale: number;
+}> = ({ cx, kind, text, scale }) => (
+  <div
+    style={{
+      position: "absolute",
+      left: cx,
+      top: 800,
+      transform: `translate(-50%, -50%) scale(${scale})`,
+      opacity: scale <= 0 ? 0 : 1,
+    }}
+  >
+    <VerdictBadge kind={kind} label={text} />
+  </div>
+);
+
+export const Ch1Page8S19Comparison: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
   const contentOpacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
-  const rightHead = spring({ frame: frame - 20, fps, config: { damping: 14, stiffness: 120 } });
+  const leftHead = spring({ frame: frame - 10, fps, config: { damping: 14, stiffness: 120 } });
+  const rightHead = spring({
+    frame: frame - (RIGHT_OFFSET + 20),
+    fps,
+    config: { damping: 14, stiffness: 120 },
+  });
   const chipScale = (start: number) =>
     spring({ frame: frame - start, fps, config: { damping: 14, stiffness: 120 } });
+  const leftVerdict = spring({
+    frame: frame - (VERDICT_OFFSET + 10),
+    fps,
+    config: { damping: 11, stiffness: 130 },
+  });
+  const rightVerdict = spring({
+    frame: frame - (VERDICT_OFFSET + 30),
+    fps,
+    config: { damping: 11, stiffness: 130 },
+  });
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -96,7 +142,7 @@ export const Ch1Page8S20Codex: React.FC = () => {
             height: 760,
             borderLeft: `3px dashed ${DIVIDER}`,
             transform: "translateX(-50%)",
-            opacity: 1,
+            opacity: interpolate(frame, [0, 8], [0, 1], clamp),
           }}
         />
 
@@ -105,7 +151,8 @@ export const Ch1Page8S20Codex: React.FC = () => {
             position: "absolute",
             left: LX,
             top: HEADER_Y,
-            transform: "translate(-50%, -50%)",
+            transform: `translate(-50%, -50%) scale(${leftHead})`,
+            opacity: leftHead,
             background: HEADER_BG,
             color: TEXT_DARK,
             fontSize: 44,
@@ -137,12 +184,27 @@ export const Ch1Page8S20Codex: React.FC = () => {
         </div>
 
         {LEFT.map((item, index) => (
-          <Chip key={item.text} item={item} cx={LX} y={LEFT_Y[index]} scale={1} />
+          <Chip key={item.text} item={item} cx={LX} y={LEFT_Y[index]} scale={chipScale(item.start)} />
         ))}
 
         {RIGHT.map((item, index) => (
           <Chip key={item.text} item={item} cx={RX} y={RIGHT_Y[index]} scale={chipScale(item.start)} />
         ))}
+
+        <div
+          style={{
+            position: "absolute",
+            left: 180,
+            top: HLINE_Y,
+            width: 1560,
+            height: 0,
+            borderTop: `3px dashed ${HAIRLINE}`,
+            opacity: interpolate(frame, [VERDICT_OFFSET, VERDICT_OFFSET + 8], [0, 1], clamp),
+          }}
+        />
+
+        <Verdict cx={LX} kind="fail" text="還要自己動手" scale={leftVerdict} />
+        <Verdict cx={RX} kind="pass" text="完全不用動手" scale={rightVerdict} />
       </AbsoluteFill>
     </AbsoluteFill>
   );

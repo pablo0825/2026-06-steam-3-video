@@ -1,28 +1,18 @@
 import "./index.css";
 import { CalculateMetadataFunction, Composition, Folder } from "remotion";
 import { Page0LogoIntro } from "./scenes/01-實驗介紹/Page0LogoIntro";
-import { Ch1Page1S01Opening } from "./scenes/01-實驗介紹/Ch1Page1S01Opening";
 import { Ch1Page1S02Title } from "./scenes/01-實驗介紹/Ch1Page1S02Title";
-import { Ch1Page2S03AINode } from "./scenes/01-實驗介紹/Ch1Page2S03AINode";
-import { Ch1Page2S04Domains } from "./scenes/01-實驗介紹/Ch1Page2S04Domains";
-import { Ch1Page2S05PlayablePrototype } from "./scenes/01-實驗介紹/Ch1Page2S05PlayablePrototype";
-import { Ch1Page3S06Question } from "./scenes/01-實驗介紹/Ch1Page3S06Question";
-import { Ch1Page3S07DefinitionRange } from "./scenes/01-實驗介紹/Ch1Page3S07DefinitionRange";
+import { Ch1Page2S03AIPrototype } from "./scenes/01-實驗介紹/Ch1Page2S03AIPrototype";
+import { Ch1Page3S06Prototype } from "./scenes/01-實驗介紹/Ch1Page3S06Prototype";
 import { Ch1Page3S08FastPlayable } from "./scenes/01-實驗介紹/Ch1Page3S08FastPlayable";
 import { Ch1Page3S09ValidateQuestion } from "./scenes/01-實驗介紹/Ch1Page3S09ValidateQuestion";
 import { Ch1Page4S10PrototypeVideo } from "./scenes/01-實驗介紹/Ch1Page4S10PrototypeVideo";
 import { Ch1Page4S11GameplayQuestion } from "./scenes/01-實驗介紹/Ch1Page4S11GameplayQuestion";
 import { Ch1Page5S12PrototypeGoal } from "./scenes/01-實驗介紹/Ch1Page5S12PrototypeGoal";
 import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13QuestionCards";
-import { Ch1Page5S14Validated } from "./scenes/01-實驗介紹/Ch1Page5S14Validated";
 import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15ExperimentFlow";
-import { Ch1Page6S16CurrentPart } from "./scenes/01-實驗介紹/Ch1Page6S16CurrentPart";
-import { Ch1Page7S17CodexAgent } from "./scenes/01-實驗介紹/Ch1Page7S17CodexAgent";
-import { Ch1Page7S18ComputerAccess } from "./scenes/01-實驗介紹/Ch1Page7S18ComputerAccess";
-import { Ch1Page8S19ChatGPT } from "./scenes/01-實驗介紹/Ch1Page8S19ChatGPT";
-import { Ch1Page8S20Codex } from "./scenes/01-實驗介紹/Ch1Page8S20Codex";
-import { Ch1Page8S21NoManualWork } from "./scenes/01-實驗介紹/Ch1Page8S21NoManualWork";
-import { Ch1Page9S22CodexDemoPlaceholder } from "./scenes/01-實驗介紹/Ch1Page9S22CodexDemoPlaceholder";
+import { Ch1Page7S17Codex } from "./scenes/01-實驗介紹/Ch1Page7S17Codex";
+import { Ch1Page8S19Comparison } from "./scenes/01-實驗介紹/Ch1Page8S19Comparison";
 import { Ch1Page10S25Thanks } from "./scenes/01-實驗介紹/Ch1Page10S25Thanks";
 import { Ch1Page10S26Credits } from "./scenes/01-實驗介紹/Ch1Page10S26Credits";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
@@ -129,14 +119,6 @@ export const RemotionRoot: React.FC = () => {
       />
       <Folder name="Ch1">
         <Composition
-          id="Ch1-Page1-S01-Opening"
-          component={Ch1Page1S01Opening}
-          durationInFrames={120}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
           id="Ch1-Page1-S02-Title"
           component={Ch1Page1S02Title}
           durationInFrames={150}
@@ -145,41 +127,17 @@ export const RemotionRoot: React.FC = () => {
           height={1080}
         />
         <Composition
-          id="Ch1-Page2-S03-AINode"
-          component={Ch1Page2S03AINode}
-          durationInFrames={90}
+          id="Ch1-Page2-S03-AIPrototype"
+          component={Ch1Page2S03AIPrototype}
+          durationInFrames={330}
           fps={30}
           width={1920}
           height={1080}
         />
         <Composition
-          id="Ch1-Page2-S04-Domains"
-          component={Ch1Page2S04Domains}
-          durationInFrames={150}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page2-S05-PlayablePrototype"
-          component={Ch1Page2S05PlayablePrototype}
-          durationInFrames={90}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page3-S06-Question"
-          component={Ch1Page3S06Question}
-          durationInFrames={90}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page3-S07-DefinitionRange"
-          component={Ch1Page3S07DefinitionRange}
-          durationInFrames={90}
+          id="Ch1-Page3-S06-Prototype"
+          component={Ch1Page3S06Prototype}
+          durationInFrames={180}
           fps={30}
           width={1920}
           height={1080}
@@ -227,15 +185,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page5-S13-QuestionCards"
           component={Ch1Page5S13QuestionCards}
-          durationInFrames={240}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page5-S14-Validated"
-          component={Ch1Page5S14Validated}
-          durationInFrames={150}
+          durationInFrames={390}
           fps={30}
           width={1920}
           height={1080}
@@ -243,63 +193,23 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page6-S15-ExperimentFlow"
           component={Ch1Page6S15ExperimentFlow}
-          durationInFrames={210}
+          durationInFrames={390}
           fps={30}
           width={1920}
           height={1080}
         />
         <Composition
-          id="Ch1-Page6-S16-CurrentPart"
-          component={Ch1Page6S16CurrentPart}
-          durationInFrames={180}
+          id="Ch1-Page7-S17-Codex"
+          component={Ch1Page7S17Codex}
+          durationInFrames={360}
           fps={30}
           width={1920}
           height={1080}
         />
         <Composition
-          id="Ch1-Page7-S17-CodexAgent"
-          component={Ch1Page7S17CodexAgent}
-          durationInFrames={150}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page7-S18-ComputerAccess"
-          component={Ch1Page7S18ComputerAccess}
-          durationInFrames={210}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page8-S19-ChatGPT"
-          component={Ch1Page8S19ChatGPT}
-          durationInFrames={300}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page8-S20-Codex"
-          component={Ch1Page8S20Codex}
-          durationInFrames={240}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page8-S21-NoManualWork"
-          component={Ch1Page8S21NoManualWork}
-          durationInFrames={90}
-          fps={30}
-          width={1920}
-          height={1080}
-        />
-        <Composition
-          id="Ch1-Page9-S22-CodexDemoPlaceholder"
-          component={Ch1Page9S22CodexDemoPlaceholder}
-          durationInFrames={90}
+          id="Ch1-Page8-S19-Comparison"
+          component={Ch1Page8S19Comparison}
+          durationInFrames={630}
           fps={30}
           width={1920}
           height={1080}
