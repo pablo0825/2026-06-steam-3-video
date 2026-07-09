@@ -26,7 +26,7 @@ const DIAGRAM_OUT = [332, 362] as const; // 高亮回中性後，迴圈原地淡
 const COMPARE_IN = [366, 398] as const; // 對比資訊置中淡入
 const COMPARE_OUT = [472, 498] as const;
 const CONCLUSION_IN = [508, 540] as const; // 對比完全淡出（498）後留 10 幀空檔再淡入
-const CONTENT_OUT = [590, 616] as const;
+const CONTENT_OUT = [593, 619] as const;
 
 const NODES: CoreLoopNodeData[] = [
   { label: "動作", example: "跳躍・衝刺・攀牆", icon: "action" },

@@ -30,7 +30,7 @@ const SHRINK = [30, 116] as const; // 框收緊 / 設計師張力累積
 const BURST_AT = 116; // 爆發時點
 const FLY_START = 126; // 卡片開始噴出
 const FLY_STAGGER = 3;
-const CONTENT_OUT = [222, 246] as const;
+const CONTENT_OUT = [226, 250] as const;
 
 // 6 張玩法小卡片（中心相對座標＋旋轉）
 const CARDS = [

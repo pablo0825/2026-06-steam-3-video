@@ -47,7 +47,6 @@ import { Ch2Page5S15MonsterLoop02 } from "./scenes/02-遊戲設計/Ch2Page5S15Mo
 import { Ch2Page6S17CelesteLoop } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop";
 import { Ch2Page7S18StoryboardIntro } from "./scenes/02-遊戲設計/Ch2Page7S18StoryboardIntro";
 import { Ch2Page7S19Examples } from "./scenes/02-遊戲設計/Ch2Page7S19Examples";
-import { Ch2Page7S20Readable } from "./scenes/02-遊戲設計/Ch2Page7S20Readable";
 import { Ch2Page7S21Consensus } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus";
 import { Ch2Page7S22Checklist } from "./scenes/02-遊戲設計/Ch2Page7S22Checklist";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
@@ -515,17 +514,9 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
-            id="Ch2-Page7-S20-Readable"
-            component={Ch2Page7S20Readable}
-            durationInFrames={210}
-            fps={30}
-            width={1920}
-            height={1080}
-          />
-          <Composition
             id="Ch2-Page7-S21-Consensus"
             component={Ch2Page7S21Consensus}
-            durationInFrames={490}
+            durationInFrames={230}
             fps={30}
             width={1920}
             height={1080}

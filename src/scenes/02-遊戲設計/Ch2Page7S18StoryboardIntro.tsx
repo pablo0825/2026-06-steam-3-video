@@ -6,7 +6,7 @@ import {
 
 // 第 2 集・第 7 頁・S18：Storyboard 定義（270 幀，前 30 幀白底停留）
 const SEGMENTS: DefinitionSegment[] = [
-  { text: "Storyboard 是用" },
+  { text: "用" },
   { text: "連續畫面", highlight: true },
   { text: "呈現玩家在遊戲中經歷的工具" },
 ];

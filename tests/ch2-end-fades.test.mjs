@@ -45,10 +45,10 @@ test("Ch2 ending fade-out ranges end on the final rendered frame", async () => {
     ["Ch2Page2S06Question", "Ch2Page2S06Question.tsx", "CONTENT_OUT"],
     ["Ch2Page3S09ConstraintMethod", "Ch2Page3S09ConstraintMethod.tsx", "CONTENT_OUT"],
     ["Ch2Page4S12ActionsOverlay", "Ch2Page4S12ActionsOverlay.tsx", "CONTENT_OUT"],
-    ["Ch2Page5S14LoopFramework", "Ch2Page5S14LoopFramework.tsx", "CONTENT_OUT"],
-    ["Ch2Page5S15MonsterLoop", "Ch2Page5S15MonsterLoop.tsx", "CONTENT_OUT"],
+    // S14 刻意不淡出（保持原樣到最後），故不列入結尾淡出檢查。
+    // S15 已拆成 -01／-02，真正做結尾淡出的是 -02。
+    ["Ch2Page5S15MonsterLoop02", "Ch2Page5S15MonsterLoop-02.tsx", "CONTENT_OUT"],
     ["Ch2Page6S17CelesteLoop", "Ch2Page6S17CelesteLoop.tsx", "CONTENT_OUT"],
-    ["Ch2Page7S20Readable", "Ch2Page7S20Readable.tsx", "CONTENT_OUT"],
     ["Ch2Page7S21Consensus", "Ch2Page7S21Consensus.tsx", "CONTENT_OUT"],
     ["Ch2Page7S22Checklist", "Ch2Page7S22Checklist.tsx", "CONTENT_OUT"],
   ];
