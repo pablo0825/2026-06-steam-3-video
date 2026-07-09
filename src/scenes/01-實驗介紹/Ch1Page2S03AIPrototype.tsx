@@ -9,11 +9,9 @@ import {
 import {
   BLACK,
   BLUE,
-  CARD_BORDER,
   CAT_ART,
   CAT_CODE,
   CAT_PLAN,
-  DOT_RED,
   GREEN,
   NEUTRAL_50,
   NEUTRAL_200,
@@ -21,10 +19,9 @@ import {
   SUBTLE,
   TEXT_DARK,
   WHITE,
-  WINDOW_BAR,
-  YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { WindowFrame } from "../../components/WindowFrame";
 import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
 // 第 1 集・第 2 頁・S03：AI → 程式/企劃/美術 → 聚合成可以玩的遊戲原型（330 幀）
@@ -116,7 +113,6 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
     config: { damping: 16, stiffness: 110 },
   });
   const winVisible = frame >= WIN_START - 2;
-  const winTitle = interpolate(frame, [248, 264], [0, 1], easeOutExpo);
   const flagRaise = interpolate(frame, [300, 314], [0, 1], easeOutExpo);
   const labelIn = interpolate(frame, [296, 314], [0, 1], easeOutExpo);
 
@@ -275,51 +271,20 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
 
         {/* 第三拍：視窗（Ch4 風格）內的迷你跳關 */}
         {winVisible && (
-          <div
+          <WindowFrame
+            title="遊戲原型"
+            titleStyle={{ letterSpacing: 2 }}
+            barHeight={TITLE_H}
             style={{
               position: "absolute",
               left: WIN_LEFT,
               top: WIN_TOP,
               width: WIN_W,
-              background: WHITE,
-              border: `3px solid ${CARD_BORDER}`,
-              borderRadius: 22,
-              overflow: "hidden",
-              boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
               opacity: winSpring,
               transform: `scale(${interpolate(winSpring, [0, 1], [0.94, 1])})`,
               transformOrigin: "center center",
             }}
           >
-            {/* 標題列：三色點 */}
-            <div
-              style={{
-                height: TITLE_H,
-                background: WINDOW_BAR,
-                borderBottom: `1px solid ${CARD_BORDER}`,
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "0 22px",
-              }}
-            >
-              <span style={{ width: 13, height: 13, borderRadius: "50%", background: DOT_RED }} />
-              <span style={{ width: 13, height: 13, borderRadius: "50%", background: YELLOW }} />
-              <span style={{ width: 13, height: 13, borderRadius: "50%", background: GREEN }} />
-              <span
-                style={{
-                  marginLeft: 12,
-                  color: TEXT_DARK,
-                  fontSize: 28,
-                  fontWeight: 850,
-                  letterSpacing: 2,
-                  opacity: winTitle,
-                }}
-              >
-                遊戲原型
-              </span>
-            </div>
-
             {/* 遊戲畫面 */}
             <div style={{ position: "relative", width: WIN_W, height: CANVAS_H, background: WHITE, overflow: "hidden" }}>
               {/* 地板 */}
@@ -420,7 +385,7 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
                 </div>
               </div>
             </div>
-          </div>
+          </WindowFrame>
         )}
 
         {/* 下方標籤 */}

@@ -10,19 +10,15 @@ import {
   BLUE,
   CARD_BORDER,
   DASH_BORDER,
-  DOT_RED,
-  GREEN,
   NEUTRAL_50,
   NEUTRAL_100,
-  SUBTLE,
   TEXT_DARK,
-  WHITE,
-  WINDOW_BAR,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 import { VerdictBadge } from "../../components/VerdictBadge";
+import { WindowFrame } from "../../components/WindowFrame";
 
 // 第 4 集・第 4 頁・S09：把美術圖匯進 Unity（264 幀，結尾淡出到 NEUTRAL_50）
 //   開場先停留空白底一拍 → Unity 視窗進場 → 美術圖落入框內 → 拉高、拉寬後彈回正常
@@ -89,7 +85,8 @@ export const Ch4Page4S09ToUnity: React.FC = () => {
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       <AbsoluteFill style={{ opacity: out }}>
         {/* Unity 視窗 */}
-        <div
+        <WindowFrame
+          title="Unity"
           style={{
             position: "absolute",
             left: WIN_CX,
@@ -98,61 +95,8 @@ export const Ch4Page4S09ToUnity: React.FC = () => {
             height: 500,
             transform: `translate(-50%, -50%) scale(${interpolate(winEnter, [0, 1], [0.88, 1])})`,
             opacity: winEnter,
-            borderRadius: 22,
-            overflow: "hidden",
-            background: WHITE,
-            border: `3px solid ${CARD_BORDER}`,
-            boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
           }}
         >
-          <div
-            style={{
-              height: 60,
-              background: WINDOW_BAR,
-              borderBottom: `1px solid ${CARD_BORDER}`,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "0 22px",
-            }}
-          >
-            <span
-              style={{
-                width: 13,
-                height: 13,
-                borderRadius: "50%",
-                background: DOT_RED,
-              }}
-            />
-            <span
-              style={{
-                width: 13,
-                height: 13,
-                borderRadius: "50%",
-                background: YELLOW,
-              }}
-            />
-            <span
-              style={{
-                width: 13,
-                height: 13,
-                borderRadius: "50%",
-                background: GREEN,
-              }}
-            />
-            <span
-              style={{
-                marginLeft: 12,
-                color: SUBTLE,
-                fontSize: 28,
-                fontWeight: 800,
-                letterSpacing: 1,
-              }}
-            >
-              Unity
-            </span>
-          </div>
-
           {/* 場景區：虛線參考框 + 落入並變形的美術圖 */}
           <div
             style={{
@@ -182,7 +126,7 @@ export const Ch4Page4S09ToUnity: React.FC = () => {
               <ArtGlyph size={ART} />
             </div>
           </div>
-        </div>
+        </WindowFrame>
 
         {/* 重點句：確認大小、比例是否正常（VerdictBadge） */}
         <div

@@ -7,19 +7,16 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  BLACK,
   BLUE,
-  BORDER_SOFT,
-  DOT_RED,
   GREEN,
   NEUTRAL_50,
   SUBTLE,
   TEXT_DARK,
   WHITE,
-  WINDOW_BAR,
   withAlpha,
   YELLOW,
 } from "../../theme/colors";
+import { WindowFrame } from "../../components/WindowFrame";
 import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
 // 第 1 集・第 7 頁・S17：Codex 是 AI Agent，且可以操作你電腦裡的資料（360 幀）
@@ -155,7 +152,10 @@ export const Ch1Page7S17Codex: React.FC = () => {
           by OpenAI
         </div>
 
-        <div
+        <WindowFrame
+          title="你的電腦"
+          titleStyle={{ fontSize: 26 }}
+          barHeight={56}
           style={{
             position: "absolute",
             left: WIN.x,
@@ -166,30 +166,8 @@ export const Ch1Page7S17Codex: React.FC = () => {
             marginTop: -WIN.h / 2,
             transform: `scale(${winIn})`,
             opacity: winIn <= 0 ? 0 : 1,
-            borderRadius: 18,
-            background: WHITE,
-            border: `1px solid ${BORDER_SOFT}`,
-            boxShadow: `0 24px 60px ${withAlpha(BLACK, 0.14)}`,
-            overflow: "hidden",
           }}
         >
-          <div
-            style={{
-              height: 56,
-              background: WINDOW_BAR,
-              display: "flex",
-              alignItems: "center",
-              padding: "0 22px",
-              gap: 12,
-              borderBottom: `1px solid ${BORDER_SOFT}`,
-            }}
-          >
-            <div style={{ width: 14, height: 14, borderRadius: "50%", background: DOT_RED }} />
-            <div style={{ width: 14, height: 14, borderRadius: "50%", background: YELLOW }} />
-            <div style={{ width: 14, height: 14, borderRadius: "50%", background: GREEN }} />
-            <div style={{ marginLeft: 16, fontSize: 26, color: SUBTLE, fontWeight: 600 }}>你的電腦</div>
-          </div>
-
           <div style={{ padding: "30px 34px", fontFamily: MONO, fontSize: 32, color: TEXT_DARK, lineHeight: 1.7 }}>
             {LINES.map((line, index) => {
               const opacity = interpolate(frame, [LINE_START + index * 28, LINE_START + index * 28 + 12], [0, 1], clamp);
@@ -223,7 +201,7 @@ export const Ch1Page7S17Codex: React.FC = () => {
               ✓ 已修改
             </div>
           )}
-        </div>
+        </WindowFrame>
 
         <div
           style={{

@@ -7,18 +7,12 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  CARD_BORDER,
   DIVIDER,
-  DOT_RED,
-  GREEN,
   NEUTRAL_50,
   SUBTLE,
-  TEXT_DARK,
   WHITE,
-  WINDOW_BAR,
-  YELLOW,
-  withAlpha,
 } from "../../theme/colors";
+import { WindowFrame } from "../../components/WindowFrame";
 import { FONT, clamp, easeOutExpo as ease } from "../../theme/motion";
 
 // 第 4 集・第 2 頁・S06：橫式 / 直式畫面大小（210 幀）
@@ -35,12 +29,6 @@ const LAND_H = 1080 * SCALE; // 432
 const PORT_W = 1080 * PORT_SCALE; // 378
 const PORT_H = 1920 * PORT_SCALE; // 672
 const BAR_H = 52;
-
-const Dot: React.FC<{ color: string }> = ({ color }) => (
-  <span
-    style={{ width: 12, height: 12, borderRadius: "50%", background: color }}
-  />
-);
 
 // 一側：按比例的視窗（標題列＋空白畫布）＋ 下方輔助說明字
 const Side: React.FC<{
@@ -62,49 +50,15 @@ const Side: React.FC<{
       transform: `translateX(${interpolate(enter, [0, 1], [fromX, 0])}px)`,
     }}
   >
-    <div
-      style={{
-        width: contentW,
-        background: WHITE,
-        border: `3px solid ${CARD_BORDER}`,
-        borderRadius: 18,
-        overflow: "hidden",
-        boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
-      }}
+    <WindowFrame
+      title={title}
+      titleStyle={{ fontSize: 27 }}
+      barHeight={BAR_H}
+      style={{ width: contentW }}
     >
-      {/* 標題列：三色點 + 視窗名稱 */}
-      <div
-        style={{
-          height: BAR_H,
-          background: WINDOW_BAR,
-          borderBottom: `1px solid ${CARD_BORDER}`,
-          display: "flex",
-          alignItems: "center",
-          gap: 9,
-          padding: "0 18px",
-        }}
-      >
-        <Dot color={DOT_RED} />
-        <Dot color={YELLOW} />
-        <Dot color={GREEN} />
-        <span
-          style={{
-            marginLeft: 10,
-            color: TEXT_DARK,
-            fontSize: 27,
-            fontWeight: 850,
-            letterSpacing: 1,
-            fontVariantNumeric: "tabular-nums",
-            whiteSpace: "nowrap",
-          }}
-        >
-          {title}
-        </span>
-      </div>
-
       {/* 畫布（空白） */}
       <div style={{ width: contentW, height: contentH, background: WHITE }} />
-    </div>
+    </WindowFrame>
 
     {/* 輔助說明字 */}
     <div

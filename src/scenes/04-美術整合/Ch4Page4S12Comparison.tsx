@@ -9,19 +9,16 @@ import {
 import {
   BLUE,
   CARD_BORDER,
-  DOT_RED,
-  GREEN,
   NEUTRAL_50,
   NEUTRAL_100,
   SUBTLE,
   TEXT_DARK,
-  WHITE,
-  WINDOW_BAR,
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 import { VerdictBadge } from "../../components/VerdictBadge";
+import { WindowFrame } from "../../components/WindowFrame";
 
 // 第 4 集・第 4 頁・S12：PPU=100 → 128（540 幀，沿用 S09 視窗格局）
 //   開場白停留 → 先跳出「128×128」sprite 圖片（直接放圖、帶陰影，畫面正中央）→
@@ -118,15 +115,11 @@ export const Ch4Page4S12Comparison: React.FC = () => {
 
   const out = interpolate(f, ENDING_FADE, [1, 0], clamp);
 
+  // 兩個標題疊在一起交叉淡入；字型設定由 WindowFrame 的標題容器繼承。
   const ppuLabelStyle: React.CSSProperties = {
     position: "absolute",
     left: 0,
     top: 0,
-    color: TEXT_DARK,
-    fontSize: 30,
-    fontWeight: 850,
-    letterSpacing: 1,
-    whiteSpace: "nowrap",
   };
 
   return (
@@ -164,7 +157,14 @@ export const Ch4Page4S12Comparison: React.FC = () => {
         </div>
 
         {/* 視窗（沿用 S09） */}
-        <div
+        <WindowFrame
+          title={
+            <>
+              <span style={{ ...ppuLabelStyle, opacity: titleOut }}>PPU=100</span>
+              <span style={{ ...ppuLabelStyle, opacity: titleIn }}>PPU=128</span>
+            </>
+          }
+          titleStyle={{ position: "relative", width: 200, height: 36, fontSize: 30 }}
           style={{
             position: "absolute",
             left: 960,
@@ -173,39 +173,8 @@ export const Ch4Page4S12Comparison: React.FC = () => {
             height: 500,
             transform: `translate(-50%, -50%) scale(${interpolate(winEnter, [0, 1], [0.88, 1])})`,
             opacity: winEnter,
-            borderRadius: 22,
-            overflow: "hidden",
-            background: WHITE,
-            border: `3px solid ${CARD_BORDER}`,
-            boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
           }}
         >
-          <div
-            style={{
-              height: 60,
-              background: WINDOW_BAR,
-              borderBottom: `1px solid ${CARD_BORDER}`,
-              display: "flex",
-              alignItems: "center",
-              gap: 10,
-              padding: "0 22px",
-            }}
-          >
-            <span
-              style={{ width: 13, height: 13, borderRadius: "50%", background: DOT_RED }}
-            />
-            <span
-              style={{ width: 13, height: 13, borderRadius: "50%", background: YELLOW }}
-            />
-            <span
-              style={{ width: 13, height: 13, borderRadius: "50%", background: GREEN }}
-            />
-            {/* PPU=100 → PPU=128 crossfade */}
-            <div style={{ position: "relative", marginLeft: 12, width: 200, height: 36 }}>
-              <span style={{ ...ppuLabelStyle, opacity: titleOut }}>PPU=100</span>
-              <span style={{ ...ppuLabelStyle, opacity: titleIn }}>PPU=128</span>
-            </div>
-          </div>
 
           {/* 場景區：隨 PPU 縮放的 sprite（下層）+ 1 unit 虛線參考框（上層，永遠可見） */}
           <div
@@ -241,7 +210,7 @@ export const Ch4Page4S12Comparison: React.FC = () => {
               }}
             />
           </div>
-        </div>
+        </WindowFrame>
 
         {/* 下方判定：✗ 128 px ≠ 1 unit → ✓ 128 px = 1 unit */}
         <div style={{ position: "absolute", left: 960, top: 840 }}>

@@ -9,17 +9,14 @@ import {
 import {
   BLUE,
   CARD_BORDER,
-  DOT_RED,
-  GREEN,
   NEUTRAL_50,
   NEUTRAL_100,
   SUBTLE,
   TEXT_DARK,
   WHITE,
-  WINDOW_BAR,
-  YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { WindowFrame } from "../../components/WindowFrame";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
 // 第 3 集・第 4 頁・S09-02：Context 視窗裝滿（2×4）→ 新檔案擠掉最舊的（420 幀）
@@ -170,7 +167,9 @@ export const Ch3Page4S09ContextLimit02: React.FC = () => {
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
       {/* 視窗（沿用 S12 chrome） */}
-      <div
+      <WindowFrame
+        title="Context"
+        titleStyle={{ fontSize: 26 }}
         style={{
           position: "absolute",
           left: 960,
@@ -179,62 +178,10 @@ export const Ch3Page4S09ContextLimit02: React.FC = () => {
           height: WIN_H,
           transform: `translate(-50%, -50%) scale(${interpolate(winEnter, [0, 1], [0.9, 1])})`,
           opacity: winEnter,
-          borderRadius: 22,
-          overflow: "hidden",
-          background: WHITE,
-          border: `3px solid ${CARD_BORDER}`,
-          boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
         }}
       >
-        <div
-          style={{
-            height: 60,
-            background: WINDOW_BAR,
-            borderBottom: `1px solid ${CARD_BORDER}`,
-            display: "flex",
-            alignItems: "center",
-            gap: 10,
-            padding: "0 22px",
-          }}
-        >
-          <span
-            style={{
-              width: 13,
-              height: 13,
-              borderRadius: "50%",
-              background: DOT_RED,
-            }}
-          />
-          <span
-            style={{
-              width: 13,
-              height: 13,
-              borderRadius: "50%",
-              background: YELLOW,
-            }}
-          />
-          <span
-            style={{
-              width: 13,
-              height: 13,
-              borderRadius: "50%",
-              background: GREEN,
-            }}
-          />
-          <div
-            style={{
-              marginLeft: 12,
-              fontSize: 26,
-              fontWeight: 800,
-              letterSpacing: 1,
-              color: TEXT_DARK,
-            }}
-          >
-            Context
-          </div>
-        </div>
         <div style={{ height: WIN_H - 60, background: NEUTRAL_50 }} />
-      </div>
+      </WindowFrame>
 
       {/* 8 檔逐一在視窗內出現（淡入＋pop）；擠出時最舊滑出、其餘 FIFO 遞補 */}
       {FILES.map((file, i) => {

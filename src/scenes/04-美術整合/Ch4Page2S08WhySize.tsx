@@ -9,20 +9,16 @@ import {
 import {
   BLUE,
   BORDER_SOFT,
-  CARD_BORDER,
   DASH_BORDER,
-  DOT_RED,
-  GREEN,
   NEUTRAL_50,
   NEUTRAL_200,
   NEUTRAL_400,
   SUBTLE,
   TEXT_DARK,
   WHITE,
-  WINDOW_BAR,
-  YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { WindowFrame } from "../../components/WindowFrame";
 import { FONT, clamp, easeOutExpo as ease } from "../../theme/motion";
 
 // 第 4 集・第 2 頁・S08：為什麼要知道畫面大小（270 幀）
@@ -347,56 +343,17 @@ export const Ch4Page2S08WhySize: React.FC = () => {
         <AbsoluteFill
           style={{ alignItems: "center", justifyContent: "center" }}
         >
-          <div
+          <WindowFrame
+            title="1920×1080"
+            titleStyle={{ fontSize: 30, opacity: winLabel }}
             style={{
               position: "relative",
               width: WIN_W,
               marginBottom: 150,
-              background: WHITE,
-              border: `3px solid ${CARD_BORDER}`,
-              borderRadius: 22,
-              overflow: "hidden",
-              boxShadow: `0 18px 42px ${withAlpha(TEXT_DARK, 0.1)}`,
               opacity: winSpring,
               transform: `scale(${interpolate(winSpring, [0, 1], [0.94, 1])})`,
             }}
           >
-            {/* 標題列：三色點 + 視窗名稱 1920×1080 */}
-            <div
-              style={{
-                height: 60,
-                background: WINDOW_BAR,
-                borderBottom: `1px solid ${CARD_BORDER}`,
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                padding: "0 22px",
-              }}
-            >
-              <span
-                style={{ width: 13, height: 13, borderRadius: "50%", background: DOT_RED }}
-              />
-              <span
-                style={{ width: 13, height: 13, borderRadius: "50%", background: YELLOW }}
-              />
-              <span
-                style={{ width: 13, height: 13, borderRadius: "50%", background: GREEN }}
-              />
-              <span
-                style={{
-                  marginLeft: 12,
-                  color: TEXT_DARK,
-                  fontSize: 30,
-                  fontWeight: 850,
-                  letterSpacing: 1,
-                  fontVariantNumeric: "tabular-nums",
-                  opacity: winLabel,
-                }}
-              >
-                1920×1080
-              </span>
-            </div>
-
             {/* 畫布（遊戲畫面）：物件 + 虛線量測框 + 尺寸標籤 */}
             <div
               style={{
@@ -410,7 +367,7 @@ export const Ch4Page2S08WhySize: React.FC = () => {
                 <SceneObject key={o.key} o={o} frame={frame} fps={fps} />
               ))}
             </div>
-          </div>
+          </WindowFrame>
         </AbsoluteFill>
 
         {/* 結尾過場提示（下方置中：純文字 + 同色箭頭） */}

@@ -7,129 +7,236 @@ import {
   useVideoConfig,
 } from "remotion";
 import {
-  BLACK,
+  BLUE,
   GREEN,
-  HAIRLINE,
   NEUTRAL_50,
-  RED,
+  NEUTRAL_200,
+  NEUTRAL_400,
   SUBTLE,
   TEXT_DARK,
-  WHITE,
-  withAlpha,
 } from "../../theme/colors";
-import { FONT, clamp, easeOutExpo } from "../../theme/motion";
+import { FONT, clamp } from "../../theme/motion";
+import { VerdictBadge } from "../../components/VerdictBadge";
+import { WindowFrame } from "../../components/WindowFrame";
 
-// 第 1 集・第 3 頁・S09：不是完成遊戲，而是驗證問題（180 幀）
-const CONTENT_OUT = [160, 180] as const;
+// 第 1 集・第 3 頁・S09：不是完成遊戲，而是驗證問題（180 幀，S12 視窗＋判定排版）
+//   視窗（標題列＋三色點＋「遊戲原型」）進場，內含靜態的簡易遊戲原型（地板／平台／
+//   角色／終點旗杆）；下方判定 ✗「不是完成遊戲」先出，再 crossfade 成 ✓「而是驗證問題」。
+const CONTENT_OUT = [160, 179] as const;
 
-const ComparisonCard: React.FC<{
-  x: number;
-  cap: string;
-  capColor: string;
-  title: string;
-  mark: string;
-  markColor: string;
-  scale: number;
-  opacity: number;
-  borderColor: string;
-}> = ({ x, cap, capColor, title, mark, markColor, scale, opacity, borderColor }) => (
-  <div
-    style={{
-      position: "absolute",
-      left: x,
-      top: 520,
-      transform: `translate(-50%, -50%) scale(${scale})`,
-      opacity,
-      display: "flex",
-      flexDirection: "column",
-      alignItems: "center",
-    }}
-  >
-    <div style={{ fontSize: 36, fontWeight: 700, color: capColor, marginBottom: 24 }}>{cap}</div>
-    <div
-      style={{
-        width: 460,
-        height: 300,
-        borderRadius: 32,
-        background: WHITE,
-        border: `5px solid ${borderColor}`,
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 18,
-        boxShadow: `0 16px 40px ${withAlpha(BLACK, 0.08)}`,
-      }}
-    >
-      <div style={{ fontSize: 110, fontWeight: 900, color: markColor, lineHeight: 1 }}>{mark}</div>
-      <div style={{ fontSize: 54, fontWeight: 800, color: TEXT_DARK }}>{title}</div>
-    </div>
-  </div>
-);
+// 視窗畫面（canvas 700×440 局部座標）的靜態遊戲原型
+const WIN_W = 700;
+const TITLE_H = 60;
+const CANVAS_H = 440;
+const FLOOR_Y = 380;
+const CHAR_W = 46;
+const CHAR_H = 70;
+const PLATFORMS = [
+  { x: 170, y: 300, w: 120 },
+  { x: 390, y: 222, w: 130 }, // 終點平台
+] as const;
+
+// 判定 crossfade
+const FAIL_OUT = [100, 114] as const;
+const PASS_IN = [120, 136] as const;
 
 export const Ch1Page3S09ValidateQuestion: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
-  const leftIn = spring({ frame, fps, config: { damping: 13, stiffness: 120 } });
-  const rightIn = spring({
-    frame: frame - 8,
+  const out = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
+  const winEnter = spring({
+    frame: frame - 4,
     fps,
-    config: { damping: 13, stiffness: 120 },
+    config: { damping: 16, stiffness: 115 },
   });
-  const leftDim = interpolate(frame, [45, 75], [1, 0.3], clamp);
-  const rightGrow = interpolate(frame, [45, 75], [1, 1.12], easeOutExpo);
-  const stamp = spring({
-    frame: frame - 52,
+  const failEnter = spring({
+    frame: frame - 44,
     fps,
-    config: { damping: 9, stiffness: 140 },
+    config: { damping: 15, stiffness: 120 },
   });
+  const failOut = interpolate(frame, FAIL_OUT, [1, 0], clamp);
+  const passIn = interpolate(frame, PASS_IN, [0, 1], clamp);
+  const passPop = spring({
+    frame: frame - PASS_IN[0],
+    fps,
+    config: { damping: 14, stiffness: 140 },
+  });
+
+  const goal = PLATFORMS[1];
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      <AbsoluteFill style={{ opacity }}>
-        <ComparisonCard
-          x={620}
-          cap="目的不是"
-          capColor={SUBTLE}
-          title="完成遊戲"
-          mark="✗"
-          markColor={RED}
-          scale={leftIn}
-          opacity={leftIn * leftDim}
-          borderColor={HAIRLINE}
-        />
-        <ComparisonCard
-          x={1300}
-          cap="而是"
-          capColor={GREEN}
-          title="驗證問題"
-          mark="✓"
-          markColor={GREEN}
-          scale={rightIn * rightGrow}
-          opacity={rightIn}
-          borderColor={GREEN}
-        />
+      <AbsoluteFill style={{ opacity: out }}>
+        {/* 視窗（S12 風格） */}
+        <WindowFrame
+          title="遊戲原型"
+          titleStyle={{ letterSpacing: 2 }}
+          barHeight={TITLE_H}
+          style={{
+            position: "absolute",
+            left: 960,
+            top: 470,
+            width: WIN_W,
+            height: TITLE_H + CANVAS_H,
+            transform: `translate(-50%, -50%) scale(${interpolate(winEnter, [0, 1], [0.88, 1])})`,
+            opacity: winEnter,
+          }}
+        >
+          {/* 遊戲畫面（靜態簡易原型） */}
+          <div
+            style={{
+              position: "relative",
+              width: WIN_W,
+              height: CANVAS_H,
+              background: NEUTRAL_50,
+              overflow: "hidden",
+            }}
+          >
+            {/* 地板 */}
+            <div
+              style={{
+                position: "absolute",
+                left: 0,
+                top: FLOOR_Y,
+                width: WIN_W,
+                height: CANVAS_H - FLOOR_Y,
+                display: "flex",
+              }}
+            >
+              {Array.from({ length: 14 }).map((_, i) => (
+                <div
+                  key={i}
+                  style={{
+                    flex: 1,
+                    height: "100%",
+                    background: NEUTRAL_200,
+                    borderRight: `1px solid ${NEUTRAL_400}`,
+                    borderTop: `3px solid ${NEUTRAL_400}`,
+                  }}
+                />
+              ))}
+            </div>
 
-        {stamp > 0 && (
+            {/* 平台 */}
+            {PLATFORMS.map((p) => (
+              <div
+                key={p.x}
+                style={{
+                  position: "absolute",
+                  left: p.x,
+                  top: p.y,
+                  width: p.w,
+                  height: 20,
+                  background: NEUTRAL_200,
+                  borderTop: `4px solid ${NEUTRAL_400}`,
+                  borderRadius: 8,
+                }}
+              />
+            ))}
+
+            {/* 終點旗杆（靜態展開） */}
+            <div
+              style={{
+                position: "absolute",
+                left: goal.x + goal.w - 20,
+                top: goal.y - 78,
+                width: 4,
+                height: 78,
+                background: SUBTLE,
+              }}
+            />
+            <div
+              style={{
+                position: "absolute",
+                left: goal.x + goal.w - 16,
+                top: goal.y - 76,
+                width: 40,
+                height: 26,
+                background: GREEN,
+                clipPath: "polygon(0 0, 100% 50%, 0 100%)",
+              }}
+            />
+
+            {/* 角色（站在地板上） */}
+            <div
+              style={{
+                position: "absolute",
+                left: 108 - CHAR_W / 2,
+                top: FLOOR_Y - CHAR_H,
+                width: CHAR_W,
+                height: CHAR_H,
+              }}
+            >
+              <div
+                style={{ position: "relative", width: "100%", height: "100%" }}
+              >
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    top: 0,
+                    transform: "translateX(-50%)",
+                    width: "54%",
+                    aspectRatio: "1",
+                    borderRadius: "50%",
+                    background: BLUE,
+                  }}
+                />
+                <div
+                  style={{
+                    position: "absolute",
+                    left: "50%",
+                    bottom: 0,
+                    transform: "translateX(-50%)",
+                    width: "78%",
+                    height: "62%",
+                    borderRadius: "42% 42% 20% 20%",
+                    background: BLUE,
+                  }}
+                />
+              </div>
+            </div>
+          </div>
+        </WindowFrame>
+
+        {/* 下方判定：✗ 不是完成遊戲 → ✓ 而是驗證問題（crossfade） */}
+        <div style={{ position: "absolute", left: 960, top: 840 }}>
           <div
             style={{
               position: "absolute",
-              left: 1500,
-              top: 370,
-              transform: `translate(-50%, -50%) rotate(-12deg) scale(${stamp})`,
-              background: GREEN,
-              color: WHITE,
-              fontSize: 30,
-              fontWeight: 800,
-              padding: "10px 22px",
-              borderRadius: 12,
+              left: 0,
+              top: 0,
+              transform: `translateX(-50%) translateY(${interpolate(failEnter, [0, 1], [28, 0])}px)`,
+              opacity: failEnter * failOut,
             }}
           >
-            重點
+            <VerdictBadge
+              kind="fail"
+              label="不是完成遊戲"
+              size={60}
+              labelSize={50}
+              labelColor={TEXT_DARK}
+            />
           </div>
-        )}
+          <div
+            style={{
+              position: "absolute",
+              left: 0,
+              top: 0,
+              transform: `translateX(-50%) scale(${interpolate(passPop, [0, 1], [0.8, 1])})`,
+              opacity: passIn,
+            }}
+          >
+            <VerdictBadge
+              kind="pass"
+              label="提早驗證問題"
+              size={60}
+              labelSize={50}
+              labelColor={TEXT_DARK}
+            />
+          </div>
+        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
