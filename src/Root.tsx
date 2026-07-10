@@ -297,7 +297,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch2-Page3-S08-Limit-Overlay"
             component={Ch2Page3S08LimitOverlay}
-            durationInFrames={480}
+            durationInFrames={650}
             fps={30}
             width={1920}
             height={1080}
