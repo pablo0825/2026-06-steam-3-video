@@ -341,7 +341,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch2-Page4-S12-Actions-Overlay"
             component={Ch2Page4S12ActionsOverlay}
-            durationInFrames={230}
+            durationInFrames={408}
             fps={30}
             width={1920}
             height={1080}
