@@ -5,6 +5,9 @@ import { Easing } from "remotion";
 export const FONT =
   '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
 
+// 等寬字型：終端機畫面、程式碼片段用。
+export const MONO = 'Consolas, "Courier New", monospace';
+
 // interpolate 的「夾住」選項：超出輸入區間時，輸出夾在端點、不外推。
 export const clamp = {
   extrapolateLeft: "clamp",

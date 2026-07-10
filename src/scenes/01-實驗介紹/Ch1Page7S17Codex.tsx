@@ -17,14 +17,13 @@ import {
   YELLOW,
 } from "../../theme/colors";
 import { WindowFrame } from "../../components/WindowFrame";
-import { FONT, clamp, easeOutExpo } from "../../theme/motion";
+import { FONT, MONO, clamp, easeOutExpo } from "../../theme/motion";
 
 // 第 1 集・第 7 頁・S17：Codex 是 AI Agent，且可以操作你電腦裡的資料（360 幀）
 //   原本被拆成 S17(Codex 置中介紹)/S18(Codex 靠左＋操作視窗) 兩顆，此處合併回單一連續鏡頭：
 //   Codex 置中彈入（AI Agent／by OpenAI）→ 約 f=150 移到左側並略縮 →
 //   箭頭連到「你的電腦」視窗、逐行寫入程式碼、✓ 已修改。
 const CONTENT_OUT = [338, 359] as const;
-const MONO = 'Consolas, "Courier New", monospace';
 
 const CODEX_Y = 500;
 const WIN = { x: 1330, y: 520, w: 600, h: 380 };
