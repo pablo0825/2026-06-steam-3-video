@@ -6,21 +6,29 @@ import {
   useCurrentFrame,
   useVideoConfig,
 } from "remotion";
-import { BLACK, CARD_BORDER, GREEN, NEUTRAL_50, TEXT_DARK, WHITE, withAlpha } from "../../theme/colors";
-import { FONT, clamp } from "../../theme/motion";
+import { DIVIDER, NEUTRAL_50, SUBTLE, TEXT_DARK } from "../../theme/colors";
+import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
-// 第 1 集・第 5 頁・S13：三個可透過原型驗證的問題，並逐一蓋上「已驗證」（390 幀）
-//   原本被拆成 S13(三張卡翻牌)/S14(逐一蓋章) 兩顆，此處合併回單一連續鏡頭：
-//   三張卡翻牌進場 → 約 f=240 逐一彈出「✓ 已驗證」綠章。
+// 第 1 集・第 5 頁・S13：三個可透過原型驗證的問題（390 幀）
+//   三組「大字＋輔助問句」以虛線隔開，逐一進場。
 const CONTENT_OUT = [368, 389] as const;
 
-// 蓋章（第二拍）於三張卡翻完後開始。
-const STAMP_OFFSET = 240;
+const GROUP_STARTS = [0, 75, 150] as const;
+const HELPER_DELAY = 12; // 輔助文字晚於大字，讓兩者有主從關係
+const DIVIDER_LEAD = 8; // 虛線先於它右邊那組淡入：先有格線，內容才填進去
+const DIVIDER_FADE = 12;
+const DIVIDER_H = 300;
+const RISE = 18; // 滑入類動畫的長度
+// 視覺重量集中在上方的大字，幾何置中會顯得偏低；整組往上提 24px 補償。
+const OPTICAL_LIFT = 48;
 
-const CARDS = [
-  { emoji: "🎮", label: "測試玩法", x: 480, flipStart: 0, stampStart: STAMP_OFFSET + 0 },
-  { emoji: "🎨", label: "視覺風格", x: 960, flipStart: 80, stampStart: STAMP_OFFSET + 45 },
-  { emoji: "⚙️", label: "技術評估", x: 1440, flipStart: 160, stampStart: STAMP_OFFSET + 90 },
+// 彈性進場：ζ≈0.55，衝到約 1.13 倍再彈回 1.0（與 S11 膠囊同一組手感）。
+const POP = { damping: 16, stiffness: 200 } as const;
+
+const GROUPS = [
+  { title: "玩法", helper: "有趣嗎？" },
+  { title: "畫面", helper: "風格對嗎？" },
+  { title: "技術", helper: "做得到嗎？" },
 ] as const;
 
 export const Ch1Page5S13QuestionCards: React.FC = () => {
@@ -30,77 +38,75 @@ export const Ch1Page5S13QuestionCards: React.FC = () => {
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      <AbsoluteFill style={{ opacity }}>
-        {CARDS.map((card) => {
-          const flip = spring({
-            frame: frame - card.flipStart,
-            fps,
-            config: { damping: 13, stiffness: 150 },
-          });
-          const angle = interpolate(flip, [0, 1], [95, 0]);
-          const stamp = spring({
-            frame: frame - card.stampStart,
-            fps,
-            config: { damping: 9, stiffness: 140 },
-          });
+      <AbsoluteFill
+        style={{
+          opacity,
+          alignItems: "center",
+          justifyContent: "center",
+          paddingBottom: OPTICAL_LIFT,
+        }}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
+          {GROUPS.map((group, index) => {
+            const start = GROUP_STARTS[index];
+            const titleIn = spring({ frame: frame - start, fps, config: POP });
+            const helperStart = start + HELPER_DELAY;
+            const helperIn = interpolate(
+              frame,
+              [helperStart, helperStart + RISE],
+              [0, 1],
+              easeOutExpo,
+            );
+            // 每條虛線屬於它左邊那組之後、右邊那組之前的空隙。
+            const dividerStart = start - DIVIDER_LEAD;
+            const dividerIn = interpolate(
+              frame,
+              [dividerStart, dividerStart + DIVIDER_FADE],
+              [0, 1],
+              clamp,
+            );
 
-          return (
-            <div
-              key={card.label}
-              style={{
-                position: "absolute",
-                left: card.x,
-                top: 540,
-                width: 380,
-                height: 360,
-                marginLeft: -190,
-                marginTop: -180,
-                transform: `perspective(1000px) rotateY(${angle}deg)`,
-                opacity: flip <= 0 ? 0 : 1,
-              }}
-            >
-              <div
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  borderRadius: 32,
-                  background: WHITE,
-                  border: `5px solid ${CARD_BORDER}`,
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 28,
-                  boxShadow: `0 16px 40px ${withAlpha(BLACK, 0.08)}`,
-                }}
-              >
-                <div style={{ fontSize: 120, lineHeight: 1 }}>{card.emoji}</div>
-                <div style={{ fontSize: 50, fontWeight: 800, color: TEXT_DARK }}>{card.label}</div>
-              </div>
-
-              {stamp > 0 && (
-                <div
-                  style={{
-                    position: "absolute",
-                    top: -28,
-                    right: -24,
-                    transform: `rotate(-12deg) scale(${stamp})`,
-                    background: GREEN,
-                    color: WHITE,
-                    fontSize: 30,
-                    fontWeight: 800,
-                    padding: "10px 20px",
-                    borderRadius: 12,
-                    boxShadow: `0 8px 20px ${withAlpha(GREEN, 0.35)}`,
-                    whiteSpace: "nowrap",
-                  }}
-                >
-                  ✓ 已驗證
+            return (
+              <React.Fragment key={group.title}>
+                {index > 0 && (
+                  <div
+                    style={{
+                      width: 0,
+                      height: DIVIDER_H,
+                      borderLeft: `3px dashed ${DIVIDER}`,
+                      opacity: dividerIn,
+                    }}
+                  />
+                )}
+                <div style={{ width: 460, textAlign: "center" }}>
+                  <div
+                    style={{
+                      transform: `scale(${titleIn})`,
+                      fontSize: 130,
+                      fontWeight: 900,
+                      color: TEXT_DARK,
+                      lineHeight: 1.2,
+                    }}
+                  >
+                    {group.title}
+                  </div>
+                  <div
+                    style={{
+                      marginTop: 16,
+                      opacity: helperIn,
+                      transform: `translateY(${interpolate(helperIn, [0, 1], [16, 0])}px)`,
+                      fontSize: 48,
+                      fontWeight: 700,
+                      color: SUBTLE,
+                    }}
+                  >
+                    {group.helper}
+                  </div>
                 </div>
-              )}
-            </div>
-          );
-        })}
+              </React.Fragment>
+            );
+          })}
+        </div>
       </AbsoluteFill>
     </AbsoluteFill>
   );
