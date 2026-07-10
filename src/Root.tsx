@@ -306,7 +306,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch2-Page3-S09-ConstraintMethod"
             component={Ch2Page3S09ConstraintMethod}
-            durationInFrames={251}
+            durationInFrames={281}
             fps={30}
             width={1920}
             height={1080}

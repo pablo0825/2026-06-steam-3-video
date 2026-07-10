@@ -17,11 +17,17 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
-// 第 2 集・第 3 頁・S09：限制＝激發靈感（251 幀）
-//   虛線框從大收緊框住設計師 → 設計師搖晃、微縮 → 臨界爆發（放大＋黃光）、
-//   框被撐開一下後消失 → 6 張玩法小卡片自中心噴出 → 整體淡出。
+// 第 2 集・第 3 頁・S09：限制＝激發靈感（281 幀）
+//   開場先停留空白底一拍 → 設計師淡入、獨自停留一拍 → 虛線框從大收緊框住他 →
+//   設計師搖晃、微縮 → 臨界爆發（放大＋黃光）、框被撐開一下後消失 →
+//   6 張玩法小卡片自中心噴出 → 整體淡出，結尾留幾格乾淨的米白底。
 const CENTER_X = 960;
 const CENTER_Y = 500;
+
+// 開場空白底停留的幀數；設計師的進場以「扣掉停留後的幀」為基準。
+const OPENING_HOLD = 15;
+// 設計師先獨自停留這麼多幀，虛線框之後的所有動作才起跑。
+const FRAME_DELAY = 15;
 
 // 時間軸
 const DESIGNER_IN = [0, 16] as const;
@@ -30,7 +36,8 @@ const SHRINK = [30, 116] as const; // 框收緊 / 設計師張力累積
 const BURST_AT = 116; // 爆發時點
 const FLY_START = 126; // 卡片開始噴出
 const FLY_STAGGER = 3;
-const CONTENT_OUT = [226, 250] as const;
+// 最後一格是 280；淡出提早 8 格歸零，尾巴留一拍空白底。
+const CONTENT_OUT = [218, 242] as const;
 
 // 6 張玩法小卡片（中心相對座標＋旋轉）
 const CARDS = [
@@ -46,57 +53,52 @@ export const Ch2Page3S09ConstraintMethod: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
-  const contentOut = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
+  // 扣掉開場停留：f < 0 的期間所有動畫都還沒起跑，畫面維持空白底。
+  const f = frame - OPENING_HOLD;
+  // 虛線框之後的所有動作再延後一拍，讓設計師先獨自站一會兒。
+  const fb = f - FRAME_DELAY;
+
+  const contentOut = interpolate(fb, CONTENT_OUT, [1, 0], clamp);
 
   // 設計師進場（淡入＋微放大）
-  const dInOp = interpolate(frame, DESIGNER_IN, [0, 1], clamp);
-  const dInScale = interpolate(frame, DESIGNER_IN, [0.6, 1], easeStandard);
+  const dInOp = interpolate(f, DESIGNER_IN, [0, 1], clamp);
+  const dInScale = interpolate(f, DESIGNER_IN, [0.6, 1], easeStandard);
 
   // 搖晃：sin 震盪 × 張力包絡（越接近爆發越大），爆發時收斂
-  const tension = interpolate(frame, [72, BURST_AT], [0, 1], clamp);
-  const shakeWindow = interpolate(
-    frame,
-    [BURST_AT, BURST_AT + 8],
-    [1, 0],
-    clamp,
-  );
-  const osc = Math.sin((frame - 44) * 0.85);
+  const tension = interpolate(fb, [72, BURST_AT], [0, 1], clamp);
+  const shakeWindow = interpolate(fb, [BURST_AT, BURST_AT + 8], [1, 0], clamp);
+  const osc = Math.sin((fb - 44) * 0.85);
   const shakeX = osc * 16 * tension * shakeWindow;
   const shakeRot = osc * 5 * tension * shakeWindow;
 
   // 設計師 scale：跟著框收緊被壓縮（1→0.82）→ 爆發 1.25 → 回 1
   const dReact =
-    frame < BURST_AT
-      ? interpolate(frame, [96, BURST_AT], [1, 0.82], easeStandard)
-      : frame < BURST_AT + 12
-        ? interpolate(
-            frame,
-            [BURST_AT, BURST_AT + 12],
-            [0.82, 1.25],
-            easeStandard,
-          )
+    fb < BURST_AT
+      ? interpolate(fb, [96, BURST_AT], [1, 0.82], easeStandard)
+      : fb < BURST_AT + 12
+        ? interpolate(fb, [BURST_AT, BURST_AT + 12], [0.82, 1.25], easeStandard)
         : interpolate(
-            frame,
+            fb,
             [BURST_AT + 12, BURST_AT + 36],
             [1.25, 1],
             easeStandard,
           );
   const glow =
-    interpolate(frame, [BURST_AT, BURST_AT + 12], [0, 1], clamp) *
-    interpolate(frame, [BURST_AT + 12, BURST_AT + 36], [1, 0], clamp);
+    interpolate(fb, [BURST_AT, BURST_AT + 12], [0, 1], clamp) *
+    interpolate(fb, [BURST_AT + 12, BURST_AT + 36], [1, 0], clamp);
 
   // 虛線框：收緊（900→320）→ 爆發撐開（320→370）→ 淡出
   const frameW =
-    frame < BURST_AT
-      ? interpolate(frame, SHRINK, [1040, 400], easeStandard)
-      : interpolate(frame, [BURST_AT, BURST_AT + 8], [400, 460], easeStandard);
+    fb < BURST_AT
+      ? interpolate(fb, SHRINK, [1040, 400], easeStandard)
+      : interpolate(fb, [BURST_AT, BURST_AT + 8], [400, 460], easeStandard);
   const frameH =
-    frame < BURST_AT
-      ? interpolate(frame, SHRINK, [650, 400], easeStandard)
-      : interpolate(frame, [BURST_AT, BURST_AT + 8], [400, 460], easeStandard);
+    fb < BURST_AT
+      ? interpolate(fb, SHRINK, [650, 400], easeStandard)
+      : interpolate(fb, [BURST_AT, BURST_AT + 8], [400, 460], easeStandard);
   const frameOpacity =
-    interpolate(frame, FRAME_OPACITY_IN, [0, 1], clamp) *
-    interpolate(frame, [BURST_AT + 6, BURST_AT + 22], [1, 0], clamp);
+    interpolate(fb, FRAME_OPACITY_IN, [0, 1], clamp) *
+    interpolate(fb, [BURST_AT + 6, BURST_AT + 22], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -141,7 +143,7 @@ export const Ch2Page3S09ConstraintMethod: React.FC = () => {
         {/* 6 張玩法小卡片：自中心噴出（spring overshoot） */}
         {CARDS.map((c, i) => {
           const p = spring({
-            frame: frame - (FLY_START + i * FLY_STAGGER),
+            frame: fb - (FLY_START + i * FLY_STAGGER),
             fps,
             config: { damping: 14, stiffness: 120, mass: 0.8 },
           });
