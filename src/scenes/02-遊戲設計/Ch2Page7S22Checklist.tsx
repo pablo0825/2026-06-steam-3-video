@@ -18,11 +18,13 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
-// 第 2 集・第 7 頁・S22：繪製分鏡圖的重點（276 幀）
-//   標題（無 icon／無高亮）→ 2×2 編號卡片，逐張黃色高亮掃過，
+// 第 2 集・第 7 頁・S22：繪製分鏡圖的重點（306 幀）
+//   開場先留 30 幀白底 → 標題（無 icon／無高亮）→ 2×2 編號卡片，逐張黃色高亮掃過，
 //   掃到第 4 張時停住高亮並彈出「最重要」標籤，整塊垂直置中。
+//   內容一律以 f = frame - HOLD 計時（與 S03 同慣例），CONTENT_OUT 則用絕對 frame。
+const HOLD = 30; // 開場留白：內容延後這麼多幀才開始
 const CONTENT_IN = [0, 24] as const;
-const CONTENT_OUT = [254, 275] as const;
+const CONTENT_OUT = [284, 305] as const;
 
 // 四個重點（編號由 index 補零產生）；start 為各卡進場幀。
 const CHECKLIST = [
@@ -138,17 +140,18 @@ const ChecklistCard: React.FC<ChecklistCardProps> = ({
 export const Ch2Page7S22Checklist: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容的時間軸（開場留白後才起算）
 
   const opacity =
-    interpolate(frame, CONTENT_IN, [0, 1], clamp) *
+    interpolate(f, CONTENT_IN, [0, 1], clamp) *
     interpolate(frame, CONTENT_OUT, [1, 0], clamp);
   const titleProgress = spring({
-    frame,
+    frame: f,
     fps,
     config: { damping: 14, stiffness: 110 },
   });
   const tagProgress = spring({
-    frame: frame - TAG_START,
+    frame: f - TAG_START,
     fps,
     config: { damping: 15, stiffness: 140 },
   });
@@ -187,16 +190,16 @@ export const Ch2Page7S22Checklist: React.FC = () => {
         >
           {CHECKLIST.map((item, index) => {
             const progress = spring({
-              frame: frame - item.start,
+              frame: f - item.start,
               fps,
               config: { damping: 14, stiffness: 125 },
             });
             const accentProgress =
               index === 3
                 ? progress
-                : frame < item.start + 42
+                : f < item.start + 42
                   ? progress
-                  : interpolate(frame, [item.start + 42, item.start + 70], [1, 0], clamp);
+                  : interpolate(f, [item.start + 42, item.start + 70], [1, 0], clamp);
 
             return (
               <ChecklistCard
