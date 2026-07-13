@@ -43,7 +43,7 @@ export const Ch2Page5S14LoopFramework: React.FC = () => {
               config: { damping: 15, stiffness: 125 },
             }),
           )}
-          exampleProgress={[0, 0, 0, 0]}
+          swapProgress={[0, 0, 0, 0]}
           arrowProgress={CORE_LOOP_ARROW_PATHS.map((_, index) =>
             interpolate(
               frame,

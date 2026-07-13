@@ -29,7 +29,7 @@ const CONCLUSION_IN = [508, 540] as const; // 對比完全淡出（498）後留 
 const CONTENT_OUT = [593, 619] as const;
 
 const NODES: CoreLoopNodeData[] = [
-  { label: "動作", example: "跳躍・衝刺・攀牆", icon: "action" },
+  { label: "動作", example: "跳躍・攀牆…", icon: "action" },
   { label: "達成", example: "抵達安全平台", icon: "achievement" },
   { label: "回饋", example: "緊張・刺激感", icon: "feedback" },
   { label: "成長", example: "技術上的突破", icon: "growth" },
@@ -77,13 +77,13 @@ export const Ch2Page6S17CelesteLoop: React.FC = () => {
           <CoreLoopDiagram
             nodes={NODES}
             nodeProgress={[1, 1, 1, 1]}
-            exampleProgress={EXAMPLE_START.map((start) =>
+            swapProgress={EXAMPLE_START.map((start) =>
               interpolate(frame, [start, start + 26], [0, 1], easeStandard),
             )}
             arrowProgress={CORE_LOOP_ARROW_PATHS.map(() => 1)}
             highlight={highlight}
             markerPrefix="page6-s17-loop-arrow"
-            exampleFontSize={22}
+            exampleFontSize={28}
           />
         </AbsoluteFill>
 
@@ -216,7 +216,9 @@ export const Ch2Page6S17CelesteLoop: React.FC = () => {
             >
               循環設計
             </span>
-            <span style={{ fontSize: 68, fontWeight: 800, color: BLUE }}>→</span>
+            <span style={{ fontSize: 68, fontWeight: 800, color: BLUE }}>
+              →
+            </span>
             <span
               style={{
                 fontSize: 76,

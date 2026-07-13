@@ -8,6 +8,7 @@ import {
   YELLOW,
   withAlpha,
 } from "../../theme/colors";
+import { clamp } from "../../theme/motion";
 
 export type CoreLoopIconName = "action" | "achievement" | "feedback" | "growth";
 
@@ -90,6 +91,18 @@ const computeArrow = (s: number, t: number) => {
 
 const ARROWS = CORE_LOOP_ARROW_PATHS.map(([s, t]) => computeArrow(s, t));
 
+// 標題槽內兩段文字共用：滿版置中疊放，換字時只有透明度與位移在動。
+const SLOT_TEXT: React.CSSProperties = {
+  position: "absolute",
+  inset: 0,
+  display: "flex",
+  alignItems: "center",
+  justifyContent: "center",
+  lineHeight: 1.2,
+  fontWeight: 800,
+  whiteSpace: "nowrap",
+};
+
 const LoopIcon: React.FC<{ name: CoreLoopIconName; color: string }> = ({
   name,
   color,
@@ -143,7 +156,9 @@ const LoopIcon: React.FC<{ name: CoreLoopIconName; color: string }> = ({
 export const CoreLoopDiagram: React.FC<{
   nodes: CoreLoopNodeData[];
   nodeProgress: number[];
-  exampleProgress: number[];
+  // 換字進度 0..1：0 顯示 label（如「動作」），1 已換成 example（如「打怪・解謎」）。
+  // 舊標題往上淡出、新標題自下淡入，兩者在中段交棒。
+  swapProgress: number[];
   arrowProgress: number[];
   activeIndex?: number;
   highlight?: number[]; // 每個 index 的高亮強度 0..1（優先於 activeIndex）
@@ -152,7 +167,7 @@ export const CoreLoopDiagram: React.FC<{
 }> = ({
   nodes,
   nodeProgress,
-  exampleProgress,
+  swapProgress,
   arrowProgress,
   activeIndex = -1,
   highlight,
@@ -208,6 +223,14 @@ export const CoreLoopDiagram: React.FC<{
         const scale = interpolate(progress, [0, 1], [0.82, 1 + 0.04 * h]);
         const accent = lerpColor(SUBTLE, YELLOW, h);
 
+        // 換上去的新標題：高亮時黃色，退高亮後回到原標題的深色（非 icon 的淡灰）
+        const swapColor = lerpColor(TEXT_DARK, YELLOW, h);
+
+        // 換字：舊標題先往上退場，新標題自下接上（0.42 起交棒，中間不留空窗）
+        const swap = Math.max(0, Math.min(1, swapProgress[index] ?? 0));
+        const labelOut = interpolate(swap, [0, 0.45], [1, 0], clamp);
+        const exampleIn = interpolate(swap, [0.42, 1], [0, 1], clamp);
+
         return (
           <div
             key={node.label}
@@ -235,36 +258,32 @@ export const CoreLoopDiagram: React.FC<{
             }}
           >
             <LoopIcon name={node.icon} color={accent} />
-            <div
-              style={{
-                fontSize: 42,
-                lineHeight: 1,
-                fontWeight: 800,
-                letterSpacing: 4,
-                color: TEXT_DARK,
-              }}
-            >
-              {node.label}
-            </div>
-            <div
-              style={{
-                height: 34,
-                marginTop: 5,
-                fontSize: exampleFontSize,
-                lineHeight: 1.2,
-                fontWeight: 700,
-                letterSpacing: 1,
-                color: accent,
-                opacity: exampleProgress[index],
-                transform: `translateY(${interpolate(
-                  exampleProgress[index],
-                  [0, 1],
-                  [12, 0],
-                )}px)`,
-                whiteSpace: "nowrap",
-              }}
-            >
-              {node.example}
+            {/* 標題槽：固定高度，label 與 example 疊在同一位置交棒，圓圈內不位移 */}
+            <div style={{ position: "relative", width: "100%", height: 46 }}>
+              <div
+                style={{
+                  ...SLOT_TEXT,
+                  fontSize: 42,
+                  letterSpacing: 4,
+                  color: TEXT_DARK,
+                  opacity: labelOut,
+                  transform: `translateY(${interpolate(labelOut, [0, 1], [-16, 0])}px)`,
+                }}
+              >
+                {node.label}
+              </div>
+              <div
+                style={{
+                  ...SLOT_TEXT,
+                  fontSize: exampleFontSize,
+                  letterSpacing: 1,
+                  color: swapColor,
+                  opacity: exampleIn,
+                  transform: `translateY(${interpolate(exampleIn, [0, 1], [16, 0])}px)`,
+                }}
+              >
+                {node.example}
+              </div>
             </div>
           </div>
         );

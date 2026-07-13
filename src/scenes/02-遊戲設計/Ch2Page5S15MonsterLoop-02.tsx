@@ -47,12 +47,13 @@ export const Ch2Page5S15MonsterLoop02: React.FC = () => {
         <CoreLoopDiagram
           nodes={NODES}
           nodeProgress={[1, 1, 1, 1]}
-          exampleProgress={EXAMPLE_START.map((start) =>
+          swapProgress={EXAMPLE_START.map((start) =>
             interpolate(frame, [start, start + 26], [0, 1], easeStandard),
           )}
           arrowProgress={CORE_LOOP_ARROW_PATHS.map(() => 1)}
           highlight={highlight}
           markerPrefix="page5-s15-loop-arrow"
+          exampleFontSize={28}
         />
       </AbsoluteFill>
     </AbsoluteFill>
