@@ -10,7 +10,6 @@ import {
 } from "remotion";
 import {
   BORDER_LIGHT,
-  FIGURE,
   NEUTRAL_50,
   TEXT_DARK,
   WHITE,
@@ -18,8 +17,9 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo as ease } from "../../theme/motion";
 import { VerdictBadge } from "../../components/VerdictBadge";
+import { Figure } from "./ConsensusStage";
 
-// 第 2 集・第 7 頁・S21：用分鏡圖凝聚團隊共識（230 幀）
+// 第 2 集・第 7 頁・S21-01：用分鏡圖凝聚團隊共識（230 幀）
 //   分鏡：三個剪影人像進場 → 分鏡圖卡片在上方淡入（人像整組下移讓位）→
 //   隔一段時間，每個頭上逐一彈出打勾徽章（達成共識）。
 //   結尾沿用 CONTENT_OUT 淡出慣例（ch2-end-fades 測試會檢查結尾幀）。
@@ -28,12 +28,6 @@ const CONTENT_OUT = [200, 229] as const;
 // 三個人像的水平中心（1920 置中、間距 400）與頂端 y。
 const CENTERS = [560, 960, 1360] as const;
 const FIG_TOP = 560;
-
-// 人像尺寸
-const HEAD_R = 40;
-const BODY_W = 150;
-const BODY_H = 132;
-const HEAD_GAP = 22; // 頭與身體間距
 
 // 頭上打勾徽章
 const BADGE_D = 68; // 徽章圓徑
@@ -51,36 +45,7 @@ const CARD_IN = [40, 74] as const; // 分鏡圖淡入
 const CHECK_START = 100; // 第一個打勾（分鏡圖落定後隨即開始）
 const CHECK_STAGGER = 24; // 俐落的一二三連續打勾；三個約於 f≈170 全部落定
 
-// 單個人像剪影（圓頭＋拱形身體），置於 (cx, FIG_TOP)。
-const Figure: React.FC<{ cx: number }> = ({ cx }) => {
-  const w = BODY_W;
-  const h = HEAD_R * 2 + HEAD_GAP + BODY_H;
-  const bodyTop = HEAD_R * 2 + HEAD_GAP;
-  const r = 16; // 身體底部圓角
-  const bodyPath = `M 0 ${bodyTop + w / 2}
-    A ${w / 2} ${w / 2} 0 0 1 ${w} ${bodyTop + w / 2}
-    L ${w} ${bodyTop + BODY_H - r}
-    A ${r} ${r} 0 0 1 ${w - r} ${bodyTop + BODY_H}
-    L ${r} ${bodyTop + BODY_H}
-    A ${r} ${r} 0 0 1 0 ${bodyTop + BODY_H - r} Z`;
-  return (
-    <svg
-      width={w}
-      height={h}
-      viewBox={`0 0 ${w} ${h}`}
-      style={{
-        position: "absolute",
-        left: cx - w / 2,
-        top: FIG_TOP,
-      }}
-    >
-      <circle cx={w / 2} cy={HEAD_R} r={HEAD_R} fill={FIGURE} />
-      <path d={bodyPath} fill={FIGURE} />
-    </svg>
-  );
-};
-
-export const Ch2Page7S21Consensus: React.FC = () => {
+export const Ch2Page7S21Consensus01: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
 
@@ -112,7 +77,7 @@ export const Ch2Page7S21Consensus: React.FC = () => {
           }}
         >
           {CENTERS.map((cx) => (
-            <Figure key={cx} cx={cx} />
+            <Figure key={cx} cx={cx} top={FIG_TOP} />
           ))}
 
           {/* 分鏡圖寫完後，頭上打勾徽章逐一彈入（達成共識） */}

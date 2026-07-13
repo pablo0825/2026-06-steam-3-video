@@ -48,8 +48,11 @@ test("Ch2 ending fade-out ranges end on the final rendered frame", async () => {
     // S14 刻意不淡出（保持原樣到最後），故不列入結尾淡出檢查。
     // S15 已拆成 -01／-02，真正做結尾淡出的是 -02。
     ["Ch2Page5S15MonsterLoop02", "Ch2Page5S15MonsterLoop-02.tsx", "CONTENT_OUT"],
-    ["Ch2Page6S17CelesteLoop", "Ch2Page6S17CelesteLoop.tsx", "CONTENT_OUT"],
-    ["Ch2Page7S21Consensus", "Ch2Page7S21Consensus.tsx", "CONTENT_OUT"],
+    // S17 已拆成 -01（Celeste 實機 alpha overlay，結尾用 END_FILL 填底）／-02。
+    ["Ch2Page6S17CelesteLoop02", "Ch2Page6S17CelesteLoop-02.tsx", "CONTENT_OUT"],
+    ["Ch2Page7S21Consensus01", "Ch2Page7S21Consensus-01.tsx", "CONTENT_OUT"],
+    ["Ch2Page7S21Consensus02", "Ch2Page7S21Consensus-02.tsx", "CONTENT_OUT"],
+    ["Ch2Page7S21Consensus03", "Ch2Page7S21Consensus-03.tsx", "CONTENT_OUT"],
     ["Ch2Page7S22Checklist", "Ch2Page7S22Checklist.tsx", "CONTENT_OUT"],
   ];
 

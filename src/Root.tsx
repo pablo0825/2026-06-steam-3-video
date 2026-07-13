@@ -38,7 +38,9 @@ import { Ch2Page6S17CelesteLoop01 } from "./scenes/02-遊戲設計/Ch2Page6S17Ce
 import { Ch2Page6S17CelesteLoop02 } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop-02";
 import { Ch2Page7S18StoryboardIntro } from "./scenes/02-遊戲設計/Ch2Page7S18StoryboardIntro";
 import { Ch2Page7S19Examples } from "./scenes/02-遊戲設計/Ch2Page7S19Examples";
-import { Ch2Page7S21Consensus } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus";
+import { Ch2Page7S21Consensus01 } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus-01";
+import { Ch2Page7S21Consensus02 } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus-02";
+import { Ch2Page7S21Consensus03 } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus-03";
 import { Ch2Page7S22Checklist } from "./scenes/02-遊戲設計/Ch2Page7S22Checklist";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
@@ -434,9 +436,25 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
-            id="Ch2-Page7-S21-Consensus"
-            component={Ch2Page7S21Consensus}
+            id="Ch2-Page7-S21-Consensus-01"
+            component={Ch2Page7S21Consensus01}
             durationInFrames={230}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Ch2-Page7-S21-Consensus-02"
+            component={Ch2Page7S21Consensus02}
+            durationInFrames={260}
+            fps={30}
+            width={1920}
+            height={1080}
+          />
+          <Composition
+            id="Ch2-Page7-S21-Consensus-03"
+            component={Ch2Page7S21Consensus03}
+            durationInFrames={250}
             fps={30}
             width={1920}
             height={1080}
