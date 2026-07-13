@@ -34,7 +34,8 @@ import { Ch2Page5S13CoreLoop } from "./scenes/02-遊戲設計/Ch2Page5S13CoreLoo
 import { Ch2Page5S14LoopFramework } from "./scenes/02-遊戲設計/Ch2Page5S14LoopFramework";
 import { Ch2Page5S15MonsterLoop01 } from "./scenes/02-遊戲設計/Ch2Page5S15MonsterLoop-01";
 import { Ch2Page5S15MonsterLoop02 } from "./scenes/02-遊戲設計/Ch2Page5S15MonsterLoop-02";
-import { Ch2Page6S17CelesteLoop } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop";
+import { Ch2Page6S17CelesteLoop01 } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop-01";
+import { Ch2Page6S17CelesteLoop02 } from "./scenes/02-遊戲設計/Ch2Page6S17CelesteLoop-02";
 import { Ch2Page7S18StoryboardIntro } from "./scenes/02-遊戲設計/Ch2Page7S18StoryboardIntro";
 import { Ch2Page7S19Examples } from "./scenes/02-遊戲設計/Ch2Page7S19Examples";
 import { Ch2Page7S21Consensus } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus";
@@ -390,8 +391,17 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
-            id="Ch2-Page6-S17-CelesteLoop"
-            component={Ch2Page6S17CelesteLoop}
+            id="Ch2-Page6-S17-CelesteLoop-01"
+            component={Ch2Page6S17CelesteLoop01}
+            durationInFrames={272}
+            fps={30}
+            width={1920}
+            height={1080}
+            calculateMetadata={calculateAlphaOverlayMetadata}
+          />
+          <Composition
+            id="Ch2-Page6-S17-CelesteLoop-02"
+            component={Ch2Page6S17CelesteLoop02}
             durationInFrames={620}
             fps={30}
             width={1920}

@@ -17,9 +17,10 @@ import {
   type CoreLoopNodeData,
 } from "./CoreLoopDiagram";
 
-// 第 2 集・第 6 頁・S17：Celeste 核心循環對比（620 幀，無標題、迴圈位置對齊 S15-02）
-//   整個迴圈直接淡入 → 行進脈衝高亮（跑完回中性）→ 迴圈原地淡出 → 對比資訊置中出現 → 結論。
-const EXAMPLE_START = [70, 130, 190, 250] as const;
+// 第 2 集・第 6 頁・S17-02：Celeste 核心循環對比（620 幀，無標題、迴圈位置對齊 S15-02）
+//   接在 S17-01（Celeste 實機 overlay）之後：整個迴圈直接淡入 → 行進脈衝逐一高亮、每個節點在
+//   高亮時換上 Celeste 的具體內容（跑完回中性）→ 迴圈原地淡出 → 對比資訊置中出現 → 結論。
+const EXAMPLE_START = [70, 130, 190, 250] as const; // 各節點的高亮／換字起點
 const HL_RAMP = 14; // 高亮淡入／淡出幀數
 const HL_HOLD = 50; // 高亮停留（起點→開始淡出）；與下一個交疊成行進脈衝
 const DIAGRAM_OUT = [332, 362] as const; // 高亮回中性後，迴圈原地淡出
@@ -35,7 +36,7 @@ const NODES: CoreLoopNodeData[] = [
   { label: "成長", example: "技術上的突破", icon: "growth" },
 ];
 
-export const Ch2Page6S17CelesteLoop: React.FC = () => {
+export const Ch2Page6S17CelesteLoop02: React.FC = () => {
   const frame = useCurrentFrame();
   const contentOut = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
