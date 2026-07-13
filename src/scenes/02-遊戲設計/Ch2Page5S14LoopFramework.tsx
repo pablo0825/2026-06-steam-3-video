@@ -7,16 +7,17 @@ import {
   useVideoConfig,
 } from "remotion";
 import { NEUTRAL_50 } from "../../theme/colors";
-import { FONT, easeStandard } from "../../theme/motion";
+import { FONT, clamp, easeStandard } from "../../theme/motion";
 import {
   CORE_LOOP_ARROW_PATHS,
   CoreLoopDiagram,
   type CoreLoopNodeData,
 } from "./CoreLoopDiagram";
 
-// 第 2 集・第 5 頁・S14：核心循環框架建立（234 幀，結尾不淡出、保持原樣到最後）
+// 第 2 集・第 5 頁・S14：核心循環框架建立（234 幀，結尾淡出到 NEUTRAL_50）
 const NODE_START = [48, 84, 120, 156] as const;
 const ARROW_START = [72, 108, 144, 180] as const;
+const ENDING_FADE = [212, 232] as const; // 最後一支箭頭 210 畫完 → 淡出，於最後一格前歸零（最後格為 233）
 
 const NODES: CoreLoopNodeData[] = [
   { label: "動作", example: "打怪・解謎", icon: "action" },
@@ -28,10 +29,11 @@ const NODES: CoreLoopNodeData[] = [
 export const Ch2Page5S14LoopFramework: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const opacity = interpolate(frame, ENDING_FADE, [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
-      <AbsoluteFill style={{ transform: "translateY(-62px)" }}>
+      <AbsoluteFill style={{ transform: "translateY(-62px)", opacity }}>
         <CoreLoopDiagram
           nodes={NODES}
           nodeProgress={NODE_START.map((start) =>
