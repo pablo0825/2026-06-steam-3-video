@@ -9,8 +9,11 @@ import {
 import { BLACK, BLUE, NEUTRAL_50, SUBTLE, TEXT_DARK, WHITE, withAlpha, YELLOW } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
-// 第 1 集・第 3 頁・S08：最快的方法做出可玩版本（180 幀）
-const CONTENT_OUT = [160, 179] as const;
+// 第 1 集・第 3 頁・S08：最快的方法做出可玩版本（210 幀）
+//   開場先留 30 幀白底 → 內容一律以 f = frame - HOLD 計時（與 S03 同慣例），
+//   CONTENT_OUT 則用絕對 frame。
+const HOLD = 30; // 開場留白：內容延後這麼多幀才開始
+const CONTENT_OUT = [190, 209] as const;
 const LEFT = { x: 360, y: 520 };
 const RIGHT = { x: 1560, y: 520 };
 const NODE_R = 92;
@@ -73,21 +76,22 @@ const PrototypeNode: React.FC<{
 export const Ch1Page3S08FastPlayable: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容的時間軸（開場留白後才起算）
 
   const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
-  const ideaIn = spring({ frame, fps, config: { damping: 12, stiffness: 120 } });
+  const ideaIn = spring({ frame: f, fps, config: { damping: 12, stiffness: 120 } });
   const playIn = spring({
-    frame: frame - 48,
+    frame: f - 48,
     fps,
     config: { damping: 11, stiffness: 130 },
   });
   const lineStartX = LEFT.x + NODE_R + GAP;
   const lineEndX = RIGHT.x - NODE_R - GAP;
-  const lineProgress = interpolate(frame, [22, 56], [0, 1], easeOutExpo);
+  const lineProgress = interpolate(f, [22, 56], [0, 1], easeOutExpo);
   const tipX = interpolate(lineProgress, [0, 1], [lineStartX, lineEndX]);
   const midX = (lineStartX + lineEndX) / 2;
-  const labelOpacity = interpolate(frame, [28, 48], [0, 1], clamp);
-  const skipOpacity = interpolate(frame, [58, 78], [0, 1], clamp);
+  const labelOpacity = interpolate(f, [28, 48], [0, 1], clamp);
+  const skipOpacity = interpolate(f, [58, 78], [0, 1], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
