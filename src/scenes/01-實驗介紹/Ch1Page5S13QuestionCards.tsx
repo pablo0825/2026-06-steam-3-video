@@ -9,9 +9,12 @@ import {
 import { DIVIDER, NEUTRAL_50, SUBTLE, TEXT_DARK } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
-// 第 1 集・第 5 頁・S13：三個可透過原型驗證的問題（390 幀）
+// 第 1 集・第 5 頁・S13：三個可透過原型驗證的問題（420 幀）
 //   三組「大字＋輔助問句」以虛線隔開，逐一進場。
-const CONTENT_OUT = [368, 389] as const;
+//   開場先留 30 幀白底 → 內容一律以 f = frame - HOLD 計時（與 S08 同慣例），
+//   CONTENT_OUT 則用絕對 frame。
+const HOLD = 30; // 開場留白：內容延後這麼多幀才開始
+const CONTENT_OUT = [398, 419] as const;
 
 const GROUP_STARTS = [0, 75, 150] as const;
 const HELPER_DELAY = 12; // 輔助文字晚於大字，讓兩者有主從關係
@@ -34,6 +37,7 @@ const GROUPS = [
 export const Ch1Page5S13QuestionCards: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容的時間軸（開場留白後才起算）
   const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
   return (
@@ -49,10 +53,10 @@ export const Ch1Page5S13QuestionCards: React.FC = () => {
         <div style={{ display: "flex", alignItems: "center", gap: 40 }}>
           {GROUPS.map((group, index) => {
             const start = GROUP_STARTS[index];
-            const titleIn = spring({ frame: frame - start, fps, config: POP });
+            const titleIn = spring({ frame: f - start, fps, config: POP });
             const helperStart = start + HELPER_DELAY;
             const helperIn = interpolate(
-              frame,
+              f,
               [helperStart, helperStart + RISE],
               [0, 1],
               easeOutExpo,
@@ -60,7 +64,7 @@ export const Ch1Page5S13QuestionCards: React.FC = () => {
             // 每條虛線屬於它左邊那組之後、右邊那組之前的空隙。
             const dividerStart = start - DIVIDER_LEAD;
             const dividerIn = interpolate(
-              frame,
+              f,
               [dividerStart, dividerStart + DIVIDER_FADE],
               [0, 1],
               clamp,

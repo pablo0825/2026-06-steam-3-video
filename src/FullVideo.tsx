@@ -42,13 +42,13 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={430}>
         <Ch1Page4S11GameplayQuestion />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={210}>
+      <Series.Sequence durationInFrames={240}>
         <Ch1Page5S12PrototypeGoal />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={390}>
+      <Series.Sequence durationInFrames={420}>
         <Ch1Page5S13QuestionCards />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={390}>
+      <Series.Sequence durationInFrames={420}>
         <Ch1Page6S15ExperimentFlow />
       </Series.Sequence>
       <Series.Sequence durationInFrames={360}>

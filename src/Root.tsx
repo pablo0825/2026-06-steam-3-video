@@ -180,7 +180,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page5-S12-PrototypeGoal"
           component={Ch1Page5S12PrototypeGoal}
-          durationInFrames={210}
+          durationInFrames={240}
           fps={30}
           width={1920}
           height={1080}
@@ -188,7 +188,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page5-S13-QuestionCards"
           component={Ch1Page5S13QuestionCards}
-          durationInFrames={390}
+          durationInFrames={420}
           fps={30}
           width={1920}
           height={1080}
@@ -196,7 +196,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page6-S15-ExperimentFlow"
           component={Ch1Page6S15ExperimentFlow}
-          durationInFrames={390}
+          durationInFrames={420}
           fps={30}
           width={1920}
           height={1080}

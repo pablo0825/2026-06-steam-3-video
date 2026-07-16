@@ -9,10 +9,15 @@ import {
 import { BLUE, BOX_GREY, NEUTRAL_50, TEXT_DARK, WHITE, withAlpha } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo } from "../../theme/motion";
 
-// 第 1 集・第 6 頁・S15：四階段實驗流程，並標出目前在看第 1 部 Codex（390 幀）
+// 第 1 集・第 6 頁・S15：四階段實驗流程，並標出目前在看第 1 部 Codex（420 幀）
 //   原本被拆成 S15(四階段流程)/S16(高亮 Codex＋「你正在看」) 兩顆，此處合併回單一連續鏡頭：
 //   標題＋四方塊由左至右滑入 → 約 f=210 Codex 藍色高亮放大、其餘變暗、彈出「第 1 部」標籤。
-const CONTENT_OUT = [368, 389] as const;
+//   開場先留 30 幀白底 → 內容一律以 f = frame - HOLD 計時（與 S08 同慣例）。
+//   結尾淡出改用 durationInFrames 反推、並留 TAIL_HOLD 幀全空白（與 DefinitionCard 同慣例）：
+//   舊版 [368,389] 讓淡出剛好落在最後一幀，倒數第二幀仍殘留約 5% 內容 → 看起來沒淡乾淨。
+const HOLD = 30; // 開場留白：內容延後這麼多幀才開始
+const FADE_OUT = 24; // 結尾淡出花幾幀
+const TAIL_HOLD = 15; // 淡出後再留幾幀全空白，確保最後幾幀完全淡出
 const BOX_W = 340;
 const BOX_H = 190;
 const ROW_Y = 540;
@@ -26,16 +31,23 @@ const TAG_START = 228;
 
 export const Ch1Page6S15ExperimentFlow: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
+  const { fps, durationInFrames } = useVideoConfig();
+  const f = frame - HOLD; // 內容的時間軸（開場留白後才起算）
 
-  const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
-  const titleIn = spring({ frame, fps, config: { damping: 14, stiffness: 120 } });
+  // 結尾淡出：在結尾前 TAIL_HOLD 幀就歸零，留一段全空白尾巴 → 最後幾幀確實淡淨。
+  const opacity = interpolate(
+    frame,
+    [durationInFrames - FADE_OUT - TAIL_HOLD, durationInFrames - TAIL_HOLD],
+    [1, 0],
+    clamp,
+  );
+  const titleIn = spring({ frame: f, fps, config: { damping: 14, stiffness: 120 } });
 
   // 第二拍：Codex 高亮、其餘變暗、標籤彈出。
-  const highlight = interpolate(frame, HIGHLIGHT, [0, 1], easeOutExpo);
+  const highlight = interpolate(f, HIGHLIGHT, [0, 1], easeOutExpo);
   const dimOthers = interpolate(highlight, [0, 1], [1, 0.28]);
   const codexScale = 1 + 0.12 * highlight;
-  const tagIn = spring({ frame: frame - TAG_START, fps, config: { damping: 11, stiffness: 130 } });
+  const tagIn = spring({ frame: f - TAG_START, fps, config: { damping: 11, stiffness: 130 } });
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -61,7 +73,7 @@ export const Ch1Page6S15ExperimentFlow: React.FC = () => {
             const x1 = CENTERS[index] + BOX_W / 2 + 8;
             const x2 = CENTERS[index + 1] - BOX_W / 2 - 8;
             const appear = APPEAR[index + 1];
-            const progress = interpolate(frame, [appear, appear + 15], [0, 1], easeOutExpo);
+            const progress = interpolate(f, [appear, appear + 15], [0, 1], easeOutExpo);
             const tip = interpolate(progress, [0, 1], [x1, x2]);
 
             return (
@@ -83,7 +95,7 @@ export const Ch1Page6S15ExperimentFlow: React.FC = () => {
 
         {LABELS.map((label, index) => {
           const appearProgress = spring({
-            frame: frame - APPEAR[index],
+            frame: f - APPEAR[index],
             fps,
             config: { damping: 14, stiffness: 120 },
           });
