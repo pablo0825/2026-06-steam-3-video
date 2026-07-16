@@ -51,7 +51,7 @@ export const FullVideo: React.FC = () => {
       <Series.Sequence durationInFrames={420}>
         <Ch1Page6S15ExperimentFlow />
       </Series.Sequence>
-      <Series.Sequence durationInFrames={360}>
+      <Series.Sequence durationInFrames={385}>
         <Ch1Page7S17Codex />
       </Series.Sequence>
       <Series.Sequence durationInFrames={630}>
