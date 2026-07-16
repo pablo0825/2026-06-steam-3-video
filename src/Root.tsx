@@ -132,7 +132,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch1-Page2-S03-AIPrototype"
           component={Ch1Page2S03AIPrototype}
-          durationInFrames={330}
+          durationInFrames={390}
           fps={30}
           width={1920}
           height={1080}

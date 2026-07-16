@@ -22,13 +22,17 @@ import {
   withAlpha,
 } from "../../theme/colors";
 import { WindowFrame } from "../../components/WindowFrame";
+import { VerdictBadge } from "../../components/VerdictBadge";
 import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
-// 第 1 集・第 2 頁・S03：AI → 程式/企劃/美術 → 聚合成可以玩的遊戲原型（330 幀）
+// 第 1 集・第 2 頁・S03：AI → 程式/企劃/美術 → 聚合成可以玩的遊戲原型（390 幀）
 //   原本被拆成 S03(AI 出現)/S04(連三領域)/S05(聚合) 三顆，此處合併回單一連續鏡頭：
-//   AI 置中彈入 → 上移到上方 → 線往下連三領域 → 三領域聚合淡出、視窗成形，
-//   視窗內角色跳過兩個平台抵達終點（迷你遊戲原型），下方出「可以玩的遊戲原型」。
-const CONTENT_OUT = [325, 329] as const;
+//   開場先留 30 幀白底 → AI 置中彈入 → 上移到上方 → 線往下連三領域 → 三領域聚合淡出、
+//   視窗成形，視窗內角色跳過兩個平台抵達終點（迷你遊戲原型），下方出「可以玩的遊戲原型」。
+//   內容一律以 f = frame - HOLD 計時（與 S22 同慣例），CONTENT_OUT 則用絕對 frame。
+const HOLD = 30; // 開場留白：內容延後這麼多幀才開始
+// 提早幾幀淡完，讓完全淡出的白底留住尾巴（386~389 維持全淡出），避免只閃 1 幀。
+const CONTENT_OUT = [380, 385] as const;
 
 const AI_X = 960;
 const AI_Y_CENTER = 540;
@@ -92,29 +96,31 @@ const DOMAINS: Domain[] = [
 export const Ch1Page2S03AIPrototype: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容的時間軸（開場留白後才起算）
 
   const opacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
 
   // AI：置中彈入 → 上移到上方 → 聚合階段淡出。
-  const aiIn = spring({ frame, fps, config: { damping: 12, stiffness: 120 } });
-  const aiY = interpolate(frame, AI_MOVE, [AI_Y_CENTER, AI_Y_TOP], easeOutExpo);
+  const aiIn = spring({ frame: f, fps, config: { damping: 12, stiffness: 120 } });
+  const aiY = interpolate(f, AI_MOVE, [AI_Y_CENTER, AI_Y_TOP], easeOutExpo);
   const aiOpacity =
-    interpolate(frame, [0, 10], [0, 1], clamp) *
-    interpolate(frame, [210, 245], [1, 0], clamp);
+    interpolate(f, [0, 10], [0, 1], clamp) *
+    interpolate(f, [210, 245], [1, 0], clamp);
 
   // 三領域聚合進度、連線淡出。
-  const converge = interpolate(frame, CONVERGE, [0, 1], easeStandard);
-  const lineFade = interpolate(frame, [210, 228], [1, 0], clamp);
+  const converge = interpolate(f, CONVERGE, [0, 1], easeStandard);
+  const lineFade = interpolate(f, [210, 228], [1, 0], clamp);
 
   // 第三拍：視窗成形、角色跳關、旗子升起、下方標籤。
   const winSpring = spring({
-    frame: frame - WIN_START,
+    frame: f - WIN_START,
     fps,
     config: { damping: 16, stiffness: 110 },
   });
-  const winVisible = frame >= WIN_START - 2;
-  const flagRaise = interpolate(frame, [300, 314], [0, 1], easeOutExpo);
-  const labelIn = interpolate(frame, [296, 314], [0, 1], easeOutExpo);
+  const winVisible = f >= WIN_START - 2;
+  const flagRaise = interpolate(f, [300, 314], [0, 1], easeOutExpo);
+  // 旗子升完後，字才進場（原本兩者幾乎同時）。
+  const labelIn = interpolate(f, [320, 336], [0, 1], easeOutExpo);
 
   // 角色位置（逐段拋物線跳躍）＋落地壓扁。
   let charX = W0.x;
@@ -122,11 +128,11 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
   let charSy = 1;
   for (let i = 0; i < HOPS.length; i++) {
     const h = HOPS[i];
-    if (frame >= h.t1) {
+    if (f >= h.t1) {
       charX = h.to.x;
       charBottom = h.to.y;
-    } else if (frame >= h.t0) {
-      const p = (frame - h.t0) / (h.t1 - h.t0);
+    } else if (f >= h.t0) {
+      const p = (f - h.t0) / (h.t1 - h.t0);
       charX = interpolate(p, [0, 1], [h.from.x, h.to.x]);
       const baseY = interpolate(p, [0, 1], [h.from.y, h.to.y]);
       charBottom = baseY - JUMP_H * Math.sin(Math.PI * p);
@@ -138,8 +144,8 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
     }
   }
   for (const h of HOPS) {
-    if (frame >= h.t1 && frame < h.t1 + 6) {
-      charSy = interpolate((frame - h.t1) / 6, [0, 1], [0.82, 1]);
+    if (f >= h.t1 && f < h.t1 + 6) {
+      charSy = interpolate((f - h.t1) / 6, [0, 1], [0.82, 1]);
     }
   }
 
@@ -155,7 +161,7 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
             const y2 = DOMAIN_Y - NODE_R;
             const len = Math.hypot(x2 - x1, y2 - y1);
             const progress = interpolate(
-              frame,
+              f,
               [domain.lineStart, domain.lineStart + 18],
               [0, 1],
               easeOutExpo,
@@ -209,14 +215,14 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
         {/* 三領域節點：連線後彈入，聚合階段移向中央、縮小淡出 */}
         {DOMAINS.map((domain) => {
           const built = spring({
-            frame: frame - domain.iconStart,
+            frame: f - domain.iconStart,
             fps,
             config: { damping: 11, stiffness: 130 },
           });
           const cx = interpolate(converge, [0, 1], [domain.x, CENTER.x]);
           const cy = interpolate(converge, [0, 1], [DOMAIN_Y, CENTER.y]);
           const scale = built * interpolate(converge, [0, 1], [1, 0.2]);
-          const nodeFade = interpolate(frame, [234, 258], [1, 0], clamp);
+          const nodeFade = interpolate(f, [234, 258], [1, 0], clamp);
 
           return (
             <div
@@ -260,7 +266,7 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
                   fontWeight: 700,
                   color: TEXT_DARK,
                   whiteSpace: "nowrap",
-                  opacity: interpolate(frame, [210, 224], [1, 0], clamp),
+                  opacity: interpolate(f, [210, 224], [1, 0], clamp),
                 }}
               >
                 {domain.label}
@@ -388,21 +394,22 @@ export const Ch1Page2S03AIPrototype: React.FC = () => {
           </WindowFrame>
         )}
 
-        {/* 下方標籤 */}
+        {/* 下方標籤：綠色 ✓ 徽章（原位置再下移 16px） */}
         <div
           style={{
             position: "absolute",
             left: 960,
-            top: WIN_TOP + TITLE_H + CANVAS_H + 44,
+            top: WIN_TOP + TITLE_H + CANVAS_H + 44 + 16,
             transform: `translate(-50%, ${interpolate(labelIn, [0, 1], [20, 0])}px)`,
             opacity: labelIn,
-            fontSize: 52,
-            fontWeight: 800,
-            color: TEXT_DARK,
-            whiteSpace: "nowrap",
           }}
         >
-          可以玩的遊戲原型
+          <VerdictBadge
+            kind="pass"
+            label="可以玩的遊戲原型"
+            labelSize={52}
+            labelColor={TEXT_DARK}
+          />
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
