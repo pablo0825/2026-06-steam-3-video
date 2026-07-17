@@ -13,6 +13,7 @@ import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13Qu
 import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15ExperimentFlow";
 import { Ch1Page7S17Codex } from "./scenes/01-實驗介紹/Ch1Page7S17Codex";
 import { Ch1Page8S19Comparison } from "./scenes/01-實驗介紹/Ch1Page8S19Comparison";
+import { Ch1Page9S20Overlay } from "./scenes/01-實驗介紹/Ch1Page9S20Overlay";
 import { Ch1Page10S25Thanks } from "./scenes/01-實驗介紹/Ch1Page10S25Thanks";
 import { Ch1Page10S26Credits } from "./scenes/01-實驗介紹/Ch1Page10S26Credits";
 import { Ch2Page1S01Opening } from "./scenes/02-遊戲設計/Ch2Page1S01Opening";
@@ -107,7 +108,7 @@ export const RemotionRoot: React.FC = () => {
       <Composition
         id="FullVideo"
         component={FullVideo}
-        durationInFrames={4360}
+        durationInFrames={4510}
         fps={30}
         width={1920}
         height={1080}
@@ -216,6 +217,15 @@ export const RemotionRoot: React.FC = () => {
           fps={30}
           width={1920}
           height={1080}
+        />
+        <Composition
+          id="Ch1-Page9-S20-Overlay"
+          component={Ch1Page9S20Overlay}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={calculateAlphaOverlayMetadata}
         />
         <Composition
           id="Ch1-Page10-S25-Thanks"

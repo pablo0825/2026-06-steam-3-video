@@ -12,11 +12,12 @@ import { Ch1Page5S13QuestionCards } from "./scenes/01-實驗介紹/Ch1Page5S13Qu
 import { Ch1Page6S15ExperimentFlow } from "./scenes/01-實驗介紹/Ch1Page6S15ExperimentFlow";
 import { Ch1Page7S17Codex } from "./scenes/01-實驗介紹/Ch1Page7S17Codex";
 import { Ch1Page8S19Comparison } from "./scenes/01-實驗介紹/Ch1Page8S19Comparison";
+import { Ch1Page9S20Overlay } from "./scenes/01-實驗介紹/Ch1Page9S20Overlay";
 import { Ch1Page10S25Thanks } from "./scenes/01-實驗介紹/Ch1Page10S25Thanks";
 import { Ch1Page10S26Credits } from "./scenes/01-實驗介紹/Ch1Page10S26Credits";
 
-// 整支影片：10 頁依序接起來（第 9 頁為佔位卡）
-// 目前已實作內容長度加總 = 4360 frames（S23-S24 螢幕錄影待補）
+// 整支影片：10 頁依序接起來
+// 目前已實作內容長度加總 = 4505 frames（S23-S24 螢幕錄影待補）
 
 export const FullVideo: React.FC = () => {
   return (
@@ -56,6 +57,9 @@ export const FullVideo: React.FC = () => {
       </Series.Sequence>
       <Series.Sequence durationInFrames={630}>
         <Ch1Page8S19Comparison />
+      </Series.Sequence>
+      <Series.Sequence durationInFrames={150}>
+        <Ch1Page9S20Overlay />
       </Series.Sequence>
       <Series.Sequence durationInFrames={90}>
         <Ch1Page10S25Thanks />
