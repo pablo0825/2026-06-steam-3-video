@@ -5,8 +5,13 @@ import { FONT, clamp } from "../../theme/motion";
 
 // 第 1 集・第 10 頁・S26：製作團隊與素材來源上捲（480 幀，依既有實作節奏）
 const CONTENT_OUT = [450, 479] as const;
-const SCROLL_END = 450;
-const SCROLL_DISTANCE = 3000;
+// 捲動跑滿全片（到 479，與淡出重疊）→ 淡出時內容仍在移動，不會中途凍結。
+const SCROLL_END = 479;
+// 開場：內容起點落在畫面底部下方（第一行在畫面外，從下往上捲入）→
+// 結尾：捲到上方，尾段（素材來源）於片尾接近上緣時接淡出。
+// 搭配 inner marginTop 660：第一行第 0 幀位於 SCROLL_FROM + 660 ≈ 1160（畫面外）。
+const SCROLL_FROM = 500;
+const SCROLL_TO = -2100;
 const FS_TITLE = 60;
 const FS_BODY = 32;
 const FS_LABEL = 26;
@@ -16,7 +21,7 @@ export const Ch1Page10S26Credits: React.FC = () => {
   const frame = useCurrentFrame();
 
   const contentOpacity = interpolate(frame, CONTENT_OUT, [1, 0], clamp);
-  const scrollY = interpolate(frame, [0, SCROLL_END], [0, -SCROLL_DISTANCE], clamp);
+  const scrollY = interpolate(frame, [0, SCROLL_END], [SCROLL_FROM, SCROLL_TO], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT, overflow: "hidden" }}>
@@ -126,11 +131,11 @@ export const Ch1Page10S26Credits: React.FC = () => {
             <div style={{ marginTop: 48, fontSize: FS_LABEL, color: SUBTLE, fontWeight: 600 }}>
               背景音樂
             </div>
-            <div style={{ marginTop: 10, fontSize: FS_BODY, color: TEXT_DARK, fontWeight: 500 }}>
-              “Background Music” — NastelBom
+            <div style={{ marginTop: 10, maxWidth: 960, fontSize: FS_BODY, lineHeight: 1.5, color: TEXT_DARK, fontWeight: 500 }}>
+              “3AM Silence - minimal lo-fi beat with deep atmosphere and slow rhythm” — nyxaurora
             </div>
             <div style={{ marginTop: 8, fontSize: FS_META, color: SUBTLE, fontWeight: 500 }}>
-              Pixabay · Pixabay Content License · 2026/2/19
+              Pixabay · Pixabay Content License · 2026/05/04
             </div>
 
             <div style={{ marginTop: 36, fontSize: FS_LABEL, color: SUBTLE, fontWeight: 600 }}>
