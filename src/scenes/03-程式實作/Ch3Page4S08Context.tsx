@@ -8,9 +8,7 @@ import {
 const SEGMENTS: DefinitionSegment[] = [
   { text: "Context 是 AI 的" },
   { text: "短期記憶", highlight: true },
-  { text: "，我們和 AI 的對話，會" },
-  { text: "暫時存在", highlight: true },
-  { text: " Context 裡" },
+  { text: "，我們和 AI 的對話，會暫時存在 Context 裡" },
 ];
 
 export const Ch3Page4S08Context: React.FC = () => (
