@@ -43,6 +43,7 @@ import { Ch2Page7S21Consensus01 } from "./scenes/02-遊戲設計/Ch2Page7S21Cons
 import { Ch2Page7S21Consensus02 } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus-02";
 import { Ch2Page7S21Consensus03 } from "./scenes/02-遊戲設計/Ch2Page7S21Consensus-03";
 import { Ch2Page7S22Checklist } from "./scenes/02-遊戲設計/Ch2Page7S22Checklist";
+import { Ch2Page8S23Overlay } from "./scenes/02-遊戲設計/Ch2Page8S23Overlay";
 import { Ch2Page10Ending } from "./scenes/02-遊戲設計/Ch2Page10Ending";
 import { Ch3Page1S01Opening } from "./scenes/03-程式實作/Ch3Page1S01Opening";
 import { Ch3Page1S02Focus } from "./scenes/03-程式實作/Ch3Page1S02Focus";
@@ -478,6 +479,15 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
         </Folder>
+        <Composition
+          id="Ch2-Page8-S23-Overlay"
+          component={Ch2Page8S23Overlay}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={calculateAlphaOverlayMetadata}
+        />
         <Composition
           id="Ch2-Page10-Ending"
           component={Ch2Page10Ending}
