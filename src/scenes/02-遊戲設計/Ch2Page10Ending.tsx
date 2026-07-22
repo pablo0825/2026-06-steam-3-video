@@ -1,36 +1,17 @@
 import React from "react";
-import {
-  AbsoluteFill,
-  Img,
-  interpolate,
-  spring,
-  staticFile,
-  useCurrentFrame,
-  useVideoConfig,
-} from "remotion";
-import {
-  BLACK,
-  BLUE,
-  NEUTRAL_300,
-  SUBTLE,
-  TEXT_DARK,
-  WHITE,
-  withAlpha,
-} from "../../theme/colors";
+import { AbsoluteFill, interpolate, useCurrentFrame } from "remotion";
+import { BLUE, NEUTRAL_300, SUBTLE, TEXT_DARK, WHITE } from "../../theme/colors";
 
-// 第 2 集・第 10 頁：結尾（連續上捲）
-//   S27：主持人照片＋感謝聆聽
-//   S28：製作團隊、補助計畫與素材來源上捲，最後淡入黑場
+// 第 2 集・第 10 頁：結尾——製作團隊、補助計畫與素材來源上捲，最後淡出收尾。
+//   內容直接從畫面下方捲上來（比照 Ch1 S26），移除原本的主持人照片開場與黑場。
 
 const FONT = '"Noto Sans TC", "Microsoft JhengHei", "PingFang TC", sans-serif';
-const HOST_PHOTO = staticFile("01-實驗介紹/host-yujia.jpg");
 
-const HOLD_FRAMES = 120;
-const SCROLL_START = HOLD_FRAMES;
-const SCROLL_END = 660;
-const SCROLL_DISTANCE = 3200;
-const FADE_START = 630;
-const FADE_END = 660;
+const SCROLL_END = 690;
+const SCROLL_FROM = 1120; // 開場：第一行落在畫面底部下方（畫面外）
+const SCROLL_TO = -2450; // 結尾：素材來源捲到上方（跑滿全片），最後 30 幀邊捲邊淡出
+const FADE_START = 660;
+const FADE_END = 690;
 
 const FS_TITLE = 60;
 const FS_BODY = 32;
@@ -45,7 +26,7 @@ type CreditSource = {
 };
 
 type CreditSection = {
-  label: "圖片素材" | "遊戲畫面";
+  label: "圖片素材" | "遊戲畫面" | "背景音樂" | "音效";
   items: CreditSource[];
 };
 
@@ -58,6 +39,11 @@ const CREDIT_SECTIONS: CreditSection[] = [
         creator: "MIT Game Lab",
         detail: "活動照片 · 活動期間 2019/01/25–2019/01/27",
         domain: "gamelab.mit.edu",
+      },
+      {
+        title: "global-game-jam-2024",
+        creator: "Global Game Jam",
+        detail: "活動照片 · 2025/01/24",
       },
       {
         title: "“Virus Attack” Storyboard",
@@ -90,7 +76,28 @@ const CREDIT_SECTIONS: CreditSection[] = [
       {
         title: "Rhythm Doctor",
         creator: "7th Beat Games",
-        detail: "遊戲畫面自行錄製",
+        detail: "遊戲畫面自行錄製 · 遊戲發行於 2025/12/07",
+      },
+    ],
+  },
+  {
+    label: "背景音樂",
+    items: [
+      {
+        title:
+          "“3AM Silence - minimal lo-fi beat with deep atmosphere and slow rhythm”",
+        creator: "nyxaurora",
+        detail: "Pixabay · Pixabay Content License · 2026/05/04",
+      },
+    ],
+  },
+  {
+    label: "音效",
+    items: [
+      {
+        title: "“Opening bottle with falling cap”",
+        creator: "freesound_community",
+        detail: "Pixabay · Pixabay Content License · 2022/8/31",
       },
     ],
   },
@@ -101,25 +108,18 @@ const PROJECT_NAME =
 
 export const Ch2Page10Ending: React.FC = () => {
   const frame = useCurrentFrame();
-  const { fps } = useVideoConfig();
-
-  const introIn = spring({
-    frame,
-    fps,
-    config: { damping: 14, stiffness: 110 },
-  });
 
   const scrollY = interpolate(
     frame,
-    [SCROLL_START, SCROLL_END],
-    [0, -SCROLL_DISTANCE],
+    [0, SCROLL_END],
+    [SCROLL_FROM, SCROLL_TO],
     {
       extrapolateLeft: "clamp",
       extrapolateRight: "clamp",
     },
   );
 
-  const blackIn = interpolate(frame, [FADE_START, FADE_END], [0, 1], {
+  const contentOpacity = interpolate(frame, [FADE_START, FADE_END], [1, 0], {
     extrapolateLeft: "clamp",
     extrapolateRight: "clamp",
   });
@@ -139,60 +139,13 @@ export const Ch2Page10Ending: React.FC = () => {
           flexDirection: "column",
           alignItems: "center",
           textAlign: "center",
+          opacity: contentOpacity,
         }}
       >
-        {/* S27：主持人照片與感謝文字 */}
+        {/* 製作團隊、計畫資訊與素材來源 */}
         <div
           style={{
-            marginTop: 210,
-            opacity: introIn,
-            transform: `scale(${interpolate(introIn, [0, 1], [0.92, 1])})`,
-            display: "flex",
-            flexDirection: "column",
-            alignItems: "center",
-          }}
-        >
-          <Img
-            src={HOST_PHOTO}
-            style={{
-              width: 600,
-              height: "auto",
-              borderRadius: 12,
-              boxShadow: `0 16px 40px ${withAlpha(BLACK, 0.12)}`,
-            }}
-            from={-13}
-          />
-
-          <div
-            style={{
-              marginTop: 44,
-              fontSize: 100,
-              fontWeight: 800,
-              letterSpacing: 8,
-              color: TEXT_DARK,
-              whiteSpace: "nowrap",
-            }}
-          >
-            感謝各位聆聽！
-          </div>
-          <div
-            style={{
-              marginTop: 18,
-              fontSize: 46,
-              fontWeight: 500,
-              letterSpacing: 4,
-              color: SUBTLE,
-              whiteSpace: "nowrap",
-            }}
-          >
-            祝大家開發順利
-          </div>
-        </div>
-
-        {/* S28：製作團隊、計畫資訊與素材來源 */}
-        <div
-          style={{
-            marginTop: 360,
+            marginTop: 0,
             display: "flex",
             flexDirection: "column",
             alignItems: "center",
@@ -400,8 +353,6 @@ export const Ch2Page10Ending: React.FC = () => {
           ))}
         </div>
       </div>
-
-      <AbsoluteFill style={{ backgroundColor: BLACK, opacity: blackIn }} />
     </AbsoluteFill>
   );
 };
