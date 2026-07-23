@@ -61,6 +61,7 @@ import { Ch3Page4S08Context } from "./scenes/03-程式實作/Ch3Page4S08Context"
 import { Ch3Page4S09ContextLimit01 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-01";
 import { Ch3Page4S09ContextLimit02 } from "./scenes/03-程式實作/Ch3Page4S09ContextLimit-02";
 import { Ch3Page5S11AgentsDefinition } from "./scenes/03-程式實作/Ch3Page5S11AgentsDefinition";
+import { Ch3Page5S11Overlay02 } from "./scenes/03-程式實作/Ch3Page5S11Overlay-02";
 import { Ch3Page5S12AgentsFlow } from "./scenes/03-程式實作/Ch3Page5S12AgentsFlow";
 import { Ch3Page6S14SpecDefinition01 } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition-01";
 import { Ch3Page6S14SpecDefinition02 } from "./scenes/03-程式實作/Ch3Page6S14SpecDefinition-02";
@@ -70,6 +71,7 @@ import { Ch3Page7S16CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7
 import { Ch3Page7S17CelesteSpecOverlay } from "./scenes/03-程式實作/Ch3Page7S17CelesteSpecOverlay";
 import { Ch3Page7S18SpecPerFeature } from "./scenes/03-程式實作/Ch3Page7S18SpecPerFeature";
 import { Ch3Page7S18SpecWorkflow } from "./scenes/03-程式實作/Ch3Page7S18SpecWorkflow";
+import { Ch3Page8S19Overlay } from "./scenes/03-程式實作/Ch3Page8S19Overlay";
 import { Ch3Page12S23Fundamentals } from "./scenes/03-程式實作/Ch3Page12S23Fundamentals";
 import { Ch3Page13S24Ending } from "./scenes/03-程式實作/Ch3Page13S24Ending";
 import { Ch4Page1S01Opening } from "./scenes/04-美術整合/Ch4Page1S01Opening";
@@ -639,6 +641,15 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
           <Composition
+            id="Ch3-Page5-S11-Overlay-02"
+            component={Ch3Page5S11Overlay02}
+            durationInFrames={150}
+            fps={30}
+            width={1920}
+            height={1080}
+            calculateMetadata={calculateAlphaOverlayMetadata}
+          />
+          <Composition
             id="Ch3-Page5-S12-AgentsFlow"
             component={Ch3Page5S12AgentsFlow}
             durationInFrames={360}
@@ -715,6 +726,15 @@ export const RemotionRoot: React.FC = () => {
             height={1080}
           />
         </Folder>
+        <Composition
+          id="Ch3-Page8-S19-Overlay"
+          component={Ch3Page8S19Overlay}
+          durationInFrames={150}
+          fps={30}
+          width={1920}
+          height={1080}
+          calculateMetadata={calculateAlphaOverlayMetadata}
+        />
         <Composition
           id="Ch3-Page12-S23-Fundamentals"
           component={Ch3Page12S23Fundamentals}
