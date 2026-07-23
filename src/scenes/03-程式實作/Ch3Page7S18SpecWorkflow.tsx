@@ -23,11 +23,11 @@ const NODE_CY = 470;
 // 五節點中心 x
 const NODE_CX = [230, 590, 950, 1310, 1670] as const;
 const NODES = [
-  "User Story",
+  "實作計畫",
   "Spec",
   "Plan",
   "AI／使用者實作",
-  "手動驗證",
+  "AI／使用者驗證",
 ] as const;
 
 // 順流式串接：每個節點出現後，連線往右畫出去帶出下一個節點
@@ -59,7 +59,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
     );
   const segArrow = (i: number) =>
     interpolate(frame, [50 + i * STRIDE, 62 + i * STRIDE], [0, 1], clamp);
-  // 手動驗證高亮
+  // 驗證節點高亮
   const verifyHi = interpolate(frame, [218, 238], [0, 1], easeStandard);
   // 回饋曲線 + 標籤
   const fbDraw = interpolate(frame, [250, 308], [0, 1], easeStandard);
@@ -83,7 +83,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
           letterSpacing: 2,
         }}
       >
-        Spec 實作流程
+        實作流程
       </div>
 
       <svg
@@ -115,9 +115,9 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
           );
         })}
 
-        {/* 回饋曲線：手動驗證 → Spec（驗證失敗）；起點離節點底部留間距、整體下壓 */}
+        {/* 回饋曲線：AI／使用者驗證 → 實作計畫（驗證失敗）；起點離節點底部留間距、整體下壓 */}
         <path
-          d={`M${NODE_CX[4]} ${FB_Y} C${NODE_CX[4]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_DEPTH} ${NODE_CX[1]} ${FB_Y + ARROW_LEN}`}
+          d={`M${NODE_CX[4]} ${FB_Y} C${NODE_CX[4]} ${FB_DEPTH} ${NODE_CX[0]} ${FB_DEPTH} ${NODE_CX[0]} ${FB_Y + ARROW_LEN}`}
           fill="none"
           stroke={YELLOW}
           strokeWidth="6"
@@ -128,7 +128,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
         />
         <g
           opacity={fbArrow}
-          transform={`translate(${NODE_CX[1]} ${FB_Y}) rotate(-90)`}
+          transform={`translate(${NODE_CX[0]} ${FB_Y}) rotate(-90)`}
         >
           <path d="M0 0 L-30 -16 L-30 16 Z" fill={YELLOW} />
         </g>
@@ -138,7 +138,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
       <div
         style={{
           position: "absolute",
-          left: (NODE_CX[1] + NODE_CX[4]) / 2,
+          left: (NODE_CX[0] + NODE_CX[4]) / 2,
           top: FB_LABEL_Y,
           transform: "translate(-50%, -50%)",
           opacity: fbLabel,
@@ -152,7 +152,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
           boxShadow: `0 6px 16px ${withAlpha(TEXT_DARK, 0.08)}`,
         }}
       >
-        驗證失敗 → 回 Spec
+        實作下一項功能
       </div>
 
       {/* 五節點 */}
@@ -181,7 +181,7 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
               justifyContent: "center",
               textAlign: "center",
               padding: "0 14px",
-              fontSize: i === 3 ? 26 : 32,
+              fontSize: i === 3 || i === 4 ? 26 : 32,
               fontWeight: 900,
               color: hi > 0.15 ? YELLOW : TEXT_DARK,
               backgroundColor: WHITE,
