@@ -746,7 +746,7 @@ export const RemotionRoot: React.FC = () => {
         <Composition
           id="Ch3-Page13-S24-Ending"
           component={Ch3Page13S24Ending}
-          durationInFrames={690}
+          durationInFrames={562}
           fps={30}
           width={1920}
           height={1080}
