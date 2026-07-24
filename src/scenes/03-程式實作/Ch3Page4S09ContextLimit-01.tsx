@@ -19,13 +19,12 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeStandard } from "../../theme/motion";
 
-// 第 3 集・第 4 頁・S09-01：對話越來越長 → AI 忘東忘西（432 幀）
+// 第 3 集・第 4 頁・S09-01：對話越來越長 → AI 忘東忘西（447 幀）
 //   套用 S12 的「AI Agent」對話視窗樣式：聊天串裝進置中視窗（標題列 🤖 AI Agent），
 //   氣泡配色照 S12（使用者淡藍靠右、AI 中性灰靠左）。視窗一次可見 5 則：
 //   訊息一則則冒出、整串階梯式往上捲（越聊越長），最後一則 AI 露出困惑。
-//   視窗下方一句「對話越來越長…」作說明。
+const HOLD = 15; // 開場白底停留幀數（內容延後這麼多幀才開始）
 const FADE_IN = 18; // 開頭：視窗淡入
-const HEAD_IN = [6, 30] as const; // 下方說明淡入
 const MSG_FIRST = 24; // 第一則訊息（填滿階段）
 const MSG_STEP = 22; // 填滿階段每則間隔
 const READ_HOLD = 32; // 每則出現後停留（可閱讀）的幀數
@@ -33,8 +32,7 @@ const SCROLL_DUR = 14; // 單次往上捲一格的幀數
 const ENDING_FADE = [408, 432] as const; // 結尾整體淡出到 NEUTRAL_50
 
 const WIN_W = 900; // 視窗寬
-const WIN_CY = 480; // 視窗垂直中心
-const CAP_TOP = 900; // 下方說明位置（視窗下方）
+const WIN_CY = 540; // 視窗垂直中心（畫面正中）
 const ROW_H = 104; // 每則訊息的槽高
 const VISIBLE = 5; // 視窗同時可見則數
 const VIEW_H = VISIBLE * ROW_H; // 捲動視窗高度
@@ -70,15 +68,15 @@ const BUBBLE_BASE: React.CSSProperties = {
 export const Ch3Page4S09ContextLimit01: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容時間軸（開場白底後才起算）
 
-  const fadeIn = interpolate(frame, [0, FADE_IN], [0, 1], clamp);
-  const out = interpolate(frame, ENDING_FADE, [1, 0], clamp);
+  const fadeIn = interpolate(f, [0, FADE_IN], [0, 1], clamp);
+  const out = interpolate(f, ENDING_FADE, [1, 0], clamp);
   const contentOpacity = fadeIn * out;
-  const headIn = interpolate(frame, HEAD_IN, [0, 1], easeStandard);
 
   // 階梯式捲動：每 BEAT 內 [0,SCROLL_DUR] 緩動捲一格、其餘停留靜止 → 出現→停留→捲一格
   const maxRows = MESSAGES.length - VISIBLE;
-  const st = Math.max(0, frame - STEP_ONE);
+  const st = Math.max(0, f - STEP_ONE);
   const beat = Math.floor(st / BEAT);
   const stepFrac = interpolate(
     st - beat * BEAT,
@@ -149,7 +147,7 @@ export const Ch3Page4S09ContextLimit01: React.FC = () => {
                       ? MSG_FIRST + i * MSG_STEP
                       : STEP_ONE + (i - VISIBLE) * BEAT + SCROLL_DUR;
                   const appear = spring({
-                    frame: frame - at,
+                    frame: f - at,
                     fps,
                     config: { damping: 18, stiffness: 120 },
                   });
@@ -188,22 +186,6 @@ export const Ch3Page4S09ContextLimit01: React.FC = () => {
               </div>
             </div>
           </div>
-        </div>
-
-        {/* 下方說明 */}
-        <div
-          style={{
-            position: "absolute",
-            left: 960,
-            top: CAP_TOP,
-            transform: `translateX(-50%) translateY(${interpolate(headIn, [0, 1], [16, 0])}px)`,
-            opacity: headIn,
-            fontSize: 56,
-            fontWeight: 800,
-            color: TEXT_DARK,
-          }}
-        >
-          對話越來越長…
         </div>
       </AbsoluteFill>
     </AbsoluteFill>
