@@ -720,7 +720,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch3-Page7-S18-SpecWorkflow"
             component={Ch3Page7S18SpecWorkflow}
-            durationInFrames={414}
+            durationInFrames={250}
             fps={30}
             width={1920}
             height={1080}

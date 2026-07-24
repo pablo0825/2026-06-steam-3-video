@@ -30,9 +30,9 @@ const NODES = [
   "AI／使用者驗證",
 ] as const;
 
-// 順流式串接：每個節點出現後，連線往右畫出去帶出下一個節點
-const STRIDE = 44;
-const nodeStart = (i: number) => 6 + i * STRIDE;
+// 一次到位：五節點一起 pop、四段連線一起畫出（不再逐一串接）
+const NODE_AT = 20; // 五節點一起淡入的起點（比標題晚 20 幀）
+const SEG_DRAW = [20, 42] as const; // 四段藍線＋箭頭一起淡入（與節點同時間窗）
 
 // 箭頭長度：連線只畫到箭頭底部，由三角形當尖端，避免線戳出箭頭
 const ARROW_LEN = 30;
@@ -49,23 +49,15 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
   const { fps } = useVideoConfig();
 
   const titleIn = spring({ frame, fps, config: { damping: 16, stiffness: 110 } });
-  // 節點間四段連線（i = 0..3）：節點出現後才畫，畫到端點時帶出下一個節點
-  const segDraw = (i: number) =>
-    interpolate(
-      frame,
-      [28 + i * STRIDE, 56 + i * STRIDE],
-      [0, 1],
-      easeStandard,
-    );
-  const segArrow = (i: number) =>
-    interpolate(frame, [50 + i * STRIDE, 62 + i * STRIDE], [0, 1], clamp);
+  // 四段藍線＋箭頭一起淡入（共用同一時間窗）
+  const segDraw = interpolate(frame, SEG_DRAW, [0, 1], easeStandard);
   // 驗證節點高亮
-  const verifyHi = interpolate(frame, [218, 238], [0, 1], easeStandard);
+  const verifyHi = interpolate(frame, [88, 108], [0, 1], easeStandard);
   // 回饋曲線 + 標籤
-  const fbDraw = interpolate(frame, [250, 308], [0, 1], easeStandard);
-  const fbArrow = interpolate(frame, [300, 312], [0, 1], clamp);
-  const fbLabel = interpolate(frame, [286, 306], [0, 1], easeStandard);
-  const out = interpolate(frame, [366, 388], [1, 0], clamp);
+  const fbDraw = interpolate(frame, [108, 162], [0, 1], easeStandard);
+  const fbArrow = interpolate(frame, [155, 167], [0, 1], clamp);
+  const fbLabel = interpolate(frame, [142, 162], [0, 1], easeStandard);
+  const out = interpolate(frame, [202, 226], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -104,11 +96,9 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
                 stroke={BLUE}
                 strokeWidth="6"
                 strokeLinecap="round"
-                pathLength="1"
-                strokeDasharray="1"
-                strokeDashoffset={1 - segDraw(i)}
+                opacity={segDraw}
               />
-              <g opacity={segArrow(i)} transform={`translate(${x2} ${NODE_CY})`}>
+              <g opacity={segDraw} transform={`translate(${x2} ${NODE_CY})`}>
                 <path d="M0 0 L-30 -16 L-30 16 Z" fill={BLUE} />
               </g>
             </g>
@@ -157,11 +147,12 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
 
       {/* 五節點 */}
       {NODES.map((label, i) => {
-        const p = spring({
-          frame: frame - nodeStart(i),
-          fps,
-          config: { damping: 17, stiffness: 115, overshootClamping: true },
-        });
+        const nodeIn = interpolate(
+          frame,
+          [NODE_AT, NODE_AT + 22],
+          [0, 1],
+          easeStandard,
+        );
         const isVerify = i === 4;
         const hi = isVerify ? verifyHi : 0;
         return (
@@ -173,8 +164,8 @@ export const Ch3Page7S18SpecWorkflow: React.FC = () => {
               top: NODE_CY,
               width: NODE_W,
               height: NODE_H,
-              transform: `translate(-50%, -50%) scale(${interpolate(p, [0, 1], [0.86, 1])})`,
-              opacity: p,
+              transform: "translate(-50%, -50%)",
+              opacity: nodeIn,
               borderRadius: 22,
               display: "flex",
               alignItems: "center",
