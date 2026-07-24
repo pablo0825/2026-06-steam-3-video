@@ -17,6 +17,8 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp, easeOutExpo, easeStandard } from "../../theme/motion";
 
+const HOLD = 15; // 開場白底停留幀數（內容延後這麼多幀才開始）
+
 const FIELDS = [
   { title: "User Story", description: "從使用者角度描述功能", emoji: "👤" },
   {
@@ -33,14 +35,15 @@ const FIELDS = [
 export const Ch3Page6S15SpecStructure: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
+  const f = frame - HOLD; // 內容時間軸（開場白底後才起算）
 
   const titleIn = spring({
-    frame,
+    frame: f,
     fps,
     config: { damping: 15, stiffness: 110 },
   });
-  const groupIn = interpolate(frame, [70, 120], [0, 1], easeStandard);
-  const out = interpolate(frame, [980, 1018], [1, 0], clamp);
+  const groupIn = interpolate(f, [70, 120], [0, 1], easeStandard);
+  const out = interpolate(f, [980, 1018], [1, 0], clamp);
 
   return (
     <AbsoluteFill style={{ backgroundColor: NEUTRAL_50, fontFamily: FONT }}>
@@ -71,20 +74,20 @@ export const Ch3Page6S15SpecStructure: React.FC = () => {
           const startX = 175 + column * 550; // 左右邊距各 175，整排水平置中
           const startY = 315 + row * 300;
           const cardIn = interpolate(
-            frame,
+            f,
             [70 + index * 7, 112 + index * 7],
             [0, 1],
             easeStandard,
           );
           const highlightStart = 180 + index * 108;
           const highlightIn = interpolate(
-            frame,
+            f,
             [highlightStart, highlightStart + 18],
             [0, 1],
             easeOutExpo,
           );
           const highlightOut = interpolate(
-            frame,
+            f,
             [highlightStart + 92, highlightStart + 112],
             [1, 0],
             easeStandard,

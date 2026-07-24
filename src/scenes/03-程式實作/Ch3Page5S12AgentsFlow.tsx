@@ -19,10 +19,11 @@ import {
 } from "../../theme/colors";
 import { FONT, clamp } from "../../theme/motion";
 
-// 第 3 集・第 5 頁・S12：AI 有機率忘東忘西（360 幀）
+// 第 3 集・第 5 頁・S12：AI 有機率忘東忘西（375 幀）
 //   置中的「AI Agent」對話視窗：使用者連丟三則需求（靠右）→ 過了一陣子 →
 //   AI 反問「跳躍高度是多少？」（靠左），同時前面三則需求淡化，強調 AI 忘了。
 //   視窗下方一句說明作結。只保留開頭淡入、結尾淡出。
+const HOLD = 15; // 開場白底停留幀數（內容延後這麼多幀才開始）
 const FADE_IN = 18; // 開頭：整組內容淡入
 const FADE_OUT = 24; // 結尾：整組內容淡出
 
@@ -55,9 +56,10 @@ const BUBBLE_BASE: React.CSSProperties = {
 export const Ch3Page5S12AgentsFlow: React.FC = () => {
   const frame = useCurrentFrame();
   const { fps, durationInFrames } = useVideoConfig();
+  const f = frame - HOLD; // 內容時間軸（開場白底後才起算）
 
-  // 開頭淡入 × 結尾淡出
-  const fadeIn = interpolate(frame, [0, FADE_IN], [0, 1], clamp);
+  // 開頭淡入（延後 HOLD 幀）× 結尾淡出（錨定片尾）
+  const fadeIn = interpolate(f, [0, FADE_IN], [0, 1], clamp);
   const fadeOut = interpolate(
     frame,
     [durationInFrames - FADE_OUT, durationInFrames],
@@ -69,7 +71,7 @@ export const Ch3Page5S12AgentsFlow: React.FC = () => {
   // 氣泡進場：由下微微浮起 + 淡入（overshootClamping 讓使用者訊息乾淨落定）
   const pop = (start: number, overshoot: boolean) => {
     const s = spring({
-      frame: frame - start,
+      frame: f - start,
       fps,
       config: overshoot
         ? { damping: 12, stiffness: 130 }

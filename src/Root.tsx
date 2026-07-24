@@ -652,7 +652,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch3-Page5-S12-AgentsFlow"
             component={Ch3Page5S12AgentsFlow}
-            durationInFrames={360}
+            durationInFrames={375}
             fps={30}
             width={1920}
             height={1080}
@@ -686,7 +686,7 @@ export const RemotionRoot: React.FC = () => {
           <Composition
             id="Ch3-Page6-S15-SpecStructure"
             component={Ch3Page6S15SpecStructure}
-            durationInFrames={1020}
+            durationInFrames={1035}
             fps={30}
             width={1920}
             height={1080}
